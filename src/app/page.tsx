@@ -45,20 +45,40 @@ export default function HomePage() {
   return (
     <div className="w-full bg-[#FAF8F5] text-[#171717] min-h-screen">
       {/* ──────────────────────────────────────────────────────────── */}
-      {/* 1. CINEMATIC SPLIT HERO: "A QUIETER KIND OF LUXURY."         */}
+      {/* 1. CINEMATIC FULL-SIZE HERO: "NEW ARRIVALS"                  */}
       {/* ──────────────────────────────────────────────────────────── */}
-      <section className="w-full relative min-h-[70vh] sm:min-h-[78vh] lg:min-h-[85vh] border-b border-[#E9E6E0] bg-[#FAF8F5] flex flex-col lg:flex-row items-stretch overflow-hidden">
-        {/* LEFT COLUMN: Editorial Text Narrative (~52% width) */}
-        <div className="w-full lg:w-[52%] flex flex-col justify-center px-6 sm:px-12 lg:px-16 xl:px-20 py-16 sm:py-20 lg:py-0 space-y-5 sm:space-y-6">
-          <div className="space-y-3 max-w-lg">
-            <span className="text-[10px] sm:text-[11px] tracking-[0.38em] uppercase text-[#77736E] font-medium block">
-              NEW SEASON
+      <section className="relative w-full h-[78vh] sm:h-[84vh] lg:h-[88vh] min-h-[560px] max-h-[920px] overflow-hidden bg-[#EAE4D9] border-b border-[#E9E6E0]">
+        {/* Full-Size Background Image Behind Typography */}
+        <div className="absolute inset-0 transition-opacity duration-700">
+          <Image
+            src={
+              activeSlide === 1
+                ? "/images/hero/hero-new-arrivals-walking.jpg"
+                : "/images/hero/hero-new-arrivals-standing.jpg"
+            }
+            alt="VELORA New Arrivals Campaign"
+            fill
+            priority
+            quality={98}
+            className="object-cover object-[75%_center] sm:object-center"
+            sizes="100vw"
+          />
+
+          {/* Luxury Editorial Soft Scrim Overlay: Subtle warm fade on the left to ensure high contrast for typography */}
+          <div className="absolute inset-0 bg-gradient-to-r from-[#FAF8F5]/92 via-[#FAF8F5]/55 to-transparent w-full sm:w-[68%] lg:w-[54%]" />
+        </div>
+
+        {/* Foreground Content: Typography & CTAs directly in front of the image */}
+        <div className="relative z-10 h-full max-w-[1600px] mx-auto px-6 sm:px-12 lg:px-16 xl:px-20 flex flex-col justify-center space-y-6">
+          <div className="space-y-3 max-w-xl">
+            <span className="text-[10px] sm:text-[11px] tracking-[0.4em] uppercase text-[#77736E] font-medium block">
+              NEW ARRIVALS
             </span>
-            <h1 className="font-editorial text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-normal text-[#171717] leading-[1.06] tracking-tight">
+            <h1 className="font-editorial text-4xl sm:text-6xl lg:text-7xl font-normal text-[#171717] leading-[1.05] tracking-tight">
               A QUIETER<br />
               KIND OF LUXURY.
             </h1>
-            <p className="text-xs sm:text-sm text-[#55504A] font-light leading-relaxed max-w-sm pt-1">
+            <p className="text-xs sm:text-sm text-[#3E3A36] font-light leading-relaxed max-w-md pt-1">
               Considered silhouettes. Timeless pieces. For today and beyond.
             </p>
           </div>
@@ -67,7 +87,7 @@ export default function HomePage() {
           <div className="pt-2">
             <Link
               href="/shop"
-              className="inline-flex items-center gap-2.5 bg-[#171717] text-white hover:bg-[#A18A70] text-[10px] sm:text-[11px] uppercase tracking-[0.25em] px-7 py-3.5 font-medium transition-colors duration-300 group"
+              className="inline-flex items-center gap-2.5 bg-[#171717] text-white hover:bg-[#A18A70] text-[10px] sm:text-[11px] uppercase tracking-[0.25em] px-8 py-4 font-medium transition-colors duration-300 group shadow-xs"
             >
               <span>SHOP THE COLLECTION</span>
               <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
@@ -76,30 +96,17 @@ export default function HomePage() {
 
           {/* Carousel Slide Indicator Dashes */}
           <div className="flex items-center space-x-2 pt-4">
-            {[0, 1, 2].map((idx) => (
+            {[0, 1].map((idx) => (
               <button
                 key={idx}
                 onClick={() => setActiveSlide(idx)}
                 className={`h-[2px] transition-all duration-300 ${
-                  activeSlide === idx ? "w-8 bg-[#171717]" : "w-4 bg-[#DED8CF] hover:bg-[#77736E]"
+                  activeSlide === idx ? "w-10 bg-[#171717]" : "w-4 bg-[#171717]/35 hover:bg-[#171717]"
                 }`}
                 aria-label={`Slide ${idx + 1}`}
               />
             ))}
           </div>
-        </div>
-
-        {/* RIGHT COLUMN: Large Fashion Campaign Photography (~48% width) */}
-        <div className="w-full lg:w-[48%] relative min-h-[380px] sm:min-h-[480px] lg:min-h-auto bg-[#EBE5DB] overflow-hidden">
-          <Image
-            src="/images/catalog/home-hero-model.jpg"
-            alt="VELORA A Quieter Kind of Luxury Campaign"
-            fill
-            priority
-            quality={95}
-            className="object-cover object-[60%_center]"
-            sizes="(max-width: 1024px) 100vw, 48vw"
-          />
         </div>
       </section>
 
