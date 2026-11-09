@@ -22,7 +22,7 @@ const STORAGE_KEYS = {
   SETTINGS: "velora_settings_v1",
   NEWSLETTER: "velora_newsletter_v1",
   CATEGORIES: "velora_categories_v2",
-  COLLECTIONS: "velora_collections_v2",
+  COLLECTIONS: "velora_collections_v3",
   RECENTLY_VIEWED: "velora_recently_viewed_v1",
   INVENTORY: "velora_inventory_v1",
 };

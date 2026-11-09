@@ -38,8 +38,9 @@ export function Header() {
 
   const leftNavLinks = [
     { name: "SHOP", href: "/shop" },
-    { name: "SELECTED FOR YOU", href: "/collections" },
-    { name: "PRE-FALL 2025", href: "/collections/modern-tailoring" },
+    { name: "COLLECTIONS", href: "/collections" },
+    { name: "ABOUT", href: "/about" },
+    { name: "JOURNAL", href: "/journal" },
   ];
 
   const shippingDestinations = [

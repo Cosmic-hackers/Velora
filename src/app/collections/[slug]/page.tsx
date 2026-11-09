@@ -21,7 +21,16 @@ export default function CollectionDetailPage({ params }: Props) {
   }
 
   const allProducts = StoreService.getProducts();
-  const products = allProducts.filter((p) => p.collectionId === collection.id);
+  const products = allProducts.filter((p) => {
+    if (p.collectionId === collection.id) return true;
+    if (
+      collection.slug === "the-accessories" &&
+      (p.department === "accessories" || p.categoryId.startsWith("cat-a"))
+    ) {
+      return true;
+    }
+    return false;
+  });
 
   return (
     <div className="space-y-16 pb-24">
