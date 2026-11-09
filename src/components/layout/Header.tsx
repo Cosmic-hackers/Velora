@@ -35,9 +35,15 @@ export function Header() {
 
   const leftNavLinks = [
     { name: "SHOP", href: "/shop" },
-    { name: "COLLECTIONS", href: "/collections" },
-    { name: "ABOUT", href: "/about" },
-    { name: "JOURNAL", href: "/journal" },
+    { name: "SELECTED FOR YOU", href: "/collections" },
+    { name: "PRE-FALL 2025", href: "/collections/modern-tailoring" },
+  ];
+
+  const shippingDestinations = [
+    { country: "India", code: "INR", label: "Ship to: India (INR)" },
+    { country: "United Kingdom", code: "GBP", label: "Ship to: United Kingdom (£)" },
+    { country: "United States", code: "USD", label: "Ship to: United States ($)" },
+    { country: "Europe", code: "EUR", label: "Ship to: Europe (€)" },
   ];
 
   const currencies = ["INR", "USD", "EUR", "GBP"];
@@ -95,41 +101,100 @@ export function Header() {
             </Link>
           </div>
 
-          {/* RIGHT ACTION ICONS & CURRENCY */}
-          <div className="flex items-center space-x-5 sm:space-x-7 ml-auto z-10">
-            {/* Currency Selector (INR default) */}
-            <div className="relative hidden md:block">
+          {/* RIGHT ACTION ICONS & LINKS (Reference Layout) */}
+          <div className="flex items-center space-x-4 sm:space-x-6 lg:space-x-7 ml-auto z-10">
+            {/* Shipping Destination & Currency Selector (KHAITE style) */}
+            <div className="relative hidden xl:block">
               <button
                 onClick={() => setCurrencyOpen(!currencyOpen)}
-                className="text-[11px] uppercase tracking-[0.2em] font-medium text-[#171717]/80 hover:text-[#171717] flex items-center gap-1 transition-colors py-1"
-                aria-label="Select currency"
+                className="text-[11px] font-medium tracking-[0.08em] text-[#171717]/85 hover:text-[#171717] flex items-center gap-1.5 transition-colors py-1"
+                aria-label="Select destination & currency"
               >
-                <span>{currency}</span>
+                <span>
+                  {shippingDestinations.find((d) => d.code === currency)?.label || `Ship to: India (${currency})`}
+                </span>
                 <ChevronDown className="w-3 h-3 stroke-[1.5]" />
               </button>
 
               {currencyOpen && (
                 <div
                   onMouseLeave={() => setCurrencyOpen(false)}
-                  className="absolute right-0 top-full mt-2 w-24 bg-[#FFFFFF] border border-[#E9E6E0] shadow-sm py-1.5 z-50 text-[10px] tracking-widest uppercase animate-fadeIn"
+                  className="absolute right-0 top-full mt-2 w-56 bg-[#FFFFFF] border border-[#E9E6E0] shadow-sm py-2 z-50 text-[11px] tracking-wide animate-fadeIn"
                 >
-                  {currencies.map((curr) => (
+                  {shippingDestinations.map((dest) => (
                     <button
-                      key={curr}
+                      key={dest.code}
                       onClick={() => {
-                        setCurrency(curr);
+                        setCurrency(dest.code);
                         setCurrencyOpen(false);
                       }}
-                      className={`block w-full text-left px-3 py-1.5 hover:bg-[#F8F7F4] transition-colors ${
-                        currency === curr ? "font-semibold text-[#171717]" : "text-[#77736E]"
+                      className={`block w-full text-left px-4 py-2 hover:bg-[#F8F7F4] transition-colors ${
+                        currency === dest.code ? "font-semibold text-[#171717]" : "text-[#77736E]"
                       }`}
                     >
-                      {curr}
+                      {dest.label}
                     </button>
                   ))}
                 </div>
               )}
             </div>
+
+            {/* Mobile/Compact Currency Button */}
+            <div className="relative block xl:hidden">
+              <button
+                onClick={() => setCurrencyOpen(!currencyOpen)}
+                className="text-[10px] uppercase tracking-[0.2em] font-medium text-[#171717]/80 hover:text-[#171717] flex items-center gap-1 transition-colors py-1"
+                aria-label="Select currency"
+              >
+                <span>{currency}</span>
+                <ChevronDown className="w-3 h-3 stroke-[1.5]" />
+              </button>
+              {currencyOpen && (
+                <div
+                  onMouseLeave={() => setCurrencyOpen(false)}
+                  className="absolute right-0 top-full mt-2 w-28 bg-[#FFFFFF] border border-[#E9E6E0] shadow-sm py-1.5 z-50 text-[10px] tracking-widest uppercase animate-fadeIn"
+                >
+                  {shippingDestinations.map((dest) => (
+                    <button
+                      key={dest.code}
+                      onClick={() => {
+                        setCurrency(dest.code);
+                        setCurrencyOpen(false);
+                      }}
+                      className={`block w-full text-left px-3 py-1.5 hover:bg-[#F8F7F4] transition-colors ${
+                        currency === dest.code ? "font-semibold text-[#171717]" : "text-[#77736E]"
+                      }`}
+                    >
+                      {dest.code}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* About Link */}
+            <Link
+              href="/about"
+              className="hidden lg:inline-block text-[11px] uppercase tracking-[0.2em] font-medium text-[#171717]/85 hover:text-[#171717] transition-colors"
+            >
+              ABOUT
+            </Link>
+
+            {/* Stores Link */}
+            <Link
+              href="/contact"
+              className="hidden lg:inline-block text-[11px] uppercase tracking-[0.2em] font-medium text-[#171717]/85 hover:text-[#171717] transition-colors"
+            >
+              STORES
+            </Link>
+
+            {/* Account: Sign In / Account: Name */}
+            <Link
+              href={user?.role === "admin" || user?.role === "super_admin" ? "/admin" : user ? "/account" : "/login"}
+              className="hidden sm:inline-block text-[11px] uppercase tracking-[0.18em] font-medium text-[#171717]/85 hover:text-[#171717] transition-colors"
+            >
+              {user ? `ACCOUNT: ${user.fullName?.split(" ")[0] || "CLIENT"}` : "ACCOUNT: SIGN IN"}
+            </Link>
 
             {/* Wishlist */}
             <Link
@@ -137,23 +202,11 @@ export function Header() {
               className="text-[#171717] hover:opacity-60 transition-opacity relative p-1"
               aria-label="View wishlist"
             >
-              <Heart className="w-[18px] h-[18px] stroke-[1.25]" />
+              <Heart className="w-[17px] h-[17px] stroke-[1.25]" />
               {wishlistCount > 0 && (
                 <span className="absolute -top-1 -right-1 text-[9px] font-medium text-[#171717] w-3.5 h-3.5 flex items-center justify-center">
                   {wishlistCount}
                 </span>
-              )}
-            </Link>
-
-            {/* Account */}
-            <Link
-              href={user?.role === "admin" || user?.role === "super_admin" ? "/admin" : user ? "/account" : "/login"}
-              className="text-[#171717] hover:opacity-60 transition-opacity p-1 relative"
-              aria-label="Client account"
-            >
-              <User className="w-[18px] h-[18px] stroke-[1.25]" />
-              {user && (
-                <span className="absolute bottom-1 right-1 w-1.5 h-1.5 bg-[#A18A70] rounded-full" />
               )}
             </Link>
 
@@ -163,23 +216,17 @@ export function Header() {
               className="text-[#171717] hover:opacity-60 transition-opacity p-1"
               aria-label="Search collection"
             >
-              <Search className="w-[18px] h-[18px] stroke-[1.25]" />
+              <Search className="w-[17px] h-[17px] stroke-[1.25]" />
             </button>
 
-            {/* Shopping Bag with live count */}
+            {/* Shopping Bag with live count: e.g. (0) */}
             <button
               onClick={openCart}
-              className="text-[#171717] hover:opacity-60 transition-opacity p-1 flex items-center gap-1.5 group"
+              className="text-[#171717] hover:opacity-60 transition-opacity p-1 flex items-center gap-1 group text-[11px] font-mono tracking-tight"
               aria-label="Open shopping bag"
             >
-              <div className="relative">
-                <ShoppingBag className="w-[18px] h-[18px] stroke-[1.25]" />
-                {itemCount > 0 && (
-                  <span className="absolute -top-1.5 -right-2 text-[9px] font-semibold text-[#171717] bg-[#E9E6E0] rounded-full w-4 h-4 flex items-center justify-center">
-                    {itemCount}
-                  </span>
-                )}
-              </div>
+              <ShoppingBag className="w-[17px] h-[17px] stroke-[1.25]" />
+              <span className="font-sans text-[11px] tracking-normal">({itemCount})</span>
             </button>
           </div>
         </div>

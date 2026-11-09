@@ -14,6 +14,9 @@ export default function AdminSettingsPage() {
   const [address, setAddress] = useState(current.address);
   const [freeShippingThreshold, setFreeShippingThreshold] = useState(current.freeShippingThreshold);
   const [defaultShippingCost, setDefaultShippingCost] = useState(current.defaultShippingCost);
+  const [heroCampaignStyle, setHeroCampaignStyle] = useState<"campaign_diptych" | "editorial_split" | "campaign_portrait">(
+    (current as any).heroCampaignStyle || "campaign_diptych"
+  );
   const [saved, setSaved] = useState(false);
 
   const handleSave = (e: React.FormEvent) => {
@@ -26,6 +29,7 @@ export default function AdminSettingsPage() {
       address,
       freeShippingThreshold: Number(freeShippingThreshold),
       defaultShippingCost: Number(defaultShippingCost),
+      heroCampaignStyle,
     });
 
     setSaved(true);
@@ -84,6 +88,30 @@ export default function AdminSettingsPage() {
                 onChange={(e) => setTagline(e.target.value)}
                 className="w-full bg-white border border-[#DED8CF] p-2.5 text-xs text-[#171717]"
               />
+            </div>
+
+            <div className="sm:col-span-2">
+              <label className="block text-xs uppercase tracking-wider text-[#171717] mb-1 font-medium">
+                Active Homepage Hero Campaign
+              </label>
+              <select
+                value={heroCampaignStyle}
+                onChange={(e) => setHeroCampaignStyle(e.target.value as any)}
+                className="w-full bg-white border border-[#DED8CF] p-2.5 text-xs text-[#171717]"
+              >
+                <option value="campaign_diptych">
+                  The Roth Trench Campaign — Full-Width Diptych (KHAITE Luxury Reference)
+                </option>
+                <option value="editorial_split">
+                  The Signature Collection — Two-Column Editorial Split (Editorial Reference)
+                </option>
+                <option value="campaign_portrait">
+                  Studio Campaign 04 — Close-Up Portrait & Silhouette (Campaign Reference)
+                </option>
+              </select>
+              <p className="text-[10px] text-[#77716A] mt-1">
+                Controls the active campaign presentation showcased to all clients on the homepage hero.
+              </p>
             </div>
           </div>
         </div>

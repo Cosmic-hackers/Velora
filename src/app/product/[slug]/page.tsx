@@ -96,6 +96,43 @@ export default function ProductDetailPage({ params }: Props) {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-24">
+      {/* Schema.org JSON-LD Structured Data for SEO Rich Snippets */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org/",
+            "@type": "Product",
+            name: product.name,
+            image: product.images,
+            description: product.description,
+            sku: product.sku,
+            brand: {
+              "@type": "Brand",
+              name: "VELORA",
+            },
+            offers: {
+              "@type": "Offer",
+              url: `https://velora-couture.com/product/${product.slug}`,
+              priceCurrency: "INR",
+              price: effectivePrice,
+              priceValidUntil: "2026-12-31",
+              itemCondition: "https://schema.org/NewCondition",
+              availability: "https://schema.org/InStock",
+              seller: {
+                "@type": "Organization",
+                name: "VELORA",
+              },
+            },
+            aggregateRating: {
+              "@type": "AggregateRating",
+              ratingValue: product.rating,
+              reviewCount: Math.max(product.reviewCount, reviews.length),
+            },
+          }),
+        }}
+      />
+
       {/* Breadcrumb */}
       <nav className="text-[11px] tracking-[0.2em] uppercase text-[#77716A] flex items-center gap-2">
         <Link href="/" className="hover:text-[#171717]">Maison</Link>

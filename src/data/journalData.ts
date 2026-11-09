@@ -65,3 +65,4 @@ export const JOURNAL_POSTS: JournalPost[] = [
     `,
   },
 ];
+

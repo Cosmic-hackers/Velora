@@ -12,9 +12,9 @@ export default function HomePage() {
   const collections = StoreService.getCollections();
   const settings = StoreService.getStoreSettings();
 
-  // Support both Hero modes with a refined editorial toggle
-  const [activeHero, setActiveHero] = useState<"editorial_split" | "campaign_portrait">(
-    (settings as any).heroCampaignStyle || "editorial_split"
+  // Support all 3 Hero modes with the user's requested diptych campaign as default
+  const [activeHero, setActiveHero] = useState<"campaign_diptych" | "editorial_split" | "campaign_portrait">(
+    (settings as any).heroCampaignStyle || "campaign_diptych"
   );
 
   const newArrivals = allProducts.filter((p) => p.isNewArrival).slice(0, 4);
@@ -22,9 +22,108 @@ export default function HomePage() {
   return (
     <div className="w-full bg-[#F8F7F4] text-[#171717] overflow-hidden">
       {/* ──────────────────────────────────────────────────────────── */}
-      {/* 1. HERO SECTION: EDITORIAL SPLIT (REF 1) & CAMPAIGN (REF 2) */}
+      {/* 1. HERO SECTION: KHAITE-INSPIRED EDITORIAL CAMPAIGN DIPTYCH */}
       {/* ──────────────────────────────────────────────────────────── */}
-      {activeHero === "editorial_split" ? (
+      {activeHero === "campaign_diptych" ? (
+        /* HERO 1: EXACT MATCH TO USER'S ATTACHED REFERENCE (DIPTYCH CAMPAIGN) */
+        <section className="w-full relative min-h-[82vh] lg:min-h-[92vh] xl:min-h-[95vh] border-b border-[#E9E6E0] bg-[#F8F7F4] overflow-hidden">
+          {/* Side-by-side full-width diptych */}
+          <div className="w-full h-full min-h-[82vh] lg:min-h-[92vh] xl:min-h-[95vh] flex flex-col lg:flex-row relative">
+            {/* LEFT SIDE: Dominant close-up editorial portrait (~62.5% width) */}
+            <div className="relative w-full lg:w-[62.5%] h-[65vh] sm:h-[75vh] lg:h-auto min-h-[500px] bg-[#EFECE6] overflow-hidden">
+              <Image
+                src="/images/hero/campaign-left-portrait.jpg"
+                alt="VELORA The Roth Trench Campaign Portrait"
+                fill
+                priority
+                className="object-cover object-top hover:scale-[1.01] transition-transform duration-1000 ease-out"
+                sizes="(max-width: 1024px) 100vw, 63vw"
+              />
+
+              {/* Exact Lower-Left Editorial Product Identifiers from attached reference */}
+              <div className="absolute bottom-8 left-8 sm:bottom-12 sm:left-12 z-20 space-y-4 text-[#171717] select-none drop-shadow-sm">
+                <Link
+                  href="/product/the-roth-trench?color=Black"
+                  className="group block space-y-0.5 transition-opacity hover:opacity-75"
+                >
+                  <p className="text-[12px] sm:text-[13px] font-normal tracking-wide text-[#171717]">
+                    The Roth Trench
+                  </p>
+                  <p className="text-[11px] sm:text-[12px] font-light tracking-wide text-[#55524E]">
+                    in Black
+                  </p>
+                  <p className="text-[11px] sm:text-[12px] font-mono tracking-tight text-[#171717] pt-0.5">
+                    £2,790.00 GBP
+                  </p>
+                </Link>
+
+                <Link
+                  href="/product/the-roth-trench?color=Beige"
+                  className="group block space-y-0.5 transition-opacity hover:opacity-75"
+                >
+                  <p className="text-[12px] sm:text-[13px] font-normal tracking-wide text-[#171717]">
+                    The Roth Trench
+                  </p>
+                  <p className="text-[11px] sm:text-[12px] font-light tracking-wide text-[#55524E]">
+                    in Beige
+                  </p>
+                  <p className="text-[11px] sm:text-[12px] font-mono tracking-tight text-[#171717] pt-0.5">
+                    £2,560.00 GBP
+                  </p>
+                </Link>
+              </div>
+            </div>
+
+            {/* RIGHT SIDE: Full-length profile silhouette walking to right (~37.5% width) */}
+            <div className="relative w-full lg:w-[37.5%] h-[55vh] sm:h-[65vh] lg:h-auto min-h-[460px] bg-[#ECE8E0] overflow-hidden border-t lg:border-t-0 lg:border-l border-[#E9E6E0]/60">
+              <Image
+                src="/images/hero/campaign-right-stride.jpg"
+                alt="VELORA The Roth Trench Full-Length Silhouette"
+                fill
+                priority
+                className="object-cover object-center hover:scale-[1.01] transition-transform duration-1000 ease-out"
+                sizes="(max-width: 1024px) 100vw, 38vw"
+              />
+
+              {/* Minimal Action Badge in lower right */}
+              <div className="absolute bottom-8 right-8 sm:bottom-12 sm:right-12 z-20">
+                <Link
+                  href="/product/the-roth-trench"
+                  className="inline-flex items-center gap-2 text-[10px] sm:text-[11px] uppercase tracking-[0.25em] font-medium text-[#171717] bg-[#FFFFFF]/90 hover:bg-[#171717] hover:text-white backdrop-blur-sm px-4 py-2.5 border border-[#E9E6E0] transition-all shadow-sm group"
+                >
+                  <span>VIEW CAMPAIGN PIECE</span>
+                  <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                </Link>
+              </div>
+            </div>
+          </div>
+
+          {/* Editorial Campaign Switcher */}
+          <div className="absolute top-4 right-8 z-20 hidden md:flex items-center gap-2 text-[9px] uppercase tracking-[0.25em] text-[#77736E] bg-white/75 backdrop-blur-sm px-3 py-1.5 border border-[#E9E6E0]">
+            <span>VIEW:</span>
+            <button
+              onClick={() => setActiveHero("campaign_diptych")}
+              className="text-[#171717] font-semibold underline underline-offset-4"
+            >
+              DIPTYCH
+            </button>
+            <span>/</span>
+            <button
+              onClick={() => setActiveHero("editorial_split")}
+              className="hover:text-[#171717] transition-colors"
+            >
+              EDITORIAL SPLIT
+            </button>
+            <span>/</span>
+            <button
+              onClick={() => setActiveHero("campaign_portrait")}
+              className="hover:text-[#171717] transition-colors"
+            >
+              CLOSE-UP
+            </button>
+          </div>
+        </section>
+      ) : activeHero === "editorial_split" ? (
         /* HERO 1: EDITORIAL SPLIT (Primary reference) */
         <section className="w-full min-h-[90vh] lg:min-h-[94vh] flex flex-col lg:flex-row border-b border-[#E9E6E0] relative">
           {/* LEFT COLUMN: ~52% width full-height fashion campaign photograph */}
@@ -85,8 +184,15 @@ export default function HomePage() {
           </div>
 
           {/* Subtle Campaign Style Switcher in bottom right */}
-          <div className="absolute bottom-4 right-8 z-20 hidden md:flex items-center gap-2 text-[9px] uppercase tracking-[0.25em] text-[#77736E]">
+          <div className="absolute bottom-4 right-8 z-20 hidden md:flex items-center gap-2 text-[9px] uppercase tracking-[0.25em] text-[#77736E] bg-white/80 backdrop-blur-sm px-3 py-1.5 border border-[#E9E6E0]">
             <span>VIEW:</span>
+            <button
+              onClick={() => setActiveHero("campaign_diptych")}
+              className="hover:text-[#171717] transition-colors"
+            >
+              DIPTYCH
+            </button>
+            <span>/</span>
             <button
               onClick={() => setActiveHero("editorial_split")}
               className="text-[#171717] font-semibold underline underline-offset-4"
@@ -98,12 +204,12 @@ export default function HomePage() {
               onClick={() => setActiveHero("campaign_portrait")}
               className="hover:text-[#171717] transition-colors"
             >
-              CAMPAIGN CLOSE-UP
+              CLOSE-UP
             </button>
           </div>
         </section>
       ) : (
-        /* HERO 2: ALTERNATIVE CAMPAIGN HERO (REF 2) */
+        /* HERO 3: ALTERNATIVE CAMPAIGN HERO (REF 2) */
         <section className="w-full min-h-[90vh] lg:min-h-[94vh] flex flex-col lg:flex-row border-b border-[#E9E6E0] relative bg-[#F8F7F4]">
           {/* Close-Up Fashion Portrait occupying approx 65% width */}
           <div className="w-full lg:w-[65%] relative min-h-[60vh] lg:min-h-full bg-[#F0EDE8] overflow-hidden">
@@ -163,8 +269,15 @@ export default function HomePage() {
           </div>
 
           {/* Campaign Style Switcher */}
-          <div className="absolute bottom-4 right-8 z-20 hidden md:flex items-center gap-2 text-[9px] uppercase tracking-[0.25em] text-[#77736E]">
+          <div className="absolute bottom-4 right-8 z-20 hidden md:flex items-center gap-2 text-[9px] uppercase tracking-[0.25em] text-[#77736E] bg-white/80 backdrop-blur-sm px-3 py-1.5 border border-[#E9E6E0]">
             <span>VIEW:</span>
+            <button
+              onClick={() => setActiveHero("campaign_diptych")}
+              className="hover:text-[#171717] transition-colors"
+            >
+              DIPTYCH
+            </button>
+            <span>/</span>
             <button
               onClick={() => setActiveHero("editorial_split")}
               className="hover:text-[#171717] transition-colors"
@@ -176,7 +289,7 @@ export default function HomePage() {
               onClick={() => setActiveHero("campaign_portrait")}
               className="text-[#171717] font-semibold underline underline-offset-4"
             >
-              CAMPAIGN CLOSE-UP
+              CLOSE-UP
             </button>
           </div>
         </section>
