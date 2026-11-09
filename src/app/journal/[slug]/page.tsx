@@ -11,6 +11,12 @@ interface Props {
   };
 }
 
+export function generateStaticParams() {
+  return JOURNAL_POSTS.map((post) => ({
+    slug: post.slug,
+  }));
+}
+
 export default function JournalArticlePage({ params }: Props) {
   const post = JOURNAL_POSTS.find((p) => p.slug === params.slug);
 

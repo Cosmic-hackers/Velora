@@ -97,7 +97,7 @@ export default function HomePage() {
             fill
             priority
             quality={95}
-            className="object-cover object-[65%_center]"
+            className="object-cover object-[60%_center]"
             sizes="(max-width: 1024px) 100vw, 48vw"
           />
         </div>

@@ -1,129 +1,227 @@
+"use client";
+
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Compass, ShieldCheck, Sparkles, Feather } from "lucide-react";
-
-export const metadata = {
-  title: "The Maison Story & Philosophy — VELORA",
-  description: "Wear less. Mean more. The architectural manifesto of VELORA Haute Garde-Robe.",
-};
+import { ArrowRight } from "lucide-react";
 
 export default function AboutPage() {
+  const designPrinciples = [
+    {
+      label: "FORM",
+      desc: "Clean lines and purposeful silhouettes.",
+      image: "/images/about/design-form.jpg",
+    },
+    {
+      label: "FABRIC",
+      desc: "Natural materials, selected for longevity.",
+      image: "/images/about/design-fabric.jpg",
+    },
+    {
+      label: "FUNCTION",
+      desc: "Thoughtful details for everyday ease.",
+      image: "/images/about/design-function.jpg",
+    },
+  ];
+
   return (
-    <div className="space-y-24 pb-24">
-      {/* Hero */}
-      <section className="relative w-full h-[65vh] min-h-[460px] flex items-end overflow-hidden bg-[#171717]">
-        <Image
-          src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?q=85&w=2000&auto=format&fit=crop"
-          alt="VELORA Atelier Workroom"
-          fill
-          priority
-          className="object-cover opacity-70"
-          sizes="100vw"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent" />
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16 w-full">
-          <div className="max-w-2xl space-y-4">
-            <span className="text-[10px] tracking-[0.35em] uppercase text-[#C2A888] font-semibold">
-              The Maison Manifesto
-            </span>
-            <h1 className="font-editorial text-4xl sm:text-6xl text-white font-normal leading-tight">
-              Wear less. Mean more.
+    <div className="w-full bg-[#FAF8F5] text-[#171717] min-h-screen">
+      {/* ──────────────────────────────────────────────────────────── */}
+      {/* 1. HERO SECTION: "THE ART OF LESS."                          */}
+      {/* ──────────────────────────────────────────────────────────── */}
+      <section className="relative w-full border-b border-[#E9E6E0] bg-[#8B735B] overflow-hidden text-white">
+        <div className="max-w-[1600px] mx-auto flex flex-col lg:flex-row items-stretch min-h-[380px] sm:min-h-[440px] lg:min-h-[480px]">
+          {/* Left Column: Heading and Subtitle */}
+          <div className="w-full lg:w-[55%] px-6 sm:px-12 lg:px-16 py-12 sm:py-16 lg:py-20 flex flex-col justify-center space-y-3 sm:space-y-4 z-10">
+            <h1 className="font-editorial text-4xl sm:text-5xl lg:text-6xl text-white font-normal tracking-wide leading-tight">
+              THE ART OF LESS.
             </h1>
-            <p className="text-xs sm:text-sm text-[#D8D2C7] font-light leading-relaxed">
-              Founded on the radical proposition that modern refinement requires reduction, not accumulation.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* Narrative Section 1 */}
-      <section className="max-w-4xl mx-auto px-4 sm:px-6 space-y-10 text-center">
-        <span className="text-[10px] tracking-[0.3em] uppercase text-[#9B8065] font-semibold">
-          Architectural Minimalism
-        </span>
-        <blockquote className="font-editorial text-2xl sm:text-4xl text-[#171717] font-normal leading-relaxed">
-          &ldquo;We design clothing that ceases to scream for attention, and instead commands quiet presence.&rdquo;
-        </blockquote>
-        <p className="text-xs sm:text-sm text-[#77716A] font-light leading-loose text-justify sm:text-center">
-          In an era characterized by disposable trends and synthetic acceleration, VELORA operates
-          on a counter-rhythm. Every garment begins with an archival silhouette — an unconstructed
-          double-faced overcoat, an oversized artist poplin shirt, a razor-pleated wool trouser —
-          stripped of decorative excess until only pure proportion remains.
-        </p>
-      </section>
-
-      {/* Sourcing & Craftsmanship Pillars */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div className="bg-[#FAF7F2] p-8 border border-[#DED8CF] space-y-4">
-            <div className="p-3 bg-[#EFE9DE] text-[#9B8065] w-fit">
-              <Feather className="w-5 h-5 stroke-[1.5]" />
-            </div>
-            <h3 className="font-editorial text-xl text-[#171717]">Grade-A Mongolian Cashmere</h3>
-            <p className="text-xs text-[#77716A] font-light leading-relaxed">
-              Sourced exclusively from free-roaming nomadic herders in the Alashan region of Inner
-              Mongolia. Our 15.5-micron fibers are comb-harvested ethically and spun at heritage Scottish mills.
+            <p className="text-xs sm:text-sm text-white/80 font-light tracking-wide max-w-md">
+              Designed with intention. Made to endure.
             </p>
           </div>
 
-          <div className="bg-[#FAF7F2] p-8 border border-[#DED8CF] space-y-4">
-            <div className="p-3 bg-[#EFE9DE] text-[#9B8065] w-fit">
-              <Compass className="w-5 h-5 stroke-[1.5]" />
-            </div>
-            <h3 className="font-editorial text-xl text-[#171717]">Biella Virgin Wool Mills</h3>
-            <p className="text-xs text-[#77716A] font-light leading-relaxed">
-              Nestled at the foothills of the Italian Alps, our fabric partners utilize glacial mountain
-              waters that yield an incomparable softness, creating double-faced virgin wools that drape with sculptural dignity.
-            </p>
-          </div>
-
-          <div className="bg-[#FAF7F2] p-8 border border-[#DED8CF] space-y-4">
-            <div className="p-3 bg-[#EFE9DE] text-[#9B8065] w-fit">
-              <Sparkles className="w-5 h-5 stroke-[1.5]" />
-            </div>
-            <h3 className="font-editorial text-xl text-[#171717]">Kojima Shuttle-Loom Denim</h3>
-            <p className="text-xs text-[#77716A] font-light leading-relaxed">
-              Woven slowly on vintage 1950s Toyoda shuttle looms in Okayama, Japan. 14oz pure selvedge
-              dyed in natural indigo that molds uniquely to the wearer&apos;s lifestyle over decades.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* Atelier Photography Grid */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-          <div className="relative aspect-[4/3] bg-[#EAE4D9] border border-[#DED8CF] overflow-hidden">
+          {/* Right Column: Hero Portrait Photography */}
+          <div className="w-full lg:w-[45%] relative min-h-[320px] sm:min-h-[380px] lg:min-h-auto bg-[#7A644E] overflow-hidden">
             <Image
-              src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?q=80&w=1200&auto=format&fit=crop"
-              alt="Tailoring Masterpiece"
+              src="/images/about/about-hero-model.jpg"
+              alt="VELORA The Art of Less"
               fill
-              className="object-cover"
-              sizes="(max-width: 768px) 100vw, 50vw"
+              priority
+              quality={95}
+              className="object-cover object-center"
+              sizes="(max-width: 1024px) 100vw, 45vw"
             />
           </div>
-          <div className="space-y-6 md:pl-8">
-            <span className="text-[10px] tracking-[0.3em] uppercase text-[#9B8065] font-semibold">
-              The Permanent Closet
+        </div>
+      </section>
+
+      {/* ──────────────────────────────────────────────────────────── */}
+      {/* 2. OUR STORY: "A Modern Wardrobe for a More Considered Life" */}
+      {/* ──────────────────────────────────────────────────────────── */}
+      <section className="max-w-[1600px] mx-auto px-6 sm:px-10 lg:px-12 py-14 sm:py-20 border-b border-[#E9E6E0]">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-center">
+          {/* Left Column: Story text */}
+          <div className="lg:col-span-7 space-y-4 sm:space-y-5">
+            <span className="text-[10px] tracking-[0.35em] uppercase text-[#77736E] font-medium block">
+              OUR STORY
             </span>
-            <h2 className="font-editorial text-3xl sm:text-4xl text-[#171717]">
-              Longevity as an Ethos
+            <h2 className="font-editorial text-3xl sm:text-4xl lg:text-5xl text-[#171717] font-normal leading-[1.12]">
+              A Modern Wardrobe<br />
+              for a More Considered Life.
             </h2>
-            <p className="text-xs sm:text-sm text-[#77716A] font-light leading-relaxed">
-              We do not observe the conventional 52 micro-seasons of industrial retail. A VELORA garment
-              introduced in October 2024 is deliberately engineered to remain harmonious with pieces introduced in 2030.
+            <p className="text-xs sm:text-sm text-[#77736E] font-light leading-relaxed max-w-lg pt-1 pb-2">
+              Velora is a contemporary fashion house rooted in purity, purpose and lasting design. We create refined essentials that transcend seasons and trends.
             </p>
-            <div className="pt-2">
-              <Link href="/shop" className="btn-primary text-xs py-3.5 px-8 inline-flex items-center gap-2">
-                <span>Explore the Portfolio</span>
-                <ArrowRight className="w-3.5 h-3.5" />
+            <div>
+              <Link
+                href="/collections"
+                className="inline-flex items-center gap-2 text-[10px] sm:text-[11px] uppercase tracking-[0.25em] font-medium text-[#171717] hover:text-[#A18A70] transition-colors group"
+              >
+                <span>OUR PHILOSOPHY</span>
+                <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </div>
+          </div>
+
+          {/* Right Column: Male model portrait */}
+          <div className="lg:col-span-5 relative aspect-[4/3] sm:aspect-[16/11] w-full overflow-hidden bg-[#ECE7DE] border border-[#E9E6E0]">
+            <Image
+              src="/images/about/about-story-model.jpg"
+              alt="A Considered Modern Wardrobe"
+              fill
+              className="object-cover object-center"
+              sizes="(max-width: 1024px) 100vw, 42vw"
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* ──────────────────────────────────────────────────────────── */}
+      {/* 3. OUR DESIGN LANGUAGE: FORM, FABRIC, FUNCTION               */}
+      {/* ──────────────────────────────────────────────────────────── */}
+      <section className="max-w-[1600px] mx-auto px-6 sm:px-10 lg:px-12 py-14 sm:py-20 border-b border-[#E9E6E0]">
+        <div className="text-center pb-8 sm:pb-10">
+          <span className="text-[11px] sm:text-xs tracking-[0.35em] uppercase text-[#171717] font-medium">
+            OUR DESIGN LANGUAGE
+          </span>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
+          {designPrinciples.map((item, idx) => (
+            <div key={idx} className="space-y-3">
+              <div className="relative aspect-[16/8] sm:aspect-[16/9] w-full overflow-hidden bg-[#ECE7DE] border border-[#E9E6E0]">
+                <Image
+                  src={item.image}
+                  alt={item.label}
+                  fill
+                  className="object-cover object-center"
+                  sizes="(max-width: 768px) 100vw, 33vw"
+                />
+              </div>
+              <div className="space-y-1 pt-1">
+                <span className="text-[10px] sm:text-[11px] tracking-[0.32em] uppercase font-medium text-[#171717] block">
+                  {item.label}
+                </span>
+                <p className="text-xs text-[#77736E] font-light leading-relaxed">
+                  {item.desc}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ──────────────────────────────────────────────────────────── */}
+      {/* 4. CRAFTSMANSHIP: "Made with Care."                          */}
+      {/* ──────────────────────────────────────────────────────────── */}
+      <section className="max-w-[1600px] mx-auto px-6 sm:px-10 lg:px-12 py-14 sm:py-20 border-b border-[#E9E6E0]">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-center">
+          {/* Left Column: Artisan hands cutting cloth */}
+          <div className="lg:col-span-7 relative aspect-[16/9] sm:aspect-[16/8] w-full overflow-hidden bg-[#ECE7DE] border border-[#E9E6E0]">
+            <Image
+              src="/images/about/about-craftsmanship.jpg"
+              alt="Artisan Craftsmanship"
+              fill
+              className="object-cover object-center"
+              sizes="(max-width: 1024px) 100vw, 60vw"
+            />
+          </div>
+
+          {/* Right Column: Craftsmanship description */}
+          <div className="lg:col-span-5 space-y-3 sm:space-y-4">
+            <span className="text-[10px] tracking-[0.35em] uppercase text-[#77736E] font-medium block">
+              CRAFTSMANSHIP
+            </span>
+            <h2 className="font-editorial text-3xl sm:text-4xl lg:text-5xl text-[#171717] font-normal leading-tight">
+              Made with Care.
+            </h2>
+            <p className="text-xs sm:text-sm text-[#77736E] font-light leading-relaxed max-w-md pt-1 pb-2">
+              From fabric selection to final stitch, each piece is crafted by skilled hands in trusted ateliers.
+            </p>
+            <div>
+              <Link
+                href="/journal"
+                className="inline-flex items-center gap-2 text-[10px] sm:text-[11px] uppercase tracking-[0.25em] font-medium text-[#171717] hover:text-[#A18A70] transition-colors group"
+              >
+                <span>MEET OUR MAKERS</span>
+                <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
               </Link>
             </div>
           </div>
         </div>
       </section>
+
+      {/* ──────────────────────────────────────────────────────────── */}
+      {/* 5. OUR MANIFESTO: "TIMELESS DESIGN. LASTING VALUE."          */}
+      {/* ──────────────────────────────────────────────────────────── */}
+      <section className="max-w-[1600px] mx-auto px-6 sm:px-10 lg:px-12 py-14 sm:py-20 border-b border-[#E9E6E0]">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-10 items-center">
+          {/* Left Column: Big Headline */}
+          <div className="lg:col-span-7 space-y-2">
+            <span className="text-[10px] tracking-[0.35em] uppercase text-[#77736E] font-medium block">
+              OUR MANIFESTO
+            </span>
+            <h2 className="font-editorial text-3xl sm:text-4xl lg:text-5xl text-[#171717] font-normal tracking-tight leading-tight">
+              TIMELESS DESIGN.<br />
+              LASTING VALUE.
+            </h2>
+          </div>
+
+          {/* Right Column: Statement Paragraph */}
+          <div className="lg:col-span-5 lg:pl-6">
+            <p className="text-xs sm:text-sm text-[#77736E] font-light leading-relaxed">
+              We believe in fewer, better pieces — garments that bring clarity, confidence and ease to modern life.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* ──────────────────────────────────────────────────────────── */}
+      {/* 6. FULL-WIDTH CAMPAIGN STRIP WITH "EXPLORE COLLECTIONS"      */}
+      {/* ──────────────────────────────────────────────────────────── */}
+      <section className="relative w-full h-[220px] sm:h-[280px] lg:h-[320px] overflow-hidden bg-[#2C241E]">
+        <Image
+          src="/images/about/about-bottom-campaign.jpg"
+          alt="VELORA Flowing Cape Campaign"
+          fill
+          priority
+          className="object-cover object-center"
+          sizes="100vw"
+        />
+        {/* Subtle right-side dark gradient to ensure high button contrast */}
+        <div className="absolute inset-0 bg-gradient-to-l from-black/60 via-transparent to-transparent" />
+
+        <div className="relative z-10 h-full max-w-[1600px] mx-auto px-6 sm:px-10 lg:px-12 flex items-center justify-end">
+          <Link
+            href="/collections"
+            className="inline-flex items-center gap-2.5 bg-[#171717]/90 hover:bg-[#171717] text-white border border-white/20 hover:border-white/50 text-[10px] sm:text-[11px] uppercase tracking-[0.25em] px-7 py-3.5 font-medium transition-all group backdrop-blur-xs"
+          >
+            <span>EXPLORE COLLECTIONS</span>
+            <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+          </Link>
+        </div>
+      </section>
     </div>
   );
 }
-
