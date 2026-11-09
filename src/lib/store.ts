@@ -15,7 +15,7 @@ import {
 } from "@/data/seedData";
 
 const STORAGE_KEYS = {
-  PRODUCTS: "velora_products_v4",
+  PRODUCTS: "velora_products_v5",
   ORDERS: "velora_orders_v1",
   COUPONS: "velora_coupons_v1",
   REVIEWS: "velora_reviews_v1",

@@ -1,173 +1,179 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import Link from "next/link";
-import { ArrowRight, CheckCircle2 } from "lucide-react";
-import { StoreService } from "@/lib/store";
+import { Instagram, Youtube } from "lucide-react";
 
 export function Footer() {
-  const [email, setEmail] = useState("");
-  const [statusMessage, setStatusMessage] = useState<string | null>(null);
-
-  const handleSubscribe = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!email) return;
-
-    const res = StoreService.subscribeNewsletter(email);
-    setStatusMessage(res.message);
-    if (res.success) {
-      setEmail("");
-      setTimeout(() => setStatusMessage(null), 4000);
-    }
-  };
-
   return (
-    <footer className="w-full bg-[#F8F7F4] text-[#171717] pt-20 pb-12 border-t border-[#E9E6E0]">
-      <div className="w-full px-6 sm:px-10 lg:px-12">
-        {/* Top Grid: Columns */}
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-10 lg:gap-14 pb-16 border-b border-[#E9E6E0]">
+    <footer className="w-full bg-[#FAF8F5] text-[#171717] pt-16 pb-12 border-t border-[#E9E6E0]">
+      <div className="max-w-[1600px] mx-auto px-6 sm:px-10 lg:px-12">
+        {/* Top 6-Column Grid matching reference */}
+        <div className="grid grid-cols-2 md:grid-cols-6 gap-8 sm:gap-10 pb-16 border-b border-[#E9E6E0]">
           {/* Column 1: Brand & Wordmark */}
-          <div className="col-span-2 space-y-4">
+          <div className="col-span-2 md:col-span-1 space-y-2">
             <Link href="/" className="inline-block group">
-              <span className="font-editorial text-3xl tracking-[0.38em] text-[#171717] font-normal uppercase block transition-opacity group-hover:opacity-70">
+              <span className="font-editorial text-2xl tracking-[0.25em] text-[#171717] uppercase block transition-opacity group-hover:opacity-70">
                 VELORA
               </span>
-              <span className="text-[10px] tracking-[0.3em] uppercase text-[#77736E] font-light block mt-1">
-                Wear less. Mean more.
-              </span>
             </Link>
-            <p className="text-xs text-[#77736E] font-light max-w-sm leading-relaxed pt-2">
-              An international luxury fashion house rooted in architectural minimalism, natural materials
-              and considered permanence.
+            <p className="text-[11px] text-[#77736E] font-light tracking-wide">
+              Wear less. Mean more.
             </p>
-            <div className="pt-2 text-xs text-[#77736E] space-y-1 font-light">
-              <p>Maison Flagship: 14 Rue Royale & Worli, Mumbai</p>
-              <p>Correspondence: concierge@velora-couture.com</p>
-            </div>
           </div>
 
-          {/* Column 2: Shop */}
-          <div className="space-y-4">
-            <h4 className="text-[10px] tracking-[0.3em] uppercase text-[#171717] font-semibold">
+          {/* Column 2: SHOP */}
+          <div className="space-y-3">
+            <h4 className="text-[10px] tracking-[0.25em] uppercase text-[#171717] font-semibold">
               SHOP
             </h4>
-            <ul className="space-y-2.5 text-xs text-[#77736E] font-light">
+            <ul className="space-y-2 text-xs text-[#77736E] font-light">
               <li>
-                <Link href="/shop" className="hover:text-[#171717] transition-colors">
-                  Shop All Pieces
+                <Link href="/shop?department=women" className="hover:text-[#171717] transition-colors">
+                  Women
                 </Link>
               </li>
               <li>
-                <Link href="/shop?gender=men" className="hover:text-[#171717] transition-colors">
-                  Men&apos;s Atelier
+                <Link href="/shop?department=men" className="hover:text-[#171717] transition-colors">
+                  Men
                 </Link>
               </li>
               <li>
-                <Link href="/shop?gender=women" className="hover:text-[#171717] transition-colors">
-                  Women&apos;s Atelier
-                </Link>
-              </li>
-              <li>
-                <Link href="/shop?tag=new-arrivals" className="hover:text-[#171717] transition-colors">
-                  New Arrivals
-                </Link>
-              </li>
-              <li>
-                <Link href="/collections" className="hover:text-[#171717] transition-colors">
-                  Curated Collections
+                <Link href="/shop?department=accessories" className="hover:text-[#171717] transition-colors">
+                  Accessories
                 </Link>
               </li>
             </ul>
           </div>
 
-          {/* Column 3: Customer Care */}
-          <div className="space-y-4">
-            <h4 className="text-[10px] tracking-[0.3em] uppercase text-[#171717] font-semibold">
-              CUSTOMER CARE
+          {/* Column 3: COLLECTIONS */}
+          <div className="space-y-3">
+            <h4 className="text-[10px] tracking-[0.25em] uppercase text-[#171717] font-semibold">
+              COLLECTIONS
             </h4>
-            <ul className="space-y-2.5 text-xs text-[#77736E] font-light">
+            <ul className="space-y-2 text-xs text-[#77736E] font-light">
               <li>
-                <Link href="/tracking" className="hover:text-[#171717] transition-colors">
-                  Track Consignment
+                <Link href="/collections/the-essentials" className="hover:text-[#171717] transition-colors">
+                  The Essentials
                 </Link>
               </li>
               <li>
-                <Link href="/returns" className="hover:text-[#171717] transition-colors">
-                  Returns & Exchanges
+                <Link href="/collections/the-signature-edit" className="hover:text-[#171717] transition-colors">
+                  The Signature Edit
                 </Link>
               </li>
               <li>
-                <Link href="/faq" className="hover:text-[#171717] transition-colors">
-                  Frequently Asked Questions
+                <Link href="/collections/the-seasonal-edit" className="hover:text-[#171717] transition-colors">
+                  The Seasonal Edit
+                </Link>
+              </li>
+              <li>
+                <Link href="/collections/the-monochrome-edit" className="hover:text-[#171717] transition-colors">
+                  The Monochrome Edit
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Column 4: ABOUT */}
+          <div className="space-y-3">
+            <h4 className="text-[10px] tracking-[0.25em] uppercase text-[#171717] font-semibold">
+              ABOUT
+            </h4>
+            <ul className="space-y-2 text-xs text-[#77736E] font-light">
+              <li>
+                <Link href="/about" className="hover:text-[#171717] transition-colors">
+                  Our Story
+                </Link>
+              </li>
+              <li>
+                <Link href="/about#sustainability" className="hover:text-[#171717] transition-colors">
+                  Sustainability
                 </Link>
               </li>
               <li>
                 <Link href="/contact" className="hover:text-[#171717] transition-colors">
-                  Personal Concierge
-                </Link>
-              </li>
-              <li>
-                <Link href="/account" className="hover:text-[#171717] transition-colors">
-                  Client Account
+                  Contact
                 </Link>
               </li>
             </ul>
           </div>
 
-          {/* Column 4: About & Journal */}
-          <div className="space-y-4">
-            <h4 className="text-[10px] tracking-[0.3em] uppercase text-[#171717] font-semibold">
-              MAISON
+          {/* Column 5: JOURNAL */}
+          <div className="space-y-3">
+            <h4 className="text-[10px] tracking-[0.25em] uppercase text-[#171717] font-semibold">
+              JOURNAL
             </h4>
-            <ul className="space-y-2.5 text-xs text-[#77736E] font-light">
-              <li>
-                <Link href="/about" className="hover:text-[#171717] transition-colors">
-                  About Velora
-                </Link>
-              </li>
+            <ul className="space-y-2 text-xs text-[#77736E] font-light">
               <li>
                 <Link href="/journal" className="hover:text-[#171717] transition-colors">
-                  Editorial Journal
+                  Editorials
                 </Link>
               </li>
               <li>
-                <a
-                  href="https://instagram.com/velora"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-[#171717] transition-colors"
-                >
-                  Instagram
-                </a>
-              </li>
-              <li>
-                <Link href="/privacy" className="hover:text-[#171717] transition-colors">
-                  Privacy Policy
+                <Link href="/journal/the-architecture-of-warmth" className="hover:text-[#171717] transition-colors">
+                  Style Guides
                 </Link>
               </li>
               <li>
-                <Link href="/terms" className="hover:text-[#171717] transition-colors">
-                  Terms of Service
-                </Link>
-              </li>
-              <li>
-                <Link href="/admin/login" className="hover:text-[#171717] transition-colors">
-                  Administrative Portal
+                <Link href="/journal/material-provenance" className="hover:text-[#171717] transition-colors">
+                  Behind the Collection
                 </Link>
               </li>
             </ul>
+          </div>
+
+          {/* Column 6: FOLLOW US */}
+          <div className="space-y-3">
+            <h4 className="text-[10px] tracking-[0.25em] uppercase text-[#171717] font-semibold">
+              FOLLOW US
+            </h4>
+            <div className="flex items-center space-x-3 text-[#171717]">
+              <a
+                href="https://instagram.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:opacity-60 transition-opacity p-0.5"
+                aria-label="Instagram"
+              >
+                <Instagram className="w-4 h-4 stroke-[1.5]" />
+              </a>
+              <a
+                href="https://pinterest.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:opacity-60 transition-opacity p-0.5"
+                aria-label="Pinterest"
+              >
+                {/* Minimalist Pinterest / P icon */}
+                <span className="font-serif font-bold text-sm leading-none inline-block">P</span>
+              </a>
+              <a
+                href="https://youtube.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:opacity-60 transition-opacity p-0.5"
+                aria-label="YouTube"
+              >
+                <Youtube className="w-4 h-4 stroke-[1.5]" />
+              </a>
+            </div>
           </div>
         </div>
 
-        {/* Bottom Bar: Copyright & Subtle Payment Mentions */}
-        <div className="pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-[11px] text-[#77736E] font-light">
-          <p>© {new Date().getFullYear()} VELORA HAUTE GARDE-ROBE. ALL RIGHTS RESERVED.</p>
-          <div className="flex items-center space-x-6 uppercase tracking-wider text-[10px]">
-            <span>RAZORPAY SECURED</span>
-            <span>•</span>
-            <span>CASH ON DELIVERY</span>
-            <span>•</span>
-            <span>256-BIT ENCRYPTION</span>
+        {/* Bottom Row */}
+        <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-[10px] sm:text-[11px] text-[#77736E] font-light">
+          <p>© 2026 VELORA. All rights reserved.</p>
+          <div className="flex items-center space-x-6">
+            <Link href="/privacy" className="hover:text-[#171717] transition-colors">
+              Privacy Policy
+            </Link>
+            <Link href="/terms" className="hover:text-[#171717] transition-colors">
+              Terms of Service
+            </Link>
+            <Link href="/returns" className="hover:text-[#171717] transition-colors">
+              Shipping & Returns
+            </Link>
           </div>
         </div>
       </div>
