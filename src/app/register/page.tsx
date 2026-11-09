@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Lock, Mail, User, ArrowRight, ShieldCheck, AlertCircle } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
+import { registerSchema } from "@/lib/validations";
 
 function RegisterForm() {
   const router = useRouter();
@@ -30,13 +31,17 @@ function RegisterForm() {
     e.preventDefault();
     setErrorMessage(null);
 
-    if (password !== confirmPassword) {
-      setErrorMessage("Passwords do not match.");
-      return;
-    }
+    // Validate with centralized Zod schema
+    const validationResult = registerSchema.safeParse({
+      fullName,
+      email,
+      password,
+      confirmPassword,
+      acceptTerms: agreeTerms,
+    });
 
-    if (!agreeTerms) {
-      setErrorMessage("Please accept the Maison Terms and Privacy Policy.");
+    if (!validationResult.success) {
+      setErrorMessage(validationResult.error.errors[0]?.message || "Please satisfy all registration requirements.");
       return;
     }
 

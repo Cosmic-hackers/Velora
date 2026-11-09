@@ -1,59 +1,62 @@
 # VELORA — Haute Garde-Robe
 > **"Wear less. Mean more."**
 
-A complete, production-ready full-stack luxury fashion and lifestyle e-commerce platform built with Next.js 14 (App Router), TypeScript, Tailwind CSS, Supabase PostgreSQL & Auth, and Razorpay test mode payment integration.
+A complete, production-ready full-stack luxury fashion and lifestyle editorial e-commerce platform built with Next.js 14 App Router, TypeScript, Tailwind CSS, Supabase PostgreSQL & Auth, and Razorpay test mode payment integration.
 
 ---
 
-## 1. Visual & Architectural Identity
+## 1. Visual & Editorial Identity
 
-- **Design Philosophy:** Luxury minimalism, editorial fashion photography, refined serif and sans typography, generous whitespace, understated luxury micro-interactions.
+- **Design Philosophy:** High-fashion quiet luxury, editorial campaign photography, high-contrast serif typography (*Cormorant Garamond* & *Playfair Display*), clean monospace metadata accents, generous whitespace, cardless minimalism.
+- **Editorial Diptych Hero:** Inspired by the iconic KHAITE Pre-Fall campaign featuring *The Roth Trench* — full-bleed close-up campaign portrait (~62.5% width) paired seamlessly with a full-length silhouette stride (~37.5% width), with interactive corner garment callouts and currency selection.
 - **Color Palette:**
-  - Background: `#F5F0E8` (Warm Oat / Ivory)
+  - Background: `#F8F7F4` (Warm Studio Ivory)
   - Primary text: `#171717` (Pitch Noir)
-  - Secondary text: `#77716A` (Muted Warm Charcoal)
-  - Accent: `#9B8065` (Warm Tuscan Bronze / Camel)
-  - Borders: `#DED8CF` (Sand Grain)
+  - Secondary text: `#77736E` (Warm Charcoal)
+  - Accent: `#A18A70` (Warm Tuscan Bronze / Camel)
+  - Borders: `#E9E6E0` (Fine Sandstone)
   - White: `#FFFFFF`
-- **Typography:** *Playfair Display* for editorial headings, *Plus Jakarta Sans* for precise body typography.
+- **Typography:** *Cormorant Garamond* for editorial headlines and the centered VELORA wordmark, *Plus Jakarta Sans* for clean body typography, and tabular numerals for pricing.
 
 ---
 
-## 2. Complete Routes Inventory
+## 2. Complete Routes Inventory (46 Routes)
 
-### Public Client Boutique (29 Pages)
-1. **Homepage** (`/`) — Editorial cinematic hero, 3 collections showcase, new arrivals, brand manifesto, featured atelier pieces, lookbook banner, gazette subscription.
+### Public Client Boutique & Editorial
+1. **Homepage** (`/`) — Editorial campaign diptych hero (*The Roth Trench*), 3 Curated Chapters, New Arrivals showcase, Brand Manifesto ("The Beauty of Less"), "Made to Last" Atelier Banner, Gazette Subscription, and full luxury footer.
 2. **Shop All** (`/shop`) — Complete catalog with real-time category, price range, gender, size, color filters, and multi-mode sorting.
 3. **Men's Atelier** (`/shop?gender=men`) — Dedicated tailoring and menswear collections.
 4. **Women's Atelier** (`/shop?gender=women`) — Double-faced wool, cashmere knitwear and silk garments.
 5. **New Arrivals** (`/shop?tag=new-arrivals`) — Seasonal release pieces.
-6. **Collections Directory** (`/collections`) — The three pillars: *Essentials*, *Contemporary*, and *Timeless Classics*.
+6. **Collections Directory** (`/collections`) — The three pillars: *The Essentials*, *Modern Tailoring*, and *Signature Silhouettes*.
 7. **Collection Detail** (`/collections/[slug]`) — Curatorial narrative and lookbook gallery.
-8. **Product Details** (`/product/[slug]`) — Multi-angle photographic zoom gallery, color picker, size selector, size guide drawer, stock availability, verified client impressions, and related creations.
-9. **Search Results** (`/search`) — Instant keyword search matching titles, descriptions, categories, and SKUs.
-10. **Wishlist** (`/wishlist`) — Saved pieces with direct "Move to Bag" capability.
-11. **Shopping Bag** (`/cart`) — Quantity controls, promotional code validator (`VELORA10`, `LUXURY50`, `FIRSTORDER`), free delivery progress bar, and totals recalculation.
-12. **Checkout** (`/checkout`) — Multi-step client coordinates, saved address autofill, Razorpay online payment test integration, and Cash on Delivery (COD).
-13. **Order Confirmation** (`/order-confirmation/[orderId]`) — Full receipt dossier, live waybill tracking link, and printable invoice.
-14. **Customer Login** (`/login`) — Authenticated session with remember-me and role redirection.
-15. **Customer Register** (`/register`) — Client registration with password matching and terms acceptance.
-16. **Forgot Password** (`/forgot-password`) — Secure password recovery protocol.
-17. **Reset Password** (`/reset-password`) — Secure credential update.
-18. **Email Verification** (`/verify-email`) — Supabase verification guidance.
-19. **Client Sanctuary / Account** (`/account`) — Account overview, privilege tier, lifetime consignments, recent orders.
-20. **Profile Settings** (`/account/profile`) — Edit name, phone number, and preferences.
-21. **Saved Addresses** (`/account/addresses`) — Add, remove, and assign default delivery addresses.
-22. **Consignment History** (`/account/orders`) — Filterable orders with cancel and return request workflows.
-23. **Consignment Details** (`/account/orders/[id]`) — Individual order dossier with printable receipt.
-24. **Order Tracking** (`/tracking`) — Live progress stepper (*Confirmed → Tailoring Assembly → In Transit → Delivered*).
-25. **About Maison** (`/about`) — Sustainable cashmere sourcing, Biella wool mills, and Kojima denim history.
-26. **Concierge & Appointments** (`/contact`) — Private styling requests and flagship contact coordinates.
-27. **Frequently Asked Questions** (`/faq`) — Interactive accordion addressing shipping, returns, and garment care.
-28. **Privacy Policy** (`/privacy`) — Client data confidentiality and PCI-DSS compliance.
-29. **Terms & Conditions** (`/terms`) — Atelier consignment policies.
-30. **Return & Refund Policy** (`/returns`) — 14-day complimentary courier returns.
+8. **Product Details** (`/product/[slug]`) — Multi-angle photographic zoom gallery, Schema.org JSON-LD structured data for Google Rich Snippets, color picker, size selector, size guide drawer, stock availability, verified client impressions, and related creations.
+9. **Editorial Journal** (`/journal`) — Fashion essays, seasonal lookbooks, and textile provenance monographs.
+10. **Journal Essay** (`/journal/[slug]`) — Full editorial read experience with pull quotes and related reading.
+11. **Search Results** (`/search`) — Instant keyword search matching titles, descriptions, categories, and SKUs.
+12. **Wishlist** (`/wishlist`) — Saved pieces with direct "Move to Bag" capability.
+13. **Shopping Bag** (`/cart`) — Quantity controls, promotional code validator (`VELORA10`, `LUXURY50`, `FIRSTORDER`), free delivery progress bar, and totals recalculation.
+14. **Checkout** (`/checkout`) — Centralized Zod-validated client coordinates, saved address autofill, Razorpay online payment test integration, and Cash on Delivery (COD).
+15. **Order Confirmation** (`/order-confirmation/[orderId]`) — Full receipt dossier, live waybill tracking link, and printable invoice.
+16. **Customer Login** (`/login`) — Authenticated session with remember-me and role redirection.
+17. **Customer Register** (`/register`) — Client registration with Zod validation, password matching, and terms acceptance.
+18. **Forgot Password** (`/forgot-password`) — Secure password recovery protocol.
+19. **Reset Password** (`/reset-password`) — Secure credential update.
+20. **Email Verification** (`/verify-email`) — Supabase verification guidance.
+21. **Client Sanctuary / Account** (`/account`) — Account overview, privilege tier, lifetime consignments, recent orders.
+22. **Profile Settings** (`/account/profile`) — Edit name, phone number, and preferences.
+23. **Saved Addresses** (`/account/addresses`) — Add, remove, and assign default delivery addresses.
+24. **Consignment History** (`/account/orders`) — Filterable orders with cancel and return request workflows.
+25. **Consignment Details** (`/account/orders/[id]`) — Individual order dossier with printable receipt.
+26. **Order Tracking** (`/tracking`) — Live progress stepper (*Confirmed → Tailoring Assembly → In Transit → Delivered*).
+27. **About Maison** (`/about`) — Sustainable cashmere sourcing, Biella wool mills, and Kojima denim history.
+28. **Concierge & Appointments** (`/contact`) — Private styling requests and flagship contact coordinates.
+29. **Frequently Asked Questions** (`/faq`) — Interactive accordion addressing shipping, returns, and garment care.
+30. **Privacy Policy** (`/privacy`) — Client data confidentiality and PCI-DSS compliance.
+31. **Terms & Conditions** (`/terms`) — Atelier consignment policies.
+32. **Return & Refund Policy** (`/returns`) — 14-day complimentary courier returns.
 
-### Administrative Command Center (15 Pages)
+### Administrative Command Center (14 Pages)
 - **Admin Login** (`/admin/login`) — Role-restricted administrative gateway.
 - **Executive Dashboard** (`/admin`) — Real-time revenue metrics, weekly sales charts, pending orders, and fast actions.
 - **Product Catalog** (`/admin/products`) — Searchable table, publish/draft visibility toggle, edit, and deletion.
@@ -68,7 +71,12 @@ A complete, production-ready full-stack luxury fashion and lifestyle e-commerce 
 - **Coupons & Concessions** (`/admin/coupons`) — Issue percentage and fixed-value promotional codes.
 - **Curatorial Reviews** (`/admin/reviews`) — Approve or reject client testimonials.
 - **Gazette Subscribers** (`/admin/newsletter`) — View subscribers and export CSV dossier.
-- **Maison Settings** (`/admin/settings`) — Modify flagship coordinates, contact details, and complimentary shipping thresholds.
+- **Maison Settings** (`/admin/settings`) — Hero Campaign Selector (*The Roth Trench Diptych* vs *Editorial Split* vs *Studio Portrait*), coordinates, contact details, and complimentary shipping thresholds.
+
+### Secure API Endpoints
+- `/api/razorpay/create-order` — Server-side Razorpay order generation with receipt tagging.
+- `/api/razorpay/verify-payment` — HMAC-SHA256 signature verification.
+- `/api/webhooks/razorpay` — Raw body HMAC-SHA256 signature verification with event idempotency protection and order status synchronization.
 
 ---
 

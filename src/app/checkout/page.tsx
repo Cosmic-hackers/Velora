@@ -17,6 +17,7 @@ import { useCart } from "@/context/CartContext";
 import { useAuth } from "@/context/AuthContext";
 import { StoreService } from "@/lib/store";
 import { formatPrice } from "@/lib/utils";
+import { checkoutSchema } from "@/lib/validations";
 
 export default function CheckoutPage() {
   const router = useRouter();
@@ -71,9 +72,27 @@ export default function CheckoutPage() {
     e.preventDefault();
     setErrorMsg(null);
 
-    // Validate inputs
-    if (!fullName.trim() || !email.trim() || !phone.trim() || !addressLine.trim() || !city.trim() || !postalCode.trim()) {
-      setErrorMsg("Please provide all required customer and delivery address fields.");
+    // Validate inputs with centralized Zod schema
+    const validationResult = checkoutSchema.safeParse({
+      email,
+      fullName,
+      phone,
+      shippingAddress: {
+        fullName,
+        phone,
+        addressLine1: addressLine,
+        addressLine2: apartmentSuite || undefined,
+        city,
+        state,
+        postalCode,
+        country,
+      },
+      paymentMethod,
+    });
+
+    if (!validationResult.success) {
+      const firstError = validationResult.error.errors[0]?.message || "Please complete all required fields.";
+      setErrorMsg(firstError);
       return;
     }
 

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Lock, Mail, ArrowRight, ShieldCheck, AlertCircle } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
+import { loginSchema } from "@/lib/validations";
 
 function LoginForm() {
   const router = useRouter();
@@ -28,6 +29,14 @@ function LoginForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMessage(null);
+
+    // Validate with centralized Zod schema
+    const validationResult = loginSchema.safeParse({ email, password, rememberMe });
+    if (!validationResult.success) {
+      setErrorMessage(validationResult.error.errors[0]?.message || "Invalid credentials format.");
+      return;
+    }
+
     setIsLoading(true);
 
     try {
