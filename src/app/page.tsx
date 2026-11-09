@@ -96,7 +96,8 @@ export default function HomePage() {
             alt="VELORA A Quieter Kind of Luxury Campaign"
             fill
             priority
-            className="object-cover object-center"
+            quality={95}
+            className="object-cover object-[65%_center]"
             sizes="(max-width: 1024px) 100vw, 48vw"
           />
         </div>
