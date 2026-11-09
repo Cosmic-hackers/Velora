@@ -15,14 +15,16 @@ import {
 } from "@/data/seedData";
 
 const STORAGE_KEYS = {
-  PRODUCTS: "velora_products_v1",
+  PRODUCTS: "velora_products_v2",
   ORDERS: "velora_orders_v1",
   COUPONS: "velora_coupons_v1",
   REVIEWS: "velora_reviews_v1",
   SETTINGS: "velora_settings_v1",
   NEWSLETTER: "velora_newsletter_v1",
-  CATEGORIES: "velora_categories_v1",
-  COLLECTIONS: "velora_collections_v1",
+  CATEGORIES: "velora_categories_v2",
+  COLLECTIONS: "velora_collections_v2",
+  RECENTLY_VIEWED: "velora_recently_viewed_v1",
+  INVENTORY: "velora_inventory_v1",
 };
 
 // Safe localStorage access helper
@@ -47,11 +49,14 @@ function setStored<T>(key: string, value: T): void {
 
 // In-memory runtime state for server-side / SSR requests
 let memoryProducts: Product[] = [...INITIAL_PRODUCTS];
+let memoryCategories: Category[] = [...INITIAL_CATEGORIES];
+let memoryCollections: Collection[] = [...INITIAL_COLLECTIONS];
 let memoryOrders: Order[] = [...INITIAL_ORDERS];
 let memoryCoupons: Coupon[] = [...INITIAL_COUPONS];
 let memoryReviews: Review[] = [...INITIAL_REVIEWS];
 let memorySettings = { ...STORE_SETTINGS };
 let memorySubscribers: string[] = ["concierge@velora-couture.com", "vip@velora.com"];
+let memoryRecentlyViewed: string[] = [];
 
 export const StoreService = {
   // PRODUCTS
@@ -122,14 +127,137 @@ export const StoreService = {
     if (typeof window !== "undefined") {
       return getStored<Category[]>(STORAGE_KEYS.CATEGORIES, INITIAL_CATEGORIES);
     }
-    return INITIAL_CATEGORIES;
+    return memoryCategories;
+  },
+
+  getCategoriesByDepartment(department: 'women' | 'men' | 'accessories'): Category[] {
+    const categories = this.getCategories();
+    return categories.filter((c) => c.department === department);
+  },
+
+  createCategory(categoryData: Omit<Category, "id">): Category {
+    const newCategory: Category = {
+      ...categoryData,
+      id: `cat-${Date.now()}`,
+    };
+    const current = this.getCategories();
+    const updated = [...current, newCategory];
+    if (typeof window !== "undefined") {
+      setStored(STORAGE_KEYS.CATEGORIES, updated);
+    }
+    memoryCategories = updated;
+    return newCategory;
+  },
+
+  updateCategory(id: string, updates: Partial<Category>): Category | null {
+    const current = this.getCategories();
+    const index = current.findIndex((c) => c.id === id);
+    if (index === -1) return null;
+    const updated = { ...current[index], ...updates };
+    current[index] = updated;
+    if (typeof window !== "undefined") {
+      setStored(STORAGE_KEYS.CATEGORIES, [...current]);
+    }
+    memoryCategories = [...current];
+    return updated;
+  },
+
+  deleteCategory(id: string): boolean {
+    const current = this.getCategories();
+    const filtered = current.filter((c) => c.id !== id);
+    if (filtered.length === current.length) return false;
+    if (typeof window !== "undefined") {
+      setStored(STORAGE_KEYS.CATEGORIES, filtered);
+    }
+    memoryCategories = filtered;
+    return true;
   },
 
   getCollections(): Collection[] {
     if (typeof window !== "undefined") {
       return getStored<Collection[]>(STORAGE_KEYS.COLLECTIONS, INITIAL_COLLECTIONS);
     }
-    return INITIAL_COLLECTIONS;
+    return memoryCollections;
+  },
+
+  createCollection(collectionData: Omit<Collection, "id">): Collection {
+    const newCol: Collection = {
+      ...collectionData,
+      id: `col-${Date.now()}`,
+    };
+    const current = this.getCollections();
+    const updated = [...current, newCol];
+    if (typeof window !== "undefined") {
+      setStored(STORAGE_KEYS.COLLECTIONS, updated);
+    }
+    memoryCollections = updated;
+    return newCol;
+  },
+
+  updateCollection(id: string, updates: Partial<Collection>): Collection | null {
+    const current = this.getCollections();
+    const index = current.findIndex((c) => c.id === id);
+    if (index === -1) return null;
+    const updated = { ...current[index], ...updates };
+    current[index] = updated;
+    if (typeof window !== "undefined") {
+      setStored(STORAGE_KEYS.COLLECTIONS, [...current]);
+    }
+    memoryCollections = [...current];
+    return updated;
+  },
+
+  deleteCollection(id: string): boolean {
+    const current = this.getCollections();
+    const filtered = current.filter((c) => c.id !== id);
+    if (filtered.length === current.length) return false;
+    if (typeof window !== "undefined") {
+      setStored(STORAGE_KEYS.COLLECTIONS, filtered);
+    }
+    memoryCollections = filtered;
+    return true;
+  },
+
+  // RECENTLY VIEWED PRODUCTS
+  recordProductView(productId: string): void {
+    if (typeof window === "undefined") return;
+    try {
+      const stored = getStored<string[]>(STORAGE_KEYS.RECENTLY_VIEWED, []);
+      const filtered = stored.filter((id) => id !== productId);
+      const updated = [productId, ...filtered].slice(0, 8); // Keep last 8 products
+      setStored(STORAGE_KEYS.RECENTLY_VIEWED, updated);
+    } catch {}
+  },
+
+  getRecentlyViewed(currentProductId?: string): Product[] {
+    if (typeof window === "undefined") return [];
+    try {
+      const stored = getStored<string[]>(STORAGE_KEYS.RECENTLY_VIEWED, []);
+      const all = this.getProducts();
+      return stored
+        .filter((id) => id !== currentProductId)
+        .map((id) => all.find((p) => p.id === id))
+        .filter((p): p is Product => Boolean(p));
+    } catch {
+      return [];
+    }
+  },
+
+  // DEPARTMENT & COLLECTION HELPERS
+  getProductsByDepartment(department: string): Product[] {
+    const all = this.getProducts();
+    if (department === "women") return all.filter((p) => p.gender === "women" || p.gender === "unisex" || p.department === "women");
+    if (department === "men") return all.filter((p) => p.gender === "men" || p.gender === "unisex" || p.department === "men");
+    if (department === "accessories") return all.filter((p) => p.department === "accessories" || p.categoryId.includes("cat-a"));
+    return all;
+  },
+
+  getProductsByCollection(collectionSlug: string): Product[] {
+    const all = this.getProducts();
+    const collections = this.getCollections();
+    const col = collections.find((c) => c.slug === collectionSlug);
+    if (!col) return all;
+    return all.filter((p) => p.collectionId === col.id);
   },
 
   // ORDERS

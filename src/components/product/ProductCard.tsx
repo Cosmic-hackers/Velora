@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Heart, Plus, Check } from "lucide-react";
+import { Heart, Check } from "lucide-react";
 import { Product } from "@/data/seedData";
 import { useWishlist } from "@/context/WishlistContext";
 import { useCart } from "@/context/CartContext";
@@ -16,23 +16,26 @@ interface ProductCardProps {
 
 export function ProductCard({ product, priority = false }: ProductCardProps) {
   const { isInWishlist, toggleWishlist } = useWishlist();
-  const { addItem } = useCart();
+  const { addItem, openCart } = useCart();
   const isWishlisted = isInWishlist(product.id);
 
   const [isHovered, setIsHovered] = useState(false);
-  const [quickAdded, setQuickAdded] = useState(false);
+  const [selectedColorIdx, setSelectedColorIdx] = useState(0);
+  const [addedSize, setAddedSize] = useState<string | null>(null);
 
-  const primaryImage = product.images[0] || "";
+  const primaryImage = product.images[selectedColorIdx] || product.images[0] || "";
   const secondaryImage = product.images[1] || primaryImage;
 
-  const handleQuickAdd = (e: React.MouseEvent) => {
+  const handleQuickAddSize = (e: React.MouseEvent, size: string) => {
     e.preventDefault();
     e.stopPropagation();
-    const defaultSize = product.sizes[0] || "M";
-    const defaultColor = product.colors[0]?.name || "Standard";
-    addItem(product, defaultSize, defaultColor, 1);
-    setQuickAdded(true);
-    setTimeout(() => setQuickAdded(false), 2200);
+    const activeColor = product.colors[selectedColorIdx]?.name || product.colors[0]?.name || "Standard";
+    addItem(product, size, activeColor, 1);
+    setAddedSize(size);
+    setTimeout(() => {
+      setAddedSize(null);
+      openCart();
+    }, 400);
   };
 
   return (
@@ -43,66 +46,91 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
     >
       {/* Image Presentation */}
       <div className="relative aspect-[3/4] w-full overflow-hidden bg-[#F0EDE8]">
-        {/* Primary Image */}
-        <Image
-          src={primaryImage}
-          alt={product.name}
-          fill
-          priority={priority}
-          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-          className={`object-cover object-top transition-opacity duration-700 ease-in-out ${
-            isHovered && secondaryImage !== primaryImage ? "opacity-0" : "opacity-100"
-          }`}
-        />
+        {/* Subtle Editorial Status Badge */}
+        <div className="absolute top-3.5 left-3.5 z-10 pointer-events-none">
+          {product.isNewArrival ? (
+            <span className="text-[9px] uppercase tracking-[0.25em] font-medium bg-[#FFFFFF]/90 text-[#171717] px-2 py-1 backdrop-blur-sm border border-[#E9E6E0]">
+              NEW ARRIVAL
+            </span>
+          ) : product.isBestSeller ? (
+            <span className="text-[9px] uppercase tracking-[0.25em] font-medium bg-[#171717]/90 text-white px-2 py-1 backdrop-blur-sm">
+              BEST SELLER
+            </span>
+          ) : product.salePrice ? (
+            <span className="text-[9px] uppercase tracking-[0.25em] font-medium bg-[#A18A70]/90 text-white px-2 py-1 backdrop-blur-sm">
+              SPECIAL PRICING
+            </span>
+          ) : null}
+        </div>
 
-        {/* Secondary Hover Image */}
-        {secondaryImage !== primaryImage && (
+        {/* Primary Image */}
+        <Link href={`/product/${product.slug}`} className="block w-full h-full">
           <Image
-            src={secondaryImage}
-            alt={`${product.name} alternate view`}
+            src={primaryImage}
+            alt={product.name}
             fill
+            priority={priority}
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
             className={`object-cover object-top transition-all duration-700 ease-out group-hover:scale-105 ${
-              isHovered ? "opacity-100" : "opacity-0"
+              isHovered && secondaryImage !== primaryImage ? "opacity-0" : "opacity-100"
             }`}
           />
-        )}
 
-        {/* Minimal Wishlist Trigger */}
+          {/* Secondary Hover Image */}
+          {secondaryImage !== primaryImage && (
+            <Image
+              src={secondaryImage}
+              alt={`${product.name} alternate view`}
+              fill
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+              className={`object-cover object-top transition-all duration-700 ease-out group-hover:scale-105 ${
+                isHovered ? "opacity-100" : "opacity-0"
+              }`}
+            />
+          )}
+        </Link>
+
+        {/* Minimal Animated Wishlist Trigger */}
         <button
           onClick={(e) => {
             e.preventDefault();
             e.stopPropagation();
             toggleWishlist(product.id);
           }}
-          className="absolute top-3.5 right-3.5 p-1.5 text-[#171717] hover:opacity-60 transition-opacity z-10"
+          className="absolute top-3.5 right-3.5 p-2 bg-white/70 hover:bg-white text-[#171717] backdrop-blur-sm rounded-full transition-all duration-300 z-10 hover:scale-110 active:scale-95 shadow-sm"
           aria-label="Save to wishlist"
         >
           <Heart
-            className={`w-4 h-4 stroke-[1.25] transition-colors ${
-              isWishlisted ? "fill-[#171717] text-[#171717]" : "text-[#171717]"
+            className={`w-3.5 h-3.5 stroke-[1.25] transition-all duration-300 ${
+              isWishlisted
+                ? "fill-[#171717] text-[#171717] scale-110"
+                : "text-[#171717] hover:text-[#A18A70]"
             }`}
           />
         </button>
 
-        {/* Quick Add Button on Hover */}
-        <div className="absolute inset-x-0 bottom-0 p-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10 hidden sm:block">
-          <button
-            onClick={handleQuickAdd}
-            className="w-full bg-[#FFFFFF]/90 hover:bg-[#FFFFFF] text-[#171717] text-[10px] uppercase tracking-[0.25em] py-3 px-4 font-medium backdrop-blur-sm transition-all flex items-center justify-center gap-1.5 border border-[#E9E6E0]"
-          >
-            {quickAdded ? (
-              <>
-                <Check className="w-3 h-3 text-[#171717]" />
-                <span>ADDED TO BAG</span>
-              </>
-            ) : (
-              <>
-                <Plus className="w-3 h-3 text-[#171717]" />
-                <span>QUICK ADD ({product.sizes[0] || "M"})</span>
-              </>
-            )}
-          </button>
+        {/* Quick Add Size Selection Bar on Hover */}
+        <div className="absolute inset-x-0 bottom-0 p-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10 hidden sm:block bg-gradient-to-t from-black/20 via-black/5 to-transparent pt-6">
+          <div className="bg-[#FFFFFF]/95 backdrop-blur-md border border-[#E9E6E0] p-2 shadow-sm">
+            <div className="text-[9px] uppercase tracking-[0.25em] text-[#77736E] text-center mb-1.5 font-medium">
+              QUICK ADD SIZE
+            </div>
+            <div className="flex items-center justify-center gap-1.5 flex-wrap">
+              {product.sizes.map((sz) => (
+                <button
+                  key={sz}
+                  onClick={(e) => handleQuickAddSize(e, sz)}
+                  className={`text-[10px] uppercase font-mono px-2 py-1 min-w-[28px] border transition-all ${
+                    addedSize === sz
+                      ? "bg-[#171717] text-white border-[#171717]"
+                      : "bg-white text-[#171717] border-[#E9E6E0] hover:border-[#171717] hover:bg-[#F8F7F4]"
+                  }`}
+                >
+                  {addedSize === sz ? <Check className="w-3 h-3 inline" /> : sz}
+                </button>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
 
@@ -118,32 +146,36 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
         {/* Price & Color Indicators */}
         <div className="flex items-center justify-between pt-0.5">
           <div className="flex items-center gap-2">
-            <span className="text-xs text-[#171717] font-normal">
+            <span className="text-xs text-[#171717] font-normal font-mono">
               {formatPrice(product.salePrice ?? product.price)}
             </span>
             {product.salePrice && (
-              <span className="text-[11px] text-[#77736E] line-through font-light">
+              <span className="text-[11px] text-[#77736E] line-through font-light font-mono">
                 {formatPrice(product.price)}
               </span>
             )}
           </div>
 
-          {/* Color Dots */}
+          {/* Interactive Color Swatches */}
           {product.colors && product.colors.length > 0 && (
-            <div className="flex items-center gap-1">
-              {product.colors.slice(0, 3).map((c) => (
-                <span
+            <div className="flex items-center gap-1.5">
+              {product.colors.map((c, idx) => (
+                <button
                   key={c.name}
                   title={c.name}
-                  className="w-2 h-2 rounded-full border border-[#E9E6E0]"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    setSelectedColorIdx(idx);
+                  }}
+                  className={`w-2.5 h-2.5 rounded-full border transition-transform ${
+                    selectedColorIdx === idx
+                      ? "ring-1 ring-[#171717] scale-110 border-white"
+                      : "border-[#E9E6E0] hover:scale-110"
+                  }`}
                   style={{ backgroundColor: c.hex }}
                 />
               ))}
-              {product.colors.length > 3 && (
-                <span className="text-[9px] text-[#77736E] font-light">
-                  +{product.colors.length - 3}
-                </span>
-              )}
             </div>
           )}
         </div>

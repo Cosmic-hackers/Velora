@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Search, Heart, ShoppingBag, User, Menu, X, ChevronDown } from "lucide-react";
 import { useCart } from "@/context/CartContext";
@@ -18,6 +19,7 @@ export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchModalOpen, setSearchModalOpen] = useState(false);
+  const [megaMenuOpen, setMegaMenuOpen] = useState(false);
   const [currency, setCurrency] = useState("INR");
   const [currencyOpen, setCurrencyOpen] = useState(false);
 
@@ -31,6 +33,7 @@ export function Header() {
 
   useEffect(() => {
     setMobileMenuOpen(false);
+    setMegaMenuOpen(false);
   }, [pathname]);
 
   const leftNavLinks = [
@@ -73,21 +76,29 @@ export function Header() {
           <nav className="hidden lg:flex items-center space-x-8 xl:space-x-10 z-10">
             {leftNavLinks.map((link) => {
               const isActive = pathname === link.href;
+              const isShop = link.name === "SHOP";
               return (
-                <Link
+                <div
                   key={link.name}
-                  href={link.href}
-                  className={`text-[11px] uppercase tracking-[0.25em] font-medium transition-all duration-300 relative py-1 group ${
-                    isActive ? "text-[#171717]" : "text-[#171717]/85 hover:text-[#171717]"
-                  }`}
+                  onMouseEnter={() => {
+                    if (isShop) setMegaMenuOpen(true);
+                  }}
+                  className="relative py-2"
                 >
-                  {link.name}
-                  <span
-                    className={`absolute bottom-0 left-0 h-[1px] bg-[#171717] transition-all duration-300 ${
-                      isActive ? "w-full" : "w-0 group-hover:w-full"
+                  <Link
+                    href={link.href}
+                    className={`text-[11px] uppercase tracking-[0.25em] font-medium transition-all duration-300 relative py-1 group ${
+                      isActive ? "text-[#171717]" : "text-[#171717]/85 hover:text-[#171717]"
                     }`}
-                  />
-                </Link>
+                  >
+                    {link.name}
+                    <span
+                      className={`absolute bottom-0 left-0 h-[1px] bg-[#171717] transition-all duration-300 ${
+                        isActive ? "w-full" : "w-0 group-hover:w-full"
+                      }`}
+                    />
+                  </Link>
+                </div>
               );
             })}
           </nav>
@@ -230,6 +241,213 @@ export function Header() {
             </button>
           </div>
         </div>
+
+        {/* DESKTOP MEGA MENU (Hover on Shop - Reference Inspiration) */}
+        {megaMenuOpen && (
+          <div
+            onMouseEnter={() => setMegaMenuOpen(true)}
+            onMouseLeave={() => setMegaMenuOpen(false)}
+            className="absolute top-full left-0 w-full bg-[#FAF9F6]/98 backdrop-blur-md border-b border-[#E9E6E0] shadow-xl py-12 px-8 sm:px-12 lg:px-16 animate-fadeIn z-50"
+          >
+            <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10">
+              {/* Column 1: Women */}
+              <div className="lg:col-span-3 space-y-4">
+                <Link
+                  href="/shop?gender=women"
+                  className="font-editorial text-lg tracking-wider text-[#171717] hover:text-[#A18A70] transition-colors block pb-2 border-b border-[#E9E6E0]"
+                >
+                  WOMEN
+                </Link>
+                <ul className="space-y-2.5 text-xs tracking-wider text-[#55524E]">
+                  <li>
+                    <Link href="/shop?gender=women&category=dresses" className="hover:text-[#171717] transition-colors block py-0.5">
+                      Dresses
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="/shop?gender=women&category=tops-shirts" className="hover:text-[#171717] transition-colors block py-0.5">
+                      Tops & Shirts
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="/shop?gender=women&category=trousers" className="hover:text-[#171717] transition-colors block py-0.5">
+                      Trousers
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="/shop?gender=women&category=outerwear" className="hover:text-[#171717] transition-colors block py-0.5">
+                      Outerwear & Coats
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="/shop?gender=women&category=knitwear" className="hover:text-[#171717] transition-colors block py-0.5">
+                      Knitwear & Cashmere
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="/shop?gender=women&category=co-ords" className="hover:text-[#171717] transition-colors block py-0.5">
+                      Co-ords & Suiting
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="/shop?gender=women&category=women-accessories" className="hover:text-[#171717] transition-colors block py-0.5">
+                      Accessories
+                    </Link>
+                  </li>
+                  <li className="pt-2">
+                    <Link href="/shop?gender=women" className="text-[10px] uppercase tracking-[0.25em] font-medium text-[#171717] hover:text-[#A18A70] transition-colors flex items-center gap-1.5">
+                      <span>SHOP ALL WOMEN</span>
+                      <span>→</span>
+                    </Link>
+                  </li>
+                </ul>
+              </div>
+
+              {/* Column 2: Men */}
+              <div className="lg:col-span-3 space-y-4">
+                <Link
+                  href="/shop?gender=men"
+                  className="font-editorial text-lg tracking-wider text-[#171717] hover:text-[#A18A70] transition-colors block pb-2 border-b border-[#E9E6E0]"
+                >
+                  MEN
+                </Link>
+                <ul className="space-y-2.5 text-xs tracking-wider text-[#55524E]">
+                  <li>
+                    <Link href="/shop?gender=men&category=men-shirts" className="hover:text-[#171717] transition-colors block py-0.5">
+                      Shirts
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="/shop?gender=men&category=men-t-shirts" className="hover:text-[#171717] transition-colors block py-0.5">
+                      T-shirts & Basics
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="/shop?gender=men&category=men-trousers" className="hover:text-[#171717] transition-colors block py-0.5">
+                      Trousers & Denim
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="/shop?gender=men&category=men-jackets" className="hover:text-[#171717] transition-colors block py-0.5">
+                      Jackets & Blousons
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="/shop?gender=men&category=men-knitwear" className="hover:text-[#171717] transition-colors block py-0.5">
+                      Knitwear & Sweaters
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="/shop?gender=men&category=men-co-ords" className="hover:text-[#171717] transition-colors block py-0.5">
+                      Co-ords
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="/shop?gender=men&category=men-accessories" className="hover:text-[#171717] transition-colors block py-0.5">
+                      Accessories
+                    </Link>
+                  </li>
+                  <li className="pt-2">
+                    <Link href="/shop?gender=men" className="text-[10px] uppercase tracking-[0.25em] font-medium text-[#171717] hover:text-[#A18A70] transition-colors flex items-center gap-1.5">
+                      <span>SHOP ALL MEN</span>
+                      <span>→</span>
+                    </Link>
+                  </li>
+                </ul>
+              </div>
+
+              {/* Column 3: Accessories & Collections */}
+              <div className="lg:col-span-3 space-y-4">
+                <Link
+                  href="/shop?department=accessories"
+                  className="font-editorial text-lg tracking-wider text-[#171717] hover:text-[#A18A70] transition-colors block pb-2 border-b border-[#E9E6E0]"
+                >
+                  ACCESSORIES & EDITS
+                </Link>
+                <div className="space-y-4">
+                  <ul className="space-y-2 text-xs tracking-wider text-[#55524E]">
+                    <li>
+                      <Link href="/shop?department=accessories&category=bags" className="hover:text-[#171717] transition-colors block py-0.5">
+                        Leather Bags
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href="/shop?department=accessories&category=belts" className="hover:text-[#171717] transition-colors block py-0.5">
+                        Belts
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href="/shop?department=accessories&category=footwear" className="hover:text-[#171717] transition-colors block py-0.5">
+                        Footwear & Boots
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href="/shop?department=accessories&category=jewellery" className="hover:text-[#171717] transition-colors block py-0.5">
+                        Sculptural Jewellery
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href="/shop?department=accessories&category=sunglasses" className="hover:text-[#171717] transition-colors block py-0.5">
+                        Sunglasses
+                      </Link>
+                    </li>
+                  </ul>
+
+                  <div className="pt-3 border-t border-[#E9E6E0]/60 space-y-1.5">
+                    <span className="text-[10px] uppercase tracking-[0.25em] text-[#77736E] font-medium block">
+                      CURATED EDITS
+                    </span>
+                    <div className="flex flex-col space-y-1.5 text-xs text-[#171717]">
+                      <Link href="/shop?collection=the-essentials" className="hover:text-[#A18A70] transition-colors">
+                        The Essentials
+                      </Link>
+                      <Link href="/shop?collection=the-seasonal-edit" className="hover:text-[#A18A70] transition-colors">
+                        The Seasonal Edit
+                      </Link>
+                      <Link href="/shop?collection=the-signature-edit" className="hover:text-[#A18A70] transition-colors">
+                        The Signature Edit
+                      </Link>
+                      <Link href="/shop?collection=the-monochrome-edit" className="hover:text-[#A18A70] transition-colors">
+                        The Monochrome Edit
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Column 4: Campaign Spotlight */}
+              <div className="lg:col-span-3">
+                <Link
+                  href="/collections/the-essentials"
+                  className="group block relative aspect-[4/5] bg-[#EAE4D9] overflow-hidden border border-[#E9E6E0]"
+                >
+                  <Image
+                    src="/images/catalog/tailored-double-breasted-blazer.jpg"
+                    alt="The Essentials Collection"
+                    fill
+                    className="object-cover object-center group-hover:scale-105 transition-transform duration-700"
+                    sizes="25vw"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent flex flex-col justify-end p-5 text-white">
+                    <span className="text-[9px] uppercase tracking-[0.3em] text-[#E9E6E0] font-light">
+                      EDITORIAL CAMPAIGN
+                    </span>
+                    <h4 className="font-editorial text-xl font-normal text-white">
+                      The Essentials
+                    </h4>
+                    <p className="text-[10px] text-white/80 font-light mt-1 mb-2">
+                      Considered pieces for a modern wardrobe.
+                    </p>
+                    <span className="inline-flex items-center gap-1.5 text-[9px] uppercase tracking-[0.25em] font-medium text-white group-hover:underline">
+                      <span>SHOP THE EDIT</span>
+                      <span>→</span>
+                    </span>
+                  </div>
+                </Link>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Mobile Navigation Drawer */}
         {mobileMenuOpen && (

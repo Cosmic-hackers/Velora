@@ -280,6 +280,16 @@ CREATE TABLE IF NOT EXISTS public.webhook_events (
     processed_at TIMESTAMPTZ NOT NULL DEFAULT timezone('utc'::text, now())
 );
 
+-- 23. RECENTLY VIEWED PRODUCTS TABLE (for personalized client browsing history)
+CREATE TABLE IF NOT EXISTS public.recently_viewed (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    user_id UUID REFERENCES auth.users(id) ON DELETE CASCADE,
+    session_id VARCHAR(100),
+    product_id UUID NOT NULL REFERENCES public.products(id) ON DELETE CASCADE,
+    viewed_at TIMESTAMPTZ NOT NULL DEFAULT timezone('utc'::text, now()),
+    CONSTRAINT uq_user_product_recent UNIQUE (user_id, product_id)
+);
+
 -- INDEXES FOR PERFORMANCE
 CREATE INDEX IF NOT EXISTS idx_products_slug ON public.products(slug);
 CREATE INDEX IF NOT EXISTS idx_products_category ON public.products(category_id);
@@ -290,6 +300,8 @@ CREATE INDEX IF NOT EXISTS idx_orders_user_id ON public.orders(user_id);
 CREATE INDEX IF NOT EXISTS idx_orders_order_number ON public.orders(order_number);
 CREATE INDEX IF NOT EXISTS idx_orders_status ON public.orders(order_status);
 CREATE INDEX IF NOT EXISTS idx_reviews_product ON public.reviews(product_id);
+CREATE INDEX IF NOT EXISTS idx_recently_viewed_user ON public.recently_viewed(user_id);
+CREATE INDEX IF NOT EXISTS idx_recently_viewed_session ON public.recently_viewed(session_id);
 
 -- ROW LEVEL SECURITY (RLS)
 ALTER TABLE public.profiles ENABLE ROW LEVEL SECURITY;
@@ -313,6 +325,7 @@ ALTER TABLE public.reviews ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.newsletter_subscribers ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.site_settings ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.admin_audit_logs ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.recently_viewed ENABLE ROW LEVEL SECURITY;
 
 -- HELPER FUNCTIONS FOR SECURITY CHECKS
 CREATE OR REPLACE FUNCTION public.is_admin()
@@ -364,4 +377,8 @@ CREATE POLICY "Admins full coupons access" ON public.coupons FOR ALL USING (publ
 CREATE POLICY "Admins full reviews access" ON public.reviews FOR ALL USING (public.is_admin());
 CREATE POLICY "Admins full settings access" ON public.site_settings FOR ALL USING (public.is_admin());
 CREATE POLICY "Admins full audit access" ON public.admin_audit_logs FOR ALL USING (public.is_admin());
+
+-- RECENTLY VIEWED POLICIES
+CREATE POLICY "Users can manage own recently viewed" ON public.recently_viewed FOR ALL USING (auth.uid() = user_id OR user_id IS NULL OR public.is_admin());
+
 

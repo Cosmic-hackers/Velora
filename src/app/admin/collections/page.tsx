@@ -28,7 +28,8 @@ export default function AdminCollectionsPage() {
       displayOrder: collections.length + 1,
     };
 
-    setCollections([...collections, newCol]);
+    StoreService.createCollection(newCol);
+    setCollections(StoreService.getCollections());
     setIsAdding(false);
     setName("");
     setSlug("");
@@ -36,12 +37,19 @@ export default function AdminCollectionsPage() {
     setImageUrl("");
   };
 
+  const handleDelete = (id: string) => {
+    if (confirm("Are you sure you want to delete this collection?")) {
+      StoreService.deleteCollection(id);
+      setCollections(StoreService.getCollections());
+    }
+  };
+
   return (
     <div className="space-y-8">
       <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
         <div>
           <span className="text-[10px] tracking-[0.3em] uppercase text-[#9B8065] font-semibold">
-            Seasonal Chapters
+            Seasonal Chapters & Edits
           </span>
           <h1 className="font-editorial text-3xl sm:text-4xl text-[#171717] mt-0.5">
             Collections & Lookbooks ({collections.length})
@@ -101,7 +109,7 @@ export default function AdminCollectionsPage() {
             </div>
             <div className="sm:col-span-2">
               <label className="block text-xs uppercase tracking-wider text-[#171717] mb-1">
-                Cinematic Lookbook Image URL
+                Hero Photograph URL
               </label>
               <input
                 type="url"
@@ -121,34 +129,41 @@ export default function AdminCollectionsPage() {
               Cancel
             </button>
             <button type="submit" className="btn-primary text-xs py-2 px-6">
-              Save Chapter
+              Save Collection
             </button>
           </div>
         </form>
       )}
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {collections.map((col) => (
           <div
             key={col.id}
-            className="bg-[#FAF7F2] border border-[#DED8CF] overflow-hidden flex flex-col"
+            className="bg-[#FAF7F2] border border-[#DED8CF] p-6 flex gap-4 items-center justify-between"
           >
-            <div className="relative aspect-[16/10] bg-[#EAE4D9]">
-              {col.imageUrl && (
-                <Image src={col.imageUrl} alt={col.name} fill className="object-cover" sizes="300px" />
-              )}
+            <div className="flex gap-4 items-center flex-1">
+              <div className="relative w-24 h-24 bg-[#EAE4D9] flex-shrink-0 border border-[#DED8CF]">
+                {col.imageUrl && (
+                  <Image src={col.imageUrl} alt={col.name} fill className="object-cover" sizes="96px" />
+                )}
+              </div>
+              <div className="flex-1 space-y-1">
+                <h4 className="font-editorial text-lg text-[#171717]">{col.name}</h4>
+                <p className="font-mono text-[10px] text-[#9B8065]">slug: {col.slug}</p>
+                <p className="text-xs text-[#77716A] line-clamp-2">{col.description}</p>
+              </div>
             </div>
-            <div className="p-5 flex-1 space-y-2">
-              <h4 className="font-editorial text-xl text-[#171717]">{col.name}</h4>
-              <p className="font-mono text-[10px] text-[#9B8065]">slug: {col.slug}</p>
-              <p className="text-xs text-[#77716A] line-clamp-3 leading-relaxed font-light">
-                {col.description}
-              </p>
-            </div>
+
+            <button
+              onClick={() => handleDelete(col.id)}
+              className="p-2 text-[#77736E] hover:text-red-700 transition-colors"
+              title="Delete Collection"
+            >
+              <Trash2 className="w-4 h-4" />
+            </button>
           </div>
         ))}
       </div>
     </div>
   );
 }
-
