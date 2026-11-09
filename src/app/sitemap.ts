@@ -11,6 +11,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/shop",
     "/collections",
     "/about",
+    "/journal",
     "/contact",
     "/faq",
     "/privacy",
@@ -40,3 +41,4 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   return [...staticRoutes, ...productRoutes, ...collectionRoutes];
 }
+

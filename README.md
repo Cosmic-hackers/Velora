@@ -162,3 +162,4 @@ http://localhost:3000
    - `RAZORPAY_KEY_SECRET` = `your_secret`
    - `RAZORPAY_WEBHOOK_SECRET` = `your_webhook_secret`
 4. Tap **Deploy**. Next.js will build all 42 static and dynamic routes automatically.
+

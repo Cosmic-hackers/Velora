@@ -6,9 +6,12 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export function formatPrice(amount: number, currency: string = "INR"): string {
-  return new Intl.NumberFormat("en-IN", {
+  const currencyCode = currency || "INR";
+  const locale = currencyCode === "INR" ? "en-IN" : "en-US";
+  
+  return new Intl.NumberFormat(locale, {
     style: "currency",
-    currency: currency,
+    currency: currencyCode,
     maximumFractionDigits: 0,
   }).format(amount);
 }
@@ -27,4 +30,3 @@ export function generateOrderNumber(): string {
   const random = Math.floor(1000 + Math.random() * 9000);
   return `VEL-${year}-${random}`;
 }
-
