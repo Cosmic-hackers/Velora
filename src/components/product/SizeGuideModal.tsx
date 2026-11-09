@@ -173,3 +173,4 @@ export function SizeGuideModal({ isOpen, onClose, gender = "women" }: SizeGuideM
     </div>
   );
 }
+

@@ -19,114 +19,84 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
   const { addItem, openCart } = useCart();
   const isWishlisted = isInWishlist(product.id);
 
-  const [isHovered, setIsHovered] = useState(false);
   const [selectedColorIdx, setSelectedColorIdx] = useState(0);
   const [addedSize, setAddedSize] = useState<string | null>(null);
 
-  const primaryImage = product.images[selectedColorIdx] || product.images[0] || "";
-  const secondaryImage = product.images[1] || primaryImage;
+  // Steady image presentation without cursor hover changing
+  const activeImage =
+    (product.colors[selectedColorIdx]?.imageUrl as string) ||
+    product.images[selectedColorIdx] ||
+    product.images[0] ||
+    "";
 
   const handleQuickAddSize = (e: React.MouseEvent, size: string) => {
     e.preventDefault();
     e.stopPropagation();
-    const activeColor = product.colors[selectedColorIdx]?.name || product.colors[0]?.name || "Standard";
+    const activeColor =
+      product.colors[selectedColorIdx]?.name || product.colors[0]?.name || "Standard";
     addItem(product, size, activeColor, 1);
     setAddedSize(size);
     setTimeout(() => {
       setAddedSize(null);
       openCart();
-    }, 400);
+    }, 350);
   };
 
   return (
-    <div
-      className="group relative flex flex-col bg-transparent"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-    >
-      {/* Image Presentation */}
-      <div className="relative aspect-[3/4] w-full overflow-hidden bg-[#F0EDE8]">
-        {/* Subtle Editorial Status Badge */}
-        <div className="absolute top-3.5 left-3.5 z-10 pointer-events-none">
-          {product.isNewArrival ? (
-            <span className="text-[9px] uppercase tracking-[0.25em] font-medium bg-[#FFFFFF]/90 text-[#171717] px-2 py-1 backdrop-blur-sm border border-[#E9E6E0]">
-              NEW ARRIVAL
-            </span>
-          ) : product.isBestSeller ? (
-            <span className="text-[9px] uppercase tracking-[0.25em] font-medium bg-[#171717]/90 text-white px-2 py-1 backdrop-blur-sm">
-              BEST SELLER
-            </span>
-          ) : product.salePrice ? (
-            <span className="text-[9px] uppercase tracking-[0.25em] font-medium bg-[#A18A70]/90 text-white px-2 py-1 backdrop-blur-sm">
-              SPECIAL PRICING
-            </span>
-          ) : null}
-        </div>
-
-        {/* Primary Image */}
-        <Link href={`/product/${product.slug}`} className="block w-full h-full">
+    <div className="group relative flex flex-col bg-transparent">
+      {/* ──────────────────────────────────────────────────────────── */}
+      {/* 1. IMAGE CONTAINER (NO ZOOM, NO HOVER IMAGE SWAPPING)        */}
+      {/* ──────────────────────────────────────────────────────────── */}
+      <div className="relative aspect-[4/5] w-full overflow-hidden bg-[#EFECE6] border border-[#E9E6E0]/60">
+        <Link href={`/product/${product.slug}`} className="block w-full h-full relative">
           <Image
-            src={primaryImage}
+            src={activeImage}
             alt={product.name}
             fill
             priority={priority}
-            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-            className={`object-cover object-top transition-all duration-700 ease-out group-hover:scale-105 ${
-              isHovered && secondaryImage !== primaryImage ? "opacity-0" : "opacity-100"
-            }`}
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+            className="object-cover object-top"
           />
-
-          {/* Secondary Hover Image */}
-          {secondaryImage !== primaryImage && (
-            <Image
-              src={secondaryImage}
-              alt={`${product.name} alternate view`}
-              fill
-              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-              className={`object-cover object-top transition-all duration-700 ease-out group-hover:scale-105 ${
-                isHovered ? "opacity-100" : "opacity-0"
-              }`}
-            />
-          )}
         </Link>
 
-        {/* Minimal Animated Wishlist Trigger */}
+        {/* Minimalist Outline Wishlist Heart Icon in Top Right */}
         <button
           onClick={(e) => {
             e.preventDefault();
             e.stopPropagation();
             toggleWishlist(product.id);
           }}
-          className="absolute top-3.5 right-3.5 p-2 bg-white/70 hover:bg-white text-[#171717] backdrop-blur-sm rounded-full transition-all duration-300 z-10 hover:scale-110 active:scale-95 shadow-sm"
-          aria-label="Save to wishlist"
+          className="absolute top-3 right-3 p-1.5 text-[#171717] hover:text-[#A18A70] transition-colors z-10"
+          aria-label="Wishlist"
+          title="Save to wishlist"
         >
           <Heart
-            className={`w-3.5 h-3.5 stroke-[1.25] transition-all duration-300 ${
+            className={`w-4 h-4 stroke-[1.25] transition-all duration-300 ${
               isWishlisted
                 ? "fill-[#171717] text-[#171717] scale-110"
-                : "text-[#171717] hover:text-[#A18A70]"
+                : "text-[#171717] hover:scale-110"
             }`}
           />
         </button>
 
-        {/* Quick Add Size Selection Bar on Hover */}
-        <div className="absolute inset-x-0 bottom-0 p-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10 hidden sm:block bg-gradient-to-t from-black/20 via-black/5 to-transparent pt-6">
-          <div className="bg-[#FFFFFF]/95 backdrop-blur-md border border-[#E9E6E0] p-2 shadow-sm">
-            <div className="text-[9px] uppercase tracking-[0.25em] text-[#77736E] text-center mb-1.5 font-medium">
-              QUICK ADD SIZE
-            </div>
-            <div className="flex items-center justify-center gap-1.5 flex-wrap">
-              {product.sizes.map((sz) => (
+        {/* Subtle Quick-Add Sizing on Hover at Bottom (without image zoom/swap) */}
+        <div className="absolute inset-x-0 bottom-0 py-2.5 px-3 opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10 hidden sm:block bg-gradient-to-t from-black/40 via-black/10 to-transparent">
+          <div className="bg-[#FAF8F5]/95 backdrop-blur-sm border border-[#E9E6E0] p-1.5 flex items-center justify-between shadow-sm">
+            <span className="text-[9px] uppercase tracking-[0.2em] text-[#77736E] font-medium pl-1">
+              ADD:
+            </span>
+            <div className="flex items-center gap-1 flex-wrap">
+              {product.sizes.slice(0, 5).map((sz) => (
                 <button
                   key={sz}
                   onClick={(e) => handleQuickAddSize(e, sz)}
-                  className={`text-[10px] uppercase font-mono px-2 py-1 min-w-[28px] border transition-all ${
+                  className={`text-[9px] uppercase font-mono px-1.5 py-0.5 min-w-[22px] border transition-all ${
                     addedSize === sz
                       ? "bg-[#171717] text-white border-[#171717]"
                       : "bg-white text-[#171717] border-[#E9E6E0] hover:border-[#171717] hover:bg-[#F8F7F4]"
                   }`}
                 >
-                  {addedSize === sz ? <Check className="w-3 h-3 inline" /> : sz}
+                  {addedSize === sz ? <Check className="w-2.5 h-2.5 inline" /> : sz}
                 </button>
               ))}
             </div>
@@ -134,50 +104,49 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
         </div>
       </div>
 
-      {/* Product Information */}
-      <div className="pt-3 pb-1 flex flex-col space-y-1">
-        <Link
-          href={`/product/${product.slug}`}
-          className="text-xs uppercase tracking-[0.18em] font-medium text-[#171717] hover:text-[#A18A70] transition-colors line-clamp-1"
-        >
-          {product.name}
-        </Link>
+      {/* ──────────────────────────────────────────────────────────── */}
+      {/* 2. PRODUCT INFO (EXACT LAYOUT TO REFERENCE IMAGE)            */}
+      {/* ──────────────────────────────────────────────────────────── */}
+      <div className="pt-3 pb-1 flex flex-col space-y-0.5">
+        {/* Row 1: Name on Left, Color Swatches on Right */}
+        <div className="flex items-center justify-between gap-3">
+          <Link
+            href={`/product/${product.slug}`}
+            className="font-normal text-[13px] sm:text-[14px] text-[#171717] hover:text-[#A18A70] transition-colors truncate tracking-wide"
+            title={product.name}
+          >
+            {product.name}
+          </Link>
 
-        {/* Price & Color Indicators */}
-        <div className="flex items-center justify-between pt-0.5">
-          <div className="flex items-center gap-2">
-            <span className="text-xs text-[#171717] font-normal font-mono">
-              {formatPrice(product.salePrice ?? product.price)}
-            </span>
-            {product.salePrice && (
-              <span className="text-[11px] text-[#77736E] line-through font-light font-mono">
-                {formatPrice(product.price)}
-              </span>
-            )}
-          </div>
-
-          {/* Interactive Color Swatches */}
+          {/* Interactive Color Dots */}
           {product.colors && product.colors.length > 0 && (
-            <div className="flex items-center gap-1.5">
-              {product.colors.map((c, idx) => (
+            <div className="flex items-center gap-1.5 flex-shrink-0" onClick={(e) => e.stopPropagation()}>
+              {product.colors.slice(0, 4).map((c, idx) => (
                 <button
                   key={c.name}
-                  title={c.name}
                   onClick={(e) => {
                     e.preventDefault();
                     e.stopPropagation();
                     setSelectedColorIdx(idx);
                   }}
-                  className={`w-2.5 h-2.5 rounded-full border transition-transform ${
+                  className={`w-2.5 h-2.5 rounded-full transition-transform ${
                     selectedColorIdx === idx
-                      ? "ring-1 ring-[#171717] scale-110 border-white"
-                      : "border-[#E9E6E0] hover:scale-110"
+                      ? "ring-1 ring-offset-1 ring-[#171717] scale-110"
+                      : "hover:scale-125 opacity-90"
                   }`}
                   style={{ backgroundColor: c.hex }}
+                  title={c.name}
                 />
               ))}
             </div>
           )}
+        </div>
+
+        {/* Row 2: Price in INR formatted with Rupee Symbol */}
+        <div>
+          <p className="font-light text-[12px] sm:text-[13px] text-[#171717] tracking-tight">
+            {formatPrice(product.price)}
+          </p>
         </div>
       </div>
     </div>

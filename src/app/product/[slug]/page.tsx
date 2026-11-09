@@ -48,7 +48,6 @@ export default function ProductDetailPage({ params }: Props) {
   const [quantity, setQuantity] = useState(1);
   const [isAdded, setIsAdded] = useState(false);
   const [isSizeGuideOpen, setIsSizeGuideOpen] = useState(false);
-  const [zoomStyle, setZoomStyle] = useState<React.CSSProperties>({});
   const [activeAccordion, setActiveAccordion] = useState<string>("details");
 
   // Track recently viewed products
@@ -80,24 +79,6 @@ export default function ProductDetailPage({ params }: Props) {
   const relatedProducts = StoreService.getProducts()
     .filter((p) => p.id !== product.id && p.categoryId === product.categoryId)
     .slice(0, 4);
-
-  // Mouse move zoom
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const { left, top, width, height } = e.currentTarget.getBoundingClientRect();
-    const x = ((e.clientX - left) / width) * 100;
-    const y = ((e.clientY - top) / height) * 100;
-    setZoomStyle({
-      transformOrigin: `${x}% ${y}%`,
-      transform: "scale(1.75)",
-    });
-  };
-
-  const handleMouseLeave = () => {
-    setZoomStyle({
-      transformOrigin: "center center",
-      transform: "scale(1)",
-    });
-  };
 
   const handleAddToCart = () => {
     addItem(product, selectedSize, selectedColor, quantity);
@@ -213,19 +194,14 @@ export default function ProductDetailPage({ params }: Props) {
               </div>
             )}
 
-            {/* Main Interactive Zoom Photo Container */}
-            <div
-              onMouseMove={handleMouseMove}
-              onMouseLeave={handleMouseLeave}
-              className="relative flex-1 aspect-[3/4] bg-[#EAE4D9] border border-[#E9E6E0] overflow-hidden group cursor-crosshair"
-            >
+            {/* Main Steady Photographic Showcase (No zooming on cursor placement) */}
+            <div className="relative flex-1 aspect-[3/4] bg-[#EAE4D9] border border-[#E9E6E0] overflow-hidden">
               <Image
                 src={product.images[selectedImage] || product.images[0] || ""}
                 alt={product.name}
                 fill
                 priority
-                style={zoomStyle}
-                className="object-cover transition-transform duration-300 ease-out"
+                className="object-cover"
                 sizes="(max-width: 1024px) 100vw, 55vw"
               />
 
