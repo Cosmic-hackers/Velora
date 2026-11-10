@@ -18,11 +18,11 @@ export default function CollectionsPage() {
         {/* Architectural backdrop and Model image */}
         <div className="absolute inset-0">
           <Image
-            src="/images/catalog/collections-hero-banner.jpg"
+            src="/images/collections/collections-hero.jpg"
             alt="VELORA Curated Chapters"
             fill
             priority
-            className="object-cover object-right sm:object-center"
+            className="object-cover object-[right_top] sm:object-[center_top]"
             sizes="100vw"
           />
           {/* Subtle gradient overlay to provide pristine legibility on the left while showcasing the model on the right */}
@@ -59,11 +59,11 @@ export default function CollectionsPage() {
             {/* Photographic Canvas on Right */}
             <div className="absolute inset-0">
               <Image
-                src="/images/catalog/col-essentials-model.jpg"
+                src="/images/collections/essentials.jpg"
                 alt="The Essentials Collection"
                 fill
                 priority
-                className="object-cover object-right group-hover:scale-[1.03] transition-transform duration-700 ease-out"
+                className="object-cover object-[right_top] group-hover:scale-[1.03] transition-transform duration-700 ease-out"
                 sizes="(max-width: 768px) 100vw, 50vw"
               />
               <div className="absolute inset-0 bg-gradient-to-r from-[#FAF8F5]/95 via-[#FAF8F5]/70 to-transparent w-full sm:w-[65%]" />
@@ -97,7 +97,7 @@ export default function CollectionsPage() {
             {/* Architectural Arches on Right */}
             <div className="absolute inset-0">
               <Image
-                src="/images/catalog/col-signature-arch.jpg"
+                src="/images/collections/signature.jpg"
                 alt="The Signature Edit"
                 fill
                 priority
@@ -138,7 +138,7 @@ export default function CollectionsPage() {
             {/* Golden Hills Background */}
             <div className="absolute inset-0">
               <Image
-                src="/images/catalog/col-seasonal-hills.jpg"
+                src="/images/collections/seasonal.jpg"
                 alt="The Seasonal Edit"
                 fill
                 className="object-cover object-center group-hover:scale-[1.03] transition-transform duration-700 ease-out"
@@ -175,7 +175,7 @@ export default function CollectionsPage() {
             {/* Tactile Fabric Drapery Background */}
             <div className="absolute inset-0">
               <Image
-                src="/images/catalog/col-monochrome-drape.jpg"
+                src="/images/collections/monochrome.jpg"
                 alt="The Monochrome Edit"
                 fill
                 className="object-cover object-center group-hover:scale-[1.03] transition-transform duration-700 ease-out"
@@ -212,7 +212,7 @@ export default function CollectionsPage() {
             {/* Structured Handbag Background */}
             <div className="absolute inset-0">
               <Image
-                src="/images/catalog/col-accessories-bag.jpg"
+                src="/images/collections/accessories.jpg"
                 alt="The Accessories Collection"
                 fill
                 className="object-cover object-center group-hover:scale-[1.03] transition-transform duration-700 ease-out"

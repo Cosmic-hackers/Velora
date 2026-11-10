@@ -98,7 +98,7 @@ export default function JournalPage() {
               fill
               priority
               quality={95}
-              className="object-cover object-center"
+              className="object-cover object-top"
               sizes="(max-width: 1024px) 100vw, 45vw"
             />
           </div>
@@ -119,7 +119,7 @@ export default function JournalPage() {
               src="/images/journal/journal-featured-season.jpg"
               alt="The Season of Refinement"
               fill
-              className="object-cover object-center group-hover:scale-[1.02] transition-transform duration-700 ease-out"
+              className="object-cover object-top group-hover:scale-[1.02] transition-transform duration-700 ease-out"
               sizes="(max-width: 1024px) 100vw, 60vw"
             />
           </div>
@@ -251,7 +251,7 @@ export default function JournalPage() {
               src="/images/journal/journal-spring-edit.jpg"
               alt="VELORA The Spring Edit"
               fill
-              className="object-cover object-center"
+              className="object-cover object-top"
               sizes="(max-width: 1024px) 100vw, 58vw"
             />
           </div>

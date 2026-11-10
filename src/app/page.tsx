@@ -42,68 +42,104 @@ export default function HomePage() {
   // Hero carousel slide indicator state
   const [activeSlide, setActiveSlide] = useState(0);
 
+  // Hero advertisement carousel slides (15.png, 16.png, and main campaign)
+  const heroSlides = [
+    {
+      id: 0,
+      image: "/images/hero/hero-adv-15.jpg",
+      tag: "EDITORIAL CAMPAIGN",
+      headline: "A QUIETER\nKIND OF LUXURY.",
+      subtitle: "Considered silhouettes. Timeless pieces. For today and beyond.",
+      cta: "SHOP THE COLLECTION",
+      href: "/shop",
+      align: "object-top",
+      stylePosition: "54% 0%"
+    },
+    {
+      id: 1,
+      image: "/images/hero/hero-adv-16.jpg",
+      tag: "THE MONOCHROME EDIT",
+      headline: "EFFORTLESSLY\nTIMELESS.",
+      subtitle: "Modern essentials crafted with precision, purity and lasting presence.",
+      cta: "EXPLORE COLLECTION",
+      href: "/collections/the-monochrome-edit",
+      align: "object-top",
+      stylePosition: "52% 0%"
+    },
+    {
+      id: 2,
+      image: "/images/hero/hero-adv-main.jpg",
+      tag: "NEW SEASON ARRIVALS",
+      headline: "FORM, FABRIC\n& PROPORTION.",
+      subtitle: "Tactile cashmere, fine virgin wools and sculptural unlined outerwear.",
+      cta: "VIEW NEW ARRIVALS",
+      href: "/shop?collection=new-arrivals",
+      align: "object-top",
+      stylePosition: "72% 0%"
+    }
+  ];
+
+  const currentHero = heroSlides[activeSlide] || heroSlides[0];
+
   return (
     <div className="w-full bg-[#FAF8F5] text-[#171717] min-h-screen">
       {/* ──────────────────────────────────────────────────────────── */}
-      {/* 1. CINEMATIC FULL-SIZE HERO: "NEW ARRIVALS"                  */}
+      {/* 1. CINEMATIC FULL-SIZE HERO ADVERTISEMENT (15, 16 PNGS)      */}
       {/* ──────────────────────────────────────────────────────────── */}
-      <section className="relative w-full h-[78vh] sm:h-[84vh] lg:h-[88vh] min-h-[560px] max-h-[920px] overflow-hidden bg-[#EAE4D9] border-b border-[#E9E6E0]">
+      <section className="relative w-full h-[88vh] sm:h-[94vh] lg:h-[98vh] min-h-[660px] sm:min-h-[740px] lg:min-h-[820px] max-h-[1100px] overflow-hidden bg-[#EAE4D9] border-b border-[#E9E6E0]">
         {/* Full-Size Background Image Behind Typography */}
         <div className="absolute inset-0 transition-opacity duration-700">
           <Image
-            src={
-              activeSlide === 1
-                ? "/images/hero/hero-new-arrivals-walking.jpg"
-                : "/images/hero/hero-new-arrivals-standing.jpg"
-            }
-            alt="VELORA New Arrivals Campaign"
+            key={currentHero.image}
+            src={currentHero.image}
+            alt="VELORA Editorial Advertisement Campaign"
             fill
             priority
             quality={98}
-            className="object-cover object-[75%_center] sm:object-center"
+            className={`object-cover ${currentHero.align}`}
+            style={{ objectPosition: currentHero.stylePosition }}
             sizes="100vw"
           />
 
           {/* Luxury Editorial Soft Scrim Overlay: Subtle warm fade on the left to ensure high contrast for typography */}
-          <div className="absolute inset-0 bg-gradient-to-r from-[#FAF8F5]/92 via-[#FAF8F5]/55 to-transparent w-full sm:w-[68%] lg:w-[54%]" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#FAF8F5]/92 via-[#FAF8F5]/50 to-transparent w-full sm:w-[65%] lg:w-[48%] pointer-events-none" />
         </div>
 
-        {/* Foreground Content: Typography & CTAs directly in front of the image */}
+        {/* Foreground Content: Clean Typography & CTAs directly in front of the image */}
         <div className="relative z-10 h-full max-w-[1600px] mx-auto px-6 sm:px-12 lg:px-16 xl:px-20 flex flex-col justify-center space-y-6">
           <div className="space-y-3 max-w-xl">
             <span className="text-[10px] sm:text-[11px] tracking-[0.4em] uppercase text-[#77736E] font-medium block">
-              NEW ARRIVALS
+              {currentHero.tag}
             </span>
-            <h1 className="font-editorial text-4xl sm:text-6xl lg:text-7xl font-normal text-[#171717] leading-[1.05] tracking-tight">
-              A QUIETER<br />
-              KIND OF LUXURY.
+            <h1 className="font-editorial text-4xl sm:text-6xl lg:text-7xl font-normal text-[#171717] leading-[1.05] tracking-tight whitespace-pre-line">
+              {currentHero.headline}
             </h1>
             <p className="text-xs sm:text-sm text-[#3E3A36] font-light leading-relaxed max-w-md pt-1">
-              Considered silhouettes. Timeless pieces. For today and beyond.
+              {currentHero.subtitle}
             </p>
           </div>
 
           {/* Action CTA Button */}
           <div className="pt-2">
             <Link
-              href="/shop"
+              href={currentHero.href}
               className="inline-flex items-center gap-2.5 bg-[#171717] text-white hover:bg-[#A18A70] text-[10px] sm:text-[11px] uppercase tracking-[0.25em] px-8 py-4 font-medium transition-colors duration-300 group shadow-xs"
             >
-              <span>SHOP THE COLLECTION</span>
+              <span>{currentHero.cta}</span>
               <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
             </Link>
           </div>
 
           {/* Carousel Slide Indicator Dashes */}
           <div className="flex items-center space-x-2 pt-4">
-            {[0, 1].map((idx) => (
+            {heroSlides.map((slide, idx) => (
               <button
                 key={idx}
                 onClick={() => setActiveSlide(idx)}
                 className={`h-[2px] transition-all duration-300 ${
                   activeSlide === idx ? "w-10 bg-[#171717]" : "w-4 bg-[#171717]/35 hover:bg-[#171717]"
                 }`}
-                aria-label={`Slide ${idx + 1}`}
+                aria-label={`Advertisement Slide ${idx + 1}`}
               />
             ))}
           </div>
@@ -139,7 +175,7 @@ export default function HomePage() {
                 src="/images/catalog/home-dept-women.jpg"
                 alt="VELORA Women"
                 fill
-                className="object-cover object-center"
+                className="object-cover object-top"
                 sizes="140px"
               />
             </div>
@@ -169,7 +205,7 @@ export default function HomePage() {
                 src="/images/catalog/home-dept-men.jpg"
                 alt="VELORA Men"
                 fill
-                className="object-cover object-center"
+                className="object-cover object-top"
                 sizes="140px"
               />
             </div>

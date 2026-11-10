@@ -49,7 +49,7 @@ export default function AboutPage() {
               fill
               priority
               quality={95}
-              className="object-cover object-center"
+              className="object-cover object-top"
               sizes="(max-width: 1024px) 100vw, 45vw"
             />
           </div>
@@ -90,7 +90,7 @@ export default function AboutPage() {
               src="/images/about/about-story-model.jpg"
               alt="A Considered Modern Wardrobe"
               fill
-              className="object-cover object-center"
+              className="object-cover object-top"
               sizes="(max-width: 1024px) 100vw, 42vw"
             />
           </div>
@@ -206,7 +206,7 @@ export default function AboutPage() {
           alt="VELORA Flowing Cape Campaign"
           fill
           priority
-          className="object-cover object-center"
+          className="object-cover object-top"
           sizes="100vw"
         />
         {/* Subtle right-side dark gradient to ensure high button contrast */}

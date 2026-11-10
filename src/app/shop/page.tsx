@@ -192,7 +192,7 @@ function ShopContent() {
             alt="VELORA The Complete Portfolio"
             fill
             priority
-            className="object-cover object-right sm:object-center"
+            className="object-cover object-[right_top] sm:object-[center_top]"
             sizes="100vw"
           />
           {/* Subtle gradient overlay to enhance legibility on the left while revealing the model on the right */}
