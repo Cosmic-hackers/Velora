@@ -14,7 +14,7 @@ export default function CollectionsPage() {
       {/* ──────────────────────────────────────────────────────────── */}
       {/* 1. CINEMATIC FULL-WIDTH CAMPAIGN HERO BANNER                 */}
       {/* ──────────────────────────────────────────────────────────── */}
-      <section className="relative w-full h-[220px] sm:h-[260px] md:h-[300px] lg:h-[340px] overflow-hidden bg-[#ECE6DC] border-b border-[#E9E6E0]">
+      <section className="relative w-full h-[260px] sm:h-[320px] md:h-[380px] lg:h-[440px] overflow-hidden bg-[#ECE6DC] border-b border-[#E9E6E0]">
         {/* Architectural backdrop and Model image */}
         <div className="absolute inset-0">
           <Image
@@ -22,7 +22,7 @@ export default function CollectionsPage() {
             alt="VELORA Curated Chapters"
             fill
             priority
-            className="object-cover object-[right_top] sm:object-[center_top]"
+            className="object-cover object-[75%_top] sm:object-center"
             sizes="100vw"
           />
           {/* Subtle gradient overlay to provide pristine legibility on the left while showcasing the model on the right */}

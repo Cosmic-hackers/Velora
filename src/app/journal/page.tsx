@@ -72,36 +72,35 @@ export default function JournalPage() {
   return (
     <div className="w-full bg-[#FAF8F5] text-[#171717] min-h-screen">
       {/* ──────────────────────────────────────────────────────────── */}
-      {/* 1. HERO SECTION: "THE VELORA JOURNAL"                        */}
+      {/* 1. HERO SECTION: "THE VELORA JOURNAL" (FULL-WIDTH BANNER)    */}
       {/* ──────────────────────────────────────────────────────────── */}
-      <section className="relative w-full border-b border-[#E9E6E0] bg-[#FAF8F5] overflow-hidden">
-        <div className="max-w-[1600px] mx-auto flex flex-col lg:flex-row items-stretch min-h-[380px] sm:min-h-[440px] lg:min-h-[480px]">
-          {/* Left Column: Editorial Headline */}
-          <div className="w-full lg:w-[55%] px-6 sm:px-12 lg:px-16 py-12 sm:py-16 lg:py-20 flex flex-col justify-center space-y-4 sm:space-y-5">
-            <span className="text-[10px] sm:text-[11px] tracking-[0.38em] uppercase text-[#77736E] font-medium block">
-              JOURNAL
-            </span>
-            <h1 className="font-editorial text-4xl sm:text-5xl lg:text-6xl text-[#171717] font-normal tracking-tight leading-[1.08]">
-              THE VELORA<br />
-              JOURNAL
-            </h1>
-            <p className="text-xs sm:text-sm text-[#77736E] font-light leading-relaxed max-w-md pt-1">
-              Stories on style, craft, culture and a more considered way of living.
-            </p>
-          </div>
+      <section className="relative w-full h-[280px] sm:h-[360px] md:h-[420px] lg:h-[480px] overflow-hidden bg-[#EAE4D9] border-b border-[#E9E6E0]">
+        <div className="absolute inset-0">
+          <Image
+            src="/images/journal/journal-hero-model.jpg"
+            alt="The VELORA Journal Editorial"
+            fill
+            priority
+            quality={98}
+            className="object-cover object-[70%_top] sm:object-center"
+            sizes="100vw"
+          />
+          {/* Subtle gradient overlay to provide pristine legibility on the left while showcasing the model on the right */}
+          <div className="absolute inset-0 bg-gradient-to-r from-[#FAF8F5]/92 via-[#FAF8F5]/50 to-transparent w-full sm:w-[60%] lg:w-[48%]" />
+        </div>
 
-          {/* Right Column: Hero Portrait Photography */}
-          <div className="w-full lg:w-[45%] relative min-h-[300px] sm:min-h-[360px] lg:min-h-auto bg-[#EAE4D9] overflow-hidden">
-            <Image
-              src="/images/journal/journal-hero-model.jpg"
-              alt="The VELORA Journal Editorial"
-              fill
-              priority
-              quality={95}
-              className="object-cover object-top"
-              sizes="(max-width: 1024px) 100vw, 45vw"
-            />
-          </div>
+        {/* Hero Narrative Overlay */}
+        <div className="relative z-10 h-full max-w-[1600px] mx-auto px-6 sm:px-12 lg:px-16 flex flex-col justify-center space-y-2 sm:space-y-3">
+          <span className="text-[10px] sm:text-[11px] tracking-[0.38em] uppercase text-[#77736E] font-medium block">
+            JOURNAL
+          </span>
+          <h1 className="font-editorial text-4xl sm:text-5xl lg:text-6xl text-[#171717] font-normal tracking-tight leading-[1.08]">
+            THE VELORA<br />
+            JOURNAL
+          </h1>
+          <p className="text-xs sm:text-sm text-[#77736E] font-light leading-relaxed max-w-md pt-1">
+            Stories on style, craft, culture and a more considered way of living.
+          </p>
         </div>
       </section>
 
