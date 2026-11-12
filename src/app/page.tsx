@@ -81,37 +81,6 @@ export default function HomePage() {
 
   const currentHero = heroSlides[activeSlide] || heroSlides[0];
 
-  // Floating product showcase card data for each hero look
-  const heroShowcaseCards = [
-    {
-      badge: "FEATURED ATELIER",
-      lookLabel: "LOOK 01",
-      product:
-        allProducts.find((p) => p.slug === "double-breasted-wool-atelier-blazer") ||
-        allProducts.find((p) => p.slug === "tailored-blazer") ||
-        allProducts[0],
-    },
-    {
-      badge: "MONOCHROME EDIT",
-      lookLabel: "LOOK 02",
-      product:
-        allProducts.find((p) => p.slug === "tailored-blazer") ||
-        allProducts.find((p) => p.slug === "fluid-midi-dress") ||
-        allProducts[0],
-    },
-    {
-      badge: "NEW RELEASE",
-      lookLabel: "LOOK 03",
-      product:
-        allProducts.find((p) => p.slug === "cashmere-knit") ||
-        allProducts.find((p) => p.slug === "double-breasted-wool-atelier-blazer") ||
-        allProducts[0],
-    },
-  ];
-
-  const currentShowcase = heroShowcaseCards[activeSlide] || heroShowcaseCards[0];
-  const activeProduct = currentShowcase?.product;
-
   return (
     <div className="w-full bg-[#FAF8F5] text-[#171717] min-h-screen">
       {/* ──────────────────────────────────────────────────────────── */}
@@ -175,75 +144,6 @@ export default function HomePage() {
             ))}
           </div>
         </div>
-
-        {/* Floating Product Showcase Card on the Right-Side Space (Desktop & Wide screens) */}
-        {activeProduct && (
-          <div className="hidden lg:flex flex-col absolute right-8 xl:right-16 2xl:right-24 top-1/2 -translate-y-1/2 z-20 w-[265px] xl:w-[290px] bg-[#FAF8F5]/92 backdrop-blur-md border border-[#E9E6E0] p-4 xl:p-5 shadow-2xl transition-all duration-300 hover:shadow-3xl hover:-translate-y-[calc(50%+4px)]">
-            {/* Top eyebrow / badge */}
-            <div className="flex items-center justify-between pb-2.5 border-b border-[#E9E6E0]/80 text-[9px] uppercase tracking-[0.25em] text-[#77736E]">
-              <span className="font-semibold text-[#171717]">{currentShowcase.badge}</span>
-              <span className="text-[#A18A70] font-serif italic text-xs">{currentShowcase.lookLabel}</span>
-            </div>
-
-            {/* Product Image Frame */}
-            <Link
-              href={`/product/${activeProduct.slug}`}
-              className="relative w-full aspect-[4/5] my-3 overflow-hidden bg-[#ECE6DC] block group/cardimg"
-            >
-              <Image
-                src={activeProduct.images[0]}
-                alt={activeProduct.name}
-                fill
-                className="object-cover object-top transition-transform duration-700 ease-out group-hover/cardimg:scale-105"
-                sizes="300px"
-              />
-              <div className="absolute inset-0 bg-[#171717]/0 group-hover/cardimg:bg-[#171717]/5 transition-colors" />
-            </Link>
-
-            {/* Product Meta & Actions */}
-            <div className="space-y-2">
-              <div className="flex items-baseline justify-between gap-2">
-                <Link
-                  href={`/product/${activeProduct.slug}`}
-                  className="font-editorial text-base xl:text-lg text-[#171717] hover:text-[#A18A70] transition-colors leading-snug line-clamp-1"
-                >
-                  {activeProduct.name}
-                </Link>
-                <span className="text-xs xl:text-sm font-medium text-[#171717] tracking-tight whitespace-nowrap">
-                  ₹{activeProduct.price.toLocaleString("en-IN")}
-                </span>
-              </div>
-
-              {/* Color Swatches */}
-              <div className="flex items-center gap-1.5 pt-0.5">
-                {activeProduct.colors?.slice(0, 4).map((color, i) => (
-                  <span
-                    key={color.name}
-                    title={color.name}
-                    className={`w-3.5 h-3.5 rounded-full border border-black/15 transition-transform hover:scale-110 cursor-pointer ${
-                      i === 0 ? "ring-1 ring-[#171717] ring-offset-1 ring-offset-[#FAF8F5]" : ""
-                    }`}
-                    style={{ backgroundColor: color.hex }}
-                  />
-                ))}
-                <span className="text-[10px] text-[#77736E] font-light ml-1">
-                  {activeProduct.colors?.length || 1} shades
-                </span>
-              </div>
-
-              {/* EXPLORE PRODUCT CTA Button */}
-              <div className="pt-2">
-                <Link
-                  href={`/product/${activeProduct.slug}`}
-                  className="w-full inline-flex items-center justify-center gap-2 bg-[#171717] text-white hover:bg-[#A18A70] text-[9.5px] uppercase tracking-[0.25em] py-3 px-4 font-medium transition-colors group/btn shadow-xs"
-                >
-                  <span>EXPLORE PRODUCT</span>
-                  <ArrowRight className="w-3 h-3 group-hover/btn:translate-x-1 transition-transform" />
-                </Link>
-              </div>
-            </div>
-          </div>
-        )}
       </section>
 
       {/* ──────────────────────────────────────────────────────────── */}
