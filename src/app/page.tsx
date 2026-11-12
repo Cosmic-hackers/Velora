@@ -1,11 +1,11 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import { ProductCard } from "@/components/product/ProductCard";
+import { StoreService } from "@/lib/store";
+import { ArrowRight, CheckCircle2, ChevronLeft, ChevronRight, RotateCcw, ShieldCheck, Sparkles, Truck } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, ChevronLeft, ChevronRight, Truck, RotateCcw, ShieldCheck, Sparkles, CheckCircle2 } from "lucide-react";
-import { StoreService } from "@/lib/store";
-import { ProductCard } from "@/components/product/ProductCard";
+import React, { useEffect, useState } from "react";
 
 export default function HomePage() {
   const allProducts = StoreService.getProducts();
@@ -61,7 +61,7 @@ export default function HomePage() {
       cta: "EXPLORE SIGNATURE EDIT",
       href: "/collections/the-signature-edit",
       align: "object-top",
-      stylePosition: "52% 0%"
+      stylePosition: "52% 12%"
     },
     {
       id: 2,
@@ -73,13 +73,12 @@ export default function HomePage() {
       href: "/shop?department=accessories",
       align: "object-top",
       stylePosition: "68% 0%"
-    }
+    },
   ];
 
   // Hero carousel slide indicator state & auto-scrolling
   const [activeSlide, setActiveSlide] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
-  const [scrollY, setScrollY] = useState(0);
 
   // Auto-scrolling slides sideways slowly one after another (every 5.5s)
   useEffect(() => {
@@ -89,15 +88,6 @@ export default function HomePage() {
     }, 5500);
     return () => clearInterval(interval);
   }, [isPaused, heroSlides.length]);
-
-  // Gentle subtle parallax along page scrolling
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrollY(window.scrollY);
-    };
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
 
   const currentHero = heroSlides[activeSlide] || heroSlides[0];
 
@@ -109,24 +99,29 @@ export default function HomePage() {
       <section
         onMouseEnter={() => setIsPaused(true)}
         onMouseLeave={() => setIsPaused(false)}
-        className="relative w-full h-[88vh] sm:h-[94vh] lg:h-[98vh] min-h-[660px] sm:min-h-[740px] lg:min-h-[820px] max-h-[1100px] overflow-hidden bg-[#181411] border-b border-[#E9E6E0]"
+        className="relative w-full h-[78vh] sm:h-[86vh] lg:h-[92vh] min-h-[560px] sm:min-h-[650px] lg:min-h-[760px] max-h-[1000px] overflow-hidden bg-white border-b border-[#E9E6E0]"
       >
         {/* Horizontal side-scrolling track that glides slowly between the slides */}
         <div
-          className="absolute -inset-2 sm:-inset-3 flex w-[300%] h-full transition-transform duration-1000 ease-[cubic-bezier(0.25,1,0.5,1)]"
+          className="absolute inset-0 flex h-full bg-white transition-transform duration-1000 ease-[cubic-bezier(0.25,1,0.5,1)] will-change-transform"
           style={{
-            transform: `translateX(-${(activeSlide * 100) / 3}%) translateY(${Math.min(scrollY * 0.12, 80)}px)`,
+            width: `${heroSlides.length * 100}%`,
+            transform: `translate3d(-${(activeSlide * 100) / heroSlides.length}%, 0, 0)`,
           }}
         >
           {heroSlides.map((slide, idx) => (
-            <div key={slide.id} className="relative w-1/3 h-full overflow-hidden flex-shrink-0">
+            <div
+              key={slide.id}
+              className="relative h-full min-w-0 overflow-hidden flex-shrink-0 bg-white"
+              style={{ width: `${100 / heroSlides.length}%` }}
+            >
               <Image
                 src={slide.image}
                 alt={slide.tag}
                 fill
                 priority={idx === 0}
                 quality={96}
-                className={`object-cover ${slide.align} w-full h-full scale-[1.03] lg:scale-[1.04]`}
+                className={`object-cover ${slide.align} w-full h-full`}
                 style={{ objectPosition: slide.stylePosition }}
                 sizes="100vw"
               />

@@ -1,14 +1,13 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import Link from "next/link";
-import Image from "next/image";
-import { usePathname } from "next/navigation";
-import { Search, Heart, ShoppingBag, User, Menu, X, ChevronDown } from "lucide-react";
+import { SearchModal } from "@/components/search/SearchModal";
+import { useAuth } from "@/context/AuthContext";
 import { useCart } from "@/context/CartContext";
 import { useWishlist } from "@/context/WishlistContext";
-import { useAuth } from "@/context/AuthContext";
-import { SearchModal } from "@/components/search/SearchModal";
+import { ChevronDown, Heart, Menu, Search, ShoppingBag, X } from "lucide-react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export function Header() {
   const pathname = usePathname();
@@ -252,7 +251,7 @@ export function Header() {
           >
             <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10">
               {/* Column 1: Women */}
-              <div className="lg:col-span-3 space-y-4">
+              <div className="lg:col-span-4 space-y-4">
                 <Link
                   href="/shop?gender=women"
                   className="font-editorial text-lg tracking-wider text-[#171717] hover:text-[#A18A70] transition-colors block pb-2 border-b border-[#E9E6E0]"
@@ -305,7 +304,7 @@ export function Header() {
               </div>
 
               {/* Column 2: Men */}
-              <div className="lg:col-span-3 space-y-4">
+              <div className="lg:col-span-4 space-y-4">
                 <Link
                   href="/shop?gender=men"
                   className="font-editorial text-lg tracking-wider text-[#171717] hover:text-[#A18A70] transition-colors block pb-2 border-b border-[#E9E6E0]"
@@ -358,7 +357,7 @@ export function Header() {
               </div>
 
               {/* Column 3: Accessories & Collections */}
-              <div className="lg:col-span-3 space-y-4">
+              <div className="lg:col-span-4 space-y-4">
                 <Link
                   href="/shop?department=accessories"
                   className="font-editorial text-lg tracking-wider text-[#171717] hover:text-[#A18A70] transition-colors block pb-2 border-b border-[#E9E6E0]"
@@ -416,36 +415,6 @@ export function Header() {
                 </div>
               </div>
 
-              {/* Column 4: Campaign Spotlight */}
-              <div className="lg:col-span-3">
-                <Link
-                  href="/collections/the-essentials"
-                  className="group block relative aspect-[4/5] bg-[#EAE4D9] overflow-hidden border border-[#E9E6E0]"
-                >
-                  <Image
-                    src="/images/catalog/tailored-double-breasted-blazer.jpg"
-                    alt="The Essentials Collection"
-                    fill
-                    className="object-cover object-center group-hover:scale-105 transition-transform duration-700"
-                    sizes="25vw"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent flex flex-col justify-end p-5 text-white">
-                    <span className="text-[9px] uppercase tracking-[0.3em] text-[#E9E6E0] font-light">
-                      EDITORIAL CAMPAIGN
-                    </span>
-                    <h4 className="font-editorial text-xl font-normal text-white">
-                      The Essentials
-                    </h4>
-                    <p className="text-[10px] text-white/80 font-light mt-1 mb-2">
-                      Considered pieces for a modern wardrobe.
-                    </p>
-                    <span className="inline-flex items-center gap-1.5 text-[9px] uppercase tracking-[0.25em] font-medium text-white group-hover:underline">
-                      <span>SHOP THE EDIT</span>
-                      <span>→</span>
-                    </span>
-                  </div>
-                </Link>
-              </div>
             </div>
           </div>
         )}
