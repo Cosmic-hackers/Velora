@@ -96,6 +96,15 @@ function ShopContent() {
         if (selectedGender !== "all") {
           if (selectedGender === "men" && p.gender !== "men" && p.department !== "men") return false;
           if (selectedGender === "women" && p.gender !== "women" && p.department !== "women") return false;
+          if (
+            selectedGender === "accessories" &&
+            p.department !== "accessories" &&
+            !p.categoryId.startsWith("cat-a") &&
+            p.categoryId !== "cat-w-acc" &&
+            p.categoryId !== "cat-m-acc"
+          ) {
+            return false;
+          }
         }
 
         // Category filter
@@ -131,6 +140,19 @@ function ShopContent() {
               p.categoryId === "cat-m-shirts" ||
               p.categoryId === "cat-m-tshirts" ||
               p.categoryId === "cat-w-dresses";
+            if (!isMatch) return false;
+          } else if (selectedCategory === "accessories") {
+            const isMatch =
+              p.department === "accessories" ||
+              p.categoryId.startsWith("cat-a") ||
+              p.categoryId === "cat-w-acc" ||
+              p.categoryId === "cat-m-acc" ||
+              p.name.toLowerCase().includes("bag") ||
+              p.name.toLowerCase().includes("belt") ||
+              p.name.toLowerCase().includes("earring") ||
+              p.name.toLowerCase().includes("necklace") ||
+              p.name.toLowerCase().includes("scarf") ||
+              p.name.toLowerCase().includes("wallet");
             if (!isMatch) return false;
           } else {
             if (p.categoryId !== selectedCategory && p.slug !== selectedCategory) return false;
@@ -184,7 +206,7 @@ function ShopContent() {
       {/* ──────────────────────────────────────────────────────────── */}
       {/* 1. CINEMATIC FULL-WIDTH CAMPAIGN BANNER                      */}
       {/* ──────────────────────────────────────────────────────────── */}
-      <section className="relative w-full h-[220px] sm:h-[260px] md:h-[290px] lg:h-[310px] overflow-hidden bg-[#ECE6DC] border-b border-[#E9E6E0]">
+      <section className="relative w-full h-[260px] sm:h-[300px] md:h-[340px] lg:h-[380px] xl:h-[400px] overflow-hidden bg-[#ECE6DC] border-b border-[#E9E6E0]">
         {/* Architectural backdrop and Model image */}
         <div className="absolute inset-0">
           <Image
@@ -192,11 +214,12 @@ function ShopContent() {
             alt="VELORA The Complete Portfolio"
             fill
             priority
-            className="object-cover object-[right_top] sm:object-[center_top]"
+            className="object-cover"
+            style={{ objectPosition: "74% 20%" }}
             sizes="100vw"
           />
           {/* Subtle gradient overlay to enhance legibility on the left while revealing the model on the right */}
-          <div className="absolute inset-0 bg-gradient-to-r from-[#FAF8F5]/95 via-[#FAF8F5]/60 to-transparent sm:via-[#FAF8F5]/40" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#FAF8F5]/90 via-[#FAF8F5]/45 to-transparent sm:via-[#FAF8F5]/25" />
         </div>
 
         {/* Banner Content (Aligned to left margin) */}
@@ -341,6 +364,19 @@ function ShopContent() {
                       Women&apos;s Atelier
                     </span>
                   </label>
+
+                  <label className="flex items-center gap-2.5 cursor-pointer hover:text-[#171717] transition-colors">
+                    <input
+                      type="radio"
+                      name="gender_filter"
+                      checked={selectedGender === "accessories"}
+                      onChange={() => setSelectedGender("accessories")}
+                      className="accent-[#171717] w-3.5 h-3.5 rounded-none"
+                    />
+                    <span className={selectedGender === "accessories" ? "text-[#171717] font-medium" : ""}>
+                      Accessories & Leather
+                    </span>
+                  </label>
                 </div>
               )}
             </div>
@@ -367,6 +403,7 @@ function ShopContent() {
                     { key: "tailoring-suits", label: "Tailoring & Suits" },
                     { key: "knitwear-cashmere", label: "Knitwear & Cashmere" },
                     { key: "minimal-essentials", label: "Minimal Essentials" },
+                    { key: "accessories", label: "Accessories & Leather" },
                   ].map((cat) => (
                     <label
                       key={cat.key}
@@ -581,7 +618,7 @@ function ShopContent() {
                   GENDER
                 </span>
                 <div className="space-y-2 text-xs">
-                  {["all", "men", "women"].map((g) => (
+                  {["all", "men", "women", "accessories"].map((g) => (
                     <label key={g} className="flex items-center gap-2 cursor-pointer">
                       <input
                         type="radio"
@@ -590,7 +627,13 @@ function ShopContent() {
                         onChange={() => setSelectedGender(g)}
                         className="accent-[#171717]"
                       />
-                      <span className="capitalize">{g === "all" ? "All Creations" : `${g}'s Atelier`}</span>
+                      <span className="capitalize">
+                        {g === "all"
+                          ? "All Creations"
+                          : g === "accessories"
+                          ? "Accessories & Leather"
+                          : `${g}'s Atelier`}
+                      </span>
                     </label>
                   ))}
                 </div>
@@ -608,6 +651,7 @@ function ShopContent() {
                     { key: "tailoring-suits", label: "Tailoring & Suits" },
                     { key: "knitwear-cashmere", label: "Knitwear & Cashmere" },
                     { key: "minimal-essentials", label: "Minimal Essentials" },
+                    { key: "accessories", label: "Accessories & Leather" },
                   ].map((c) => (
                     <label key={c.key} className="flex items-center gap-2 cursor-pointer">
                       <input

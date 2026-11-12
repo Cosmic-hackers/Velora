@@ -14,7 +14,9 @@ interface Props {
 
 export default function CollectionDetailPage({ params }: Props) {
   const collections = StoreService.getCollections();
-  const collection = collections.find((c) => c.slug === params.slug);
+  const collection = collections.find(
+    (c) => c.slug === params.slug || (params.slug === "accessories" && c.slug === "the-accessories")
+  );
 
   if (!collection) {
     notFound();
