@@ -1,11 +1,12 @@
-import type { Metadata } from "next";
-import "./globals.css";
+import { CartDrawer } from "@/components/cart/CartDrawer";
+import { Footer } from "@/components/layout/Footer";
+import { Header } from "@/components/layout/Header";
+import { Preloader } from "@/components/layout/Preloader";
 import { AuthProvider } from "@/context/AuthContext";
 import { CartProvider } from "@/context/CartContext";
 import { WishlistProvider } from "@/context/WishlistContext";
-import { Header } from "@/components/layout/Header";
-import { Footer } from "@/components/layout/Footer";
-import { CartDrawer } from "@/components/cart/CartDrawer";
+import type { Metadata } from "next";
+import "./globals.css";
 
 export const metadata: Metadata = {
   title: "VELORA — Haute Garde-Robe | Wear less. Mean more.",
@@ -60,6 +61,7 @@ export default function RootLayout({
         />
       </head>
       <body className="bg-[#F8F7F4] text-[#171717] min-h-screen flex flex-col font-sans selection:bg-[#A18A70] selection:text-white">
+        <Preloader />
         <AuthProvider>
           <CartProvider>
             <WishlistProvider>

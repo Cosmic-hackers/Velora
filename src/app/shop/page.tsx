@@ -1,11 +1,11 @@
 "use client";
 
-import React, { useState, useMemo, useEffect, Suspense } from "react";
-import Image from "next/image";
-import { useSearchParams, useRouter } from "next/navigation";
-import { ChevronDown, ChevronUp, SlidersHorizontal, X } from "lucide-react";
-import { StoreService } from "@/lib/store";
 import { ProductCard } from "@/components/product/ProductCard";
+import { StoreService } from "@/lib/store";
+import { ChevronDown, ChevronUp, SlidersHorizontal, X } from "lucide-react";
+import Image from "next/image";
+import { useRouter, useSearchParams } from "next/navigation";
+import { Suspense, useEffect, useMemo, useState } from "react";
 
 function ShopContent() {
   const router = useRouter();
@@ -210,7 +210,7 @@ function ShopContent() {
         {/* Architectural backdrop and Model image without any whiteness overlay */}
         <div className="absolute inset-0">
           <Image
-            src="/images/catalog/shop-banner.jpg"
+            src="/images/catalog/shop-banner.png"
             alt="VELORA The Complete Portfolio"
             fill
             priority

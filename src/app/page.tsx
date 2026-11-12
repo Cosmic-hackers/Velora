@@ -54,7 +54,7 @@ export default function HomePage() {
     },
     {
       id: 1,
-      image: "/images/hero/hero-slide-standing.jpg",
+      image: "/images/hero/hero-slide-standing.png",
       tag: "THE SIGNATURE EDIT · MONOCHROME",
       headline: "ARCHITECTURAL\nEASE & PURITY.",
       subtitle: "Sculpted outerwear and relaxed tailoring cut from Italian virgin wool.",
@@ -65,7 +65,7 @@ export default function HomePage() {
     },
     {
       id: 2,
-      image: "/images/hero/hero-slide-portrait.jpg",
+      image: "/images/hero/hero-slide-portrait.png",
       tag: "FINE JEWELLERY & ATELIER DETAILS",
       headline: "INTENTIONAL\nIN EVERY DETAIL.",
       subtitle: "18k sculpted gold vermeil, tactile silks and hand-finished craft.",

@@ -1,17 +1,17 @@
 import {
-  Product,
-  Category,
-  Collection,
-  Coupon,
-  Order,
-  Review,
-  INITIAL_PRODUCTS,
-  INITIAL_CATEGORIES,
-  INITIAL_COLLECTIONS,
-  INITIAL_COUPONS,
-  INITIAL_ORDERS,
-  INITIAL_REVIEWS,
-  STORE_SETTINGS,
+    Category,
+    Collection,
+    Coupon,
+    INITIAL_CATEGORIES,
+    INITIAL_COLLECTIONS,
+    INITIAL_COUPONS,
+    INITIAL_ORDERS,
+    INITIAL_PRODUCTS,
+    INITIAL_REVIEWS,
+    Order,
+    Product,
+    Review,
+    STORE_SETTINGS,
 } from "@/data/seedData";
 
 const STORAGE_KEYS = {
@@ -62,7 +62,9 @@ export const StoreService = {
   // PRODUCTS
   getProducts(): Product[] {
     if (typeof window !== "undefined") {
-      return getStored<Product[]>(STORAGE_KEYS.PRODUCTS, INITIAL_PRODUCTS);
+      return getStored<Product[]>(STORAGE_KEYS.PRODUCTS, INITIAL_PRODUCTS).filter(
+        (product) => product.department === "accessories"
+      );
     }
     return memoryProducts;
   },

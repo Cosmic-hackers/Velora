@@ -385,7 +385,7 @@ export const INITIAL_COLLECTIONS: Collection[] = [
   },
 ];
 
-export const INITIAL_PRODUCTS: Product[] = [
+const ALL_INITIAL_PRODUCTS: Product[] = [
   {
     id: "prod-home-blazer",
     name: "Tailored Blazer",
@@ -1470,6 +1470,10 @@ export const INITIAL_PRODUCTS: Product[] = [
     createdAt: "2024-11-12T10:30:00Z"
   }
 ];
+
+export const INITIAL_PRODUCTS: Product[] = ALL_INITIAL_PRODUCTS.filter(
+  (product) => product.department === "accessories"
+);
 
 export const INITIAL_COUPONS: Coupon[] = [
   {

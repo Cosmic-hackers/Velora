@@ -43,6 +43,136 @@ html, body {
   font-family: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
 }
 
+/* Lightweight first-load layer: motion stays on opacity and transforms for smooth compositing. */
+.velora-preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  background: #F5F1EB;
+  color: #2A211B;
+  transition: opacity 650ms cubic-bezier(0.65, 0, 0.35, 1), visibility 650ms;
+}
+
+.velora-preloader--exiting {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.velora-preloader::before,
+.velora-preloader::after {
+  position: absolute;
+  inset: -35%;
+  content: "";
+  pointer-events: none;
+}
+
+.velora-preloader::before {
+  opacity: 0.26;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.72' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.16'/%3E%3C/svg%3E");
+  mix-blend-mode: multiply;
+}
+
+.velora-preloader::after {
+  background: linear-gradient(105deg, transparent 30%, rgba(255, 255, 255, 0.5) 48%, transparent 66%);
+  transform: translateX(-45%);
+  animation: velora-light-sweep 4.5s ease-in-out infinite;
+}
+
+.velora-preloader__light {
+  position: absolute;
+  width: min(52vw, 720px);
+  height: min(52vw, 720px);
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.38), transparent 68%);
+  filter: blur(18px);
+  transform: translate(-24vw, -16vh);
+  animation: velora-light-drift 7s ease-in-out infinite alternate;
+}
+
+.velora-preloader__content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  width: min(280px, calc(100vw - 64px));
+  flex-direction: column;
+  align-items: center;
+}
+
+.velora-preloader__wordmark {
+  display: flex;
+  margin-left: 0.2em;
+  font-family: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+  font-size: clamp(2.4rem, 7vw, 4.7rem);
+  font-weight: 400;
+  letter-spacing: 0.32em;
+  line-height: 1;
+}
+
+.velora-preloader__letter {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(14px);
+  animation: velora-letter-reveal 700ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.velora-preloader__meter {
+  width: 100%;
+  height: 1px;
+  margin-top: 30px;
+  overflow: hidden;
+  background: rgba(42, 33, 27, 0.16);
+}
+
+.velora-preloader__meter span {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: #2A211B;
+  transform-origin: left center;
+  transition: transform 180ms ease-out;
+}
+
+.velora-preloader__percentage {
+  align-self: flex-end;
+  margin-top: 10px;
+  color: rgba(42, 33, 27, 0.7);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 9px;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.18em;
+}
+
+@keyframes velora-letter-reveal {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes velora-light-sweep {
+  0%, 15% { transform: translateX(-45%); }
+  65%, 100% { transform: translateX(45%); }
+}
+
+@keyframes velora-light-drift {
+  to { transform: translate(20vw, 14vh); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .velora-preloader::after,
+  .velora-preloader__light {
+    animation: none;
+  }
+
+  .velora-preloader__letter {
+    animation-duration: 1ms;
+  }
+}
+
 /* Micro-interaction buttons */
 .btn-luxury {
   @apply inline-flex items-center justify-center tracking-[0.25em] uppercase text-[11px] font-medium py-3.5 px-8 transition-all duration-300 disabled:opacity-50 disabled:pointer-events-none;
