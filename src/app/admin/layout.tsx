@@ -31,13 +31,12 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   const { user, logout, isLoading } = useAuth();
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
 
-  // If this is the admin login page, don't wrap in admin layout
-  if (pathname === "/admin/login") {
-    return <>{children}</>;
-  }
+  const isLoginPage = pathname === "/admin/login";
 
-  // Security gate: check admin authorization
+  // Security gate: check admin authorization (skipped on login page)
   useEffect(() => {
+    if (isLoginPage) return;
+
     if (!isLoading) {
       if (!user) {
         router.push("/admin/login");
@@ -49,7 +48,12 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         router.push("/admin/login?error=denied");
       }
     }
-  }, [user, isLoading, router]);
+  }, [user, isLoading, router, isLoginPage]);
+
+  // If this is the admin login page, don't wrap in admin layout chrome
+  if (isLoginPage) {
+    return <>{children}</>;
+  }
 
   if (isLoading || !user) {
     return (
