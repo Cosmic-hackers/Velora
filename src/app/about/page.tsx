@@ -30,14 +30,15 @@ export default function AboutPage() {
       {/* 1. HERO SECTION: "THE ART OF LESS." (FULL-WIDTH BANNER)      */}
       {/* ──────────────────────────────────────────────────────────── */}
       <section className="relative w-full h-[280px] sm:h-[360px] md:h-[420px] lg:h-[480px] overflow-hidden bg-[#786452] border-b border-[#E9E6E0]">
-        <div className="absolute inset-0">
+        <div className="absolute -inset-[2px]">
           <Image
             src="/images/about/about-hero-model.jpg"
             alt="VELORA The Art of Less"
             fill
             priority
             quality={98}
-            className="object-cover object-[70%_top] sm:object-center"
+            className="object-cover"
+            style={{ objectPosition: "70% 0%" }}
             sizes="100vw"
           />
           {/* Subtle gradient overlay to provide pristine legibility on the left while showcasing the model on the right */}
@@ -204,15 +205,19 @@ export default function AboutPage() {
       {/* ──────────────────────────────────────────────────────────── */}
       {/* 6. FULL-WIDTH CAMPAIGN STRIP WITH "EXPLORE COLLECTIONS"      */}
       {/* ──────────────────────────────────────────────────────────── */}
-      <section className="relative w-full h-[220px] sm:h-[280px] lg:h-[340px] overflow-hidden bg-[#2C241E] border-t border-[#E9E6E0]">
-        <Image
-          src="/images/about/about-bottom-campaign.jpg"
-          alt="VELORA Flowing Cape Campaign"
-          fill
-          priority
-          className="object-cover object-center"
-          sizes="100vw"
-        />
+      <section className="relative w-full h-[240px] sm:h-[300px] lg:h-[360px] overflow-hidden bg-[#241E19] border-t border-[#E9E6E0]">
+        <div className="absolute -inset-[2px]">
+          <Image
+            src="/images/about/about-bottom-campaign.jpg"
+            alt="VELORA Flowing Cape Campaign"
+            fill
+            priority
+            quality={98}
+            className="object-cover"
+            style={{ objectPosition: "center center" }}
+            sizes="100vw"
+          />
+        </div>
         <div className="relative z-10 h-full max-w-[1600px] mx-auto px-6 sm:px-10 lg:px-12 flex items-center justify-end">
           <Link
             href="/collections"

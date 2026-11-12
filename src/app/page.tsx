@@ -86,9 +86,9 @@ export default function HomePage() {
       {/* ──────────────────────────────────────────────────────────── */}
       {/* 1. CINEMATIC FULL-SIZE HERO ADVERTISEMENT (15, 16 PNGS)      */}
       {/* ──────────────────────────────────────────────────────────── */}
-      <section className="relative w-full h-[88vh] sm:h-[94vh] lg:h-[98vh] min-h-[660px] sm:min-h-[740px] lg:min-h-[820px] max-h-[1100px] overflow-hidden bg-[#EAE4D9] border-b border-[#E9E6E0]">
+      <section className="relative w-full h-[88vh] sm:h-[94vh] lg:h-[98vh] min-h-[660px] sm:min-h-[740px] lg:min-h-[820px] max-h-[1100px] overflow-hidden bg-[#181411] border-b border-[#E9E6E0]">
         {/* Full-Size Background Image Behind Typography */}
-        <div className="absolute inset-0 transition-opacity duration-700">
+        <div className="absolute -inset-[2px] transition-opacity duration-700">
           <Image
             key={currentHero.image}
             src={currentHero.image}
@@ -175,7 +175,7 @@ export default function HomePage() {
                 src="/images/catalog/home-dept-women.jpg"
                 alt="VELORA Women"
                 fill
-                className="object-cover object-top"
+                className="object-cover object-center"
                 sizes="140px"
               />
             </div>
@@ -205,7 +205,7 @@ export default function HomePage() {
                 src="/images/catalog/home-dept-men.jpg"
                 alt="VELORA Men"
                 fill
-                className="object-cover object-top"
+                className="object-cover object-center"
                 sizes="140px"
               />
             </div>
@@ -392,13 +392,13 @@ export default function HomePage() {
       {/* ──────────────────────────────────────────────────────────── */}
       <section className="max-w-[1600px] mx-auto px-6 sm:px-10 lg:px-12 py-16 sm:py-24 border-b border-[#E9E6E0]">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-12 items-center">
-          {/* Left Architectural Steps Image (~50% width) */}
+          {/* Left Architectural Steps & Olive Tree Image (~50% width) */}
           <div className="lg:col-span-6 relative aspect-[16/9] sm:aspect-[16/8] w-full overflow-hidden bg-[#ECE7DE] border border-[#E9E6E0]">
             <Image
               src="/images/catalog/home-story-steps.jpg"
               alt="VELORA Architectural Philosophy"
               fill
-              className="object-cover object-center"
+              className="object-cover object-left"
               sizes="(max-width: 1024px) 100vw, 50vw"
             />
           </div>
@@ -430,15 +430,17 @@ export default function HomePage() {
       {/* ──────────────────────────────────────────────────────────── */}
       {/* 6. FULL-WIDTH CINEMATIC CAMPAIGN: "MADE TO LAST."             */}
       {/* ──────────────────────────────────────────────────────────── */}
-      <section className="relative w-full h-[280px] sm:h-[340px] md:h-[400px] overflow-hidden bg-[#241F1A]">
+      <section className="relative w-full h-[460px] sm:h-[540px] md:h-[620px] lg:h-[700px] overflow-hidden bg-[#241F1A]">
         {/* Campaign Model Backdrop */}
-        <div className="absolute inset-0">
+        <div className="absolute -inset-[2px]">
           <Image
             src="/images/catalog/home-campaign-banner.jpg"
             alt="VELORA Made to Last Campaign"
             fill
             priority
-            className="object-cover object-center"
+            quality={98}
+            className="object-cover"
+            style={{ objectPosition: "70% 0%" }}
             sizes="100vw"
           />
           {/* Subtle dark gradient overlay to ensure high contrast for typography */}

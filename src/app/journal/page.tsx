@@ -75,14 +75,15 @@ export default function JournalPage() {
       {/* 1. HERO SECTION: "THE VELORA JOURNAL" (FULL-WIDTH BANNER)    */}
       {/* ──────────────────────────────────────────────────────────── */}
       <section className="relative w-full h-[280px] sm:h-[360px] md:h-[420px] lg:h-[480px] overflow-hidden bg-[#EAE4D9] border-b border-[#E9E6E0]">
-        <div className="absolute inset-0">
+        <div className="absolute -inset-[2px]">
           <Image
             src="/images/journal/journal-hero-model.jpg"
             alt="The VELORA Journal Editorial"
             fill
             priority
             quality={98}
-            className="object-cover object-[70%_top] sm:object-center"
+            className="object-cover"
+            style={{ objectPosition: "70% 0%" }}
             sizes="100vw"
           />
           {/* Subtle gradient overlay to provide pristine legibility on the left while showcasing the model on the right */}

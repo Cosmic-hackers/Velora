@@ -4,29 +4,28 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import { StoreService } from "@/lib/store";
 
 export default function CollectionsPage() {
-  const collections = StoreService.getCollections();
-
   return (
     <div className="w-full bg-[#FAF8F5] text-[#171717] min-h-screen">
       {/* ──────────────────────────────────────────────────────────── */}
       {/* 1. CINEMATIC FULL-WIDTH CAMPAIGN HERO BANNER                 */}
       {/* ──────────────────────────────────────────────────────────── */}
-      <section className="relative w-full h-[260px] sm:h-[320px] md:h-[380px] lg:h-[440px] overflow-hidden bg-[#ECE6DC] border-b border-[#E9E6E0]">
+      <section className="relative w-full h-[280px] sm:h-[340px] md:h-[400px] lg:h-[460px] overflow-hidden bg-[#ECE6DC] border-b border-[#E9E6E0]">
         {/* Architectural backdrop and Model image */}
-        <div className="absolute inset-0">
+        <div className="absolute -inset-[2px]">
           <Image
             src="/images/collections/collections-hero.jpg"
             alt="VELORA Curated Chapters"
             fill
             priority
-            className="object-cover object-[75%_top] sm:object-center"
+            quality={98}
+            className="object-cover"
+            style={{ objectPosition: "68% 0%" }}
             sizes="100vw"
           />
           {/* Subtle gradient overlay to provide pristine legibility on the left while showcasing the model on the right */}
-          <div className="absolute inset-0 bg-gradient-to-r from-[#FAF8F5]/95 via-[#FAF8F5]/65 to-transparent sm:via-[#FAF8F5]/45" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#FAF8F5]/85 via-[#FAF8F5]/40 to-transparent w-full sm:w-[50%]" />
         </div>
 
         {/* Hero Narrative Overlay */}
@@ -54,7 +53,7 @@ export default function CollectionsPage() {
           {/* CARD 1: CHAPTER 01 — THE ESSENTIALS */}
           <Link
             href="/collections/the-essentials"
-            className="group relative aspect-[16/9] sm:aspect-[16/8.5] w-full overflow-hidden bg-[#ECE7DE] border border-[#E9E6E0] flex items-center transition-all hover:border-[#171717]/40 hover:shadow-sm"
+            className="group relative aspect-[16/9] sm:aspect-[16/8.5] w-full overflow-hidden bg-[#ECE7DE] border border-[#E9E6E0] flex items-center transition-all hover:border-[#171717]/40 hover:shadow-xs"
           >
             {/* Photographic Canvas on Right */}
             <div className="absolute inset-0">
@@ -63,10 +62,11 @@ export default function CollectionsPage() {
                 alt="The Essentials Collection"
                 fill
                 priority
-                className="object-cover object-[right_top] group-hover:scale-[1.03] transition-transform duration-700 ease-out"
+                className="object-cover object-[right_top]"
                 sizes="(max-width: 768px) 100vw, 50vw"
               />
-              <div className="absolute inset-0 bg-gradient-to-r from-[#FAF8F5]/95 via-[#FAF8F5]/70 to-transparent w-full sm:w-[65%]" />
+              {/* Soft, non-glaring corner overlay */}
+              <div className="absolute inset-0 bg-gradient-to-r from-[#FAF8F5]/75 via-[#FAF8F5]/30 to-transparent w-full sm:w-[50%]" />
             </div>
 
             {/* Curatorial Text Content */}
@@ -92,7 +92,7 @@ export default function CollectionsPage() {
           {/* CARD 2: CHAPTER 02 — THE SIGNATURE EDIT */}
           <Link
             href="/collections/the-signature-edit"
-            className="group relative aspect-[16/9] sm:aspect-[16/8.5] w-full overflow-hidden bg-[#ECE7DE] border border-[#E9E6E0] flex items-center transition-all hover:border-[#171717]/40 hover:shadow-sm"
+            className="group relative aspect-[16/9] sm:aspect-[16/8.5] w-full overflow-hidden bg-[#ECE7DE] border border-[#E9E6E0] flex items-center transition-all hover:border-[#171717]/40 hover:shadow-xs"
           >
             {/* Architectural Arches on Right */}
             <div className="absolute inset-0">
@@ -101,10 +101,11 @@ export default function CollectionsPage() {
                 alt="The Signature Edit"
                 fill
                 priority
-                className="object-cover object-right group-hover:scale-[1.03] transition-transform duration-700 ease-out"
+                className="object-cover object-right"
                 sizes="(max-width: 768px) 100vw, 50vw"
               />
-              <div className="absolute inset-0 bg-gradient-to-r from-[#FAF8F5]/95 via-[#FAF8F5]/70 to-transparent w-full sm:w-[65%]" />
+              {/* Soft, non-glaring corner overlay */}
+              <div className="absolute inset-0 bg-gradient-to-r from-[#FAF8F5]/70 via-[#FAF8F5]/25 to-transparent w-full sm:w-[50%]" />
             </div>
 
             {/* Curatorial Text Content */}
@@ -133,7 +134,7 @@ export default function CollectionsPage() {
           {/* CARD 3: CHAPTER 03 — THE SEASONAL EDIT */}
           <Link
             href="/collections/the-seasonal-edit"
-            className="group relative aspect-[16/10] sm:aspect-[4/3] w-full overflow-hidden bg-[#ECE7DE] border border-[#E9E6E0] flex flex-col justify-end p-6 sm:p-8 transition-all hover:border-[#171717]/40 hover:shadow-sm"
+            className="group relative aspect-[16/10] sm:aspect-[4/3] w-full overflow-hidden bg-[#ECE7DE] border border-[#E9E6E0] flex flex-col justify-end p-6 sm:p-8 transition-all hover:border-[#171717]/40 hover:shadow-xs"
           >
             {/* Golden Hills Background */}
             <div className="absolute inset-0">
@@ -141,25 +142,25 @@ export default function CollectionsPage() {
                 src="/images/collections/seasonal.jpg"
                 alt="The Seasonal Edit"
                 fill
-                className="object-cover object-center group-hover:scale-[1.03] transition-transform duration-700 ease-out"
+                className="object-cover object-center"
                 sizes="(max-width: 768px) 100vw, 33vw"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#171717]/80 via-[#171717]/30 to-transparent sm:bg-gradient-to-t sm:from-[#FAF8F5]/95 sm:via-[#FAF8F5]/70 sm:to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/25 to-transparent" />
             </div>
 
             {/* Curatorial Text Content */}
-            <div className="relative z-10 space-y-1.5 sm:space-y-2">
-              <span className="text-[9px] sm:text-[10px] tracking-[0.3em] uppercase text-white/90 sm:text-[#77736E] font-medium block">
+            <div className="relative z-10 space-y-1.5 sm:space-y-2 text-white">
+              <span className="text-[9px] sm:text-[10px] tracking-[0.3em] uppercase text-white/90 font-medium block">
                 CHAPTER 03
               </span>
-              <h3 className="font-editorial text-xl sm:text-2xl lg:text-3xl text-white sm:text-[#171717] font-normal leading-tight group-hover:text-[#A18A70] transition-colors">
+              <h3 className="font-editorial text-xl sm:text-2xl lg:text-3xl font-normal leading-tight group-hover:text-[#A18A70] transition-colors">
                 The Seasonal Edit
               </h3>
-              <p className="text-xs text-white/80 sm:text-[#55504A] font-light">
+              <p className="text-xs text-white/85 font-light">
                 A refined take on the season.
               </p>
               <div className="pt-2">
-                <span className="inline-flex items-center gap-1.5 text-[10px] sm:text-[11px] uppercase tracking-[0.25em] font-medium text-white sm:text-[#171717] group-hover:text-[#A18A70] transition-colors">
+                <span className="inline-flex items-center gap-1.5 text-[10px] sm:text-[11px] uppercase tracking-[0.25em] font-medium text-white group-hover:text-[#A18A70] transition-colors">
                   <span>EXPLORE</span>
                   <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                 </span>
@@ -170,7 +171,7 @@ export default function CollectionsPage() {
           {/* CARD 4: CHAPTER 04 — THE MONOCHROME EDIT */}
           <Link
             href="/collections/the-monochrome-edit"
-            className="group relative aspect-[16/10] sm:aspect-[4/3] w-full overflow-hidden bg-[#ECE7DE] border border-[#E9E6E0] flex flex-col justify-end p-6 sm:p-8 transition-all hover:border-[#171717]/40 hover:shadow-sm"
+            className="group relative aspect-[16/10] sm:aspect-[4/3] w-full overflow-hidden bg-[#ECE7DE] border border-[#E9E6E0] flex flex-col justify-end p-6 sm:p-8 transition-all hover:border-[#171717]/40 hover:shadow-xs"
           >
             {/* Tactile Fabric Drapery Background */}
             <div className="absolute inset-0">
@@ -178,25 +179,25 @@ export default function CollectionsPage() {
                 src="/images/collections/monochrome.jpg"
                 alt="The Monochrome Edit"
                 fill
-                className="object-cover object-center group-hover:scale-[1.03] transition-transform duration-700 ease-out"
+                className="object-cover object-center"
                 sizes="(max-width: 768px) 100vw, 33vw"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#171717]/80 via-[#171717]/30 to-transparent sm:bg-gradient-to-t sm:from-[#FAF8F5]/95 sm:via-[#FAF8F5]/70 sm:to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/25 to-transparent" />
             </div>
 
             {/* Curatorial Text Content */}
-            <div className="relative z-10 space-y-1.5 sm:space-y-2">
-              <span className="text-[9px] sm:text-[10px] tracking-[0.3em] uppercase text-white/90 sm:text-[#77736E] font-medium block">
+            <div className="relative z-10 space-y-1.5 sm:space-y-2 text-white">
+              <span className="text-[9px] sm:text-[10px] tracking-[0.3em] uppercase text-white/90 font-medium block">
                 CHAPTER 04
               </span>
-              <h3 className="font-editorial text-xl sm:text-2xl lg:text-3xl text-white sm:text-[#171717] font-normal leading-tight group-hover:text-[#A18A70] transition-colors">
+              <h3 className="font-editorial text-xl sm:text-2xl lg:text-3xl font-normal leading-tight group-hover:text-[#A18A70] transition-colors">
                 The Monochrome Edit
               </h3>
-              <p className="text-xs text-white/80 sm:text-[#55504A] font-light">
+              <p className="text-xs text-white/85 font-light">
                 The power of timeless tones.
               </p>
               <div className="pt-2">
-                <span className="inline-flex items-center gap-1.5 text-[10px] sm:text-[11px] uppercase tracking-[0.25em] font-medium text-white sm:text-[#171717] group-hover:text-[#A18A70] transition-colors">
+                <span className="inline-flex items-center gap-1.5 text-[10px] sm:text-[11px] uppercase tracking-[0.25em] font-medium text-white group-hover:text-[#A18A70] transition-colors">
                   <span>EXPLORE</span>
                   <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                 </span>
@@ -207,7 +208,7 @@ export default function CollectionsPage() {
           {/* CARD 5: CHAPTER 05 — THE ACCESSORIES */}
           <Link
             href="/shop?department=accessories"
-            className="group relative aspect-[16/10] sm:aspect-[4/3] w-full overflow-hidden bg-[#ECE7DE] border border-[#E9E6E0] flex flex-col justify-end p-6 sm:p-8 transition-all hover:border-[#171717]/40 hover:shadow-sm"
+            className="group relative aspect-[16/10] sm:aspect-[4/3] w-full overflow-hidden bg-[#ECE7DE] border border-[#E9E6E0] flex flex-col justify-end p-6 sm:p-8 transition-all hover:border-[#171717]/40 hover:shadow-xs"
           >
             {/* Structured Handbag Background */}
             <div className="absolute inset-0">
@@ -215,25 +216,25 @@ export default function CollectionsPage() {
                 src="/images/collections/accessories.jpg"
                 alt="The Accessories Collection"
                 fill
-                className="object-cover object-center group-hover:scale-[1.03] transition-transform duration-700 ease-out"
+                className="object-cover object-center"
                 sizes="(max-width: 768px) 100vw, 33vw"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#171717]/80 via-[#171717]/30 to-transparent sm:bg-gradient-to-t sm:from-[#FAF8F5]/95 sm:via-[#FAF8F5]/70 sm:to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/25 to-transparent" />
             </div>
 
             {/* Curatorial Text Content */}
-            <div className="relative z-10 space-y-1.5 sm:space-y-2">
-              <span className="text-[9px] sm:text-[10px] tracking-[0.3em] uppercase text-white/90 sm:text-[#77736E] font-medium block">
+            <div className="relative z-10 space-y-1.5 sm:space-y-2 text-white">
+              <span className="text-[9px] sm:text-[10px] tracking-[0.3em] uppercase text-white/90 font-medium block">
                 CHAPTER 05
               </span>
-              <h3 className="font-editorial text-xl sm:text-2xl lg:text-3xl text-white sm:text-[#171717] font-normal leading-tight group-hover:text-[#A18A70] transition-colors">
+              <h3 className="font-editorial text-xl sm:text-2xl lg:text-3xl font-normal leading-tight group-hover:text-[#A18A70] transition-colors">
                 The Accessories
               </h3>
-              <p className="text-xs text-white/80 sm:text-[#55504A] font-light">
+              <p className="text-xs text-white/85 font-light">
                 Finishing touches, thoughtfully designed.
               </p>
               <div className="pt-2">
-                <span className="inline-flex items-center gap-1.5 text-[10px] sm:text-[11px] uppercase tracking-[0.25em] font-medium text-white sm:text-[#171717] group-hover:text-[#A18A70] transition-colors">
+                <span className="inline-flex items-center gap-1.5 text-[10px] sm:text-[11px] uppercase tracking-[0.25em] font-medium text-white group-hover:text-[#A18A70] transition-colors">
                   <span>EXPLORE</span>
                   <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                 </span>
