@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, ChevronLeft, ChevronRight, Truck, RotateCcw, ShieldCheck, Sparkles, CheckCircle2 } from "lucide-react";
@@ -39,305 +39,162 @@ export default function HomePage() {
     }
   };
 
-  // Hero carousel advertisement state
-  const [activeSlide, setActiveSlide] = useState(0);
-  const [selectedColorIdx, setSelectedColorIdx] = useState(0);
-  const [isHeroHovered, setIsHeroHovered] = useState(false);
-
-  // Four Curated International Fashion Brand Campaign Advertisements
-  const heroCampaignSlides = [
+  // Hero advertisement carousel slides (including walking model, standing model, and portrait detail)
+  const heroSlides = [
     {
       id: 0,
-      modelImage: "/images/hero/hero-campaign-woman-coat.jpg",
-      modelPosition: "55% 15%",
-      modelAlt: "VELORA Autumn/Winter 2025 Campaign — Double-Breasted Wool Atelier Blazer",
-      seasonalLabel: "AUTUMN / WINTER 2025 · THE SIGNATURE EDIT",
-      editionLabel: "LOOK 01 · WOMEN'S ATELIER",
-      productName: "Double-Breasted Wool Atelier Blazer",
-      productSlug: "double-breasted-wool-atelier-blazer",
-      productImage: "/images/catalog/tailored-double-breasted-blazer.jpg",
-      price: 34500,
-      description:
-        "Tailored from Italian virgin wool twill in a refined oatmeal melange. Defined by sharp peak lapels, a suppressed waist, and hand-finished horn buttons.",
-      colors: [
-        { name: "Oatmeal Melange", hex: "#D6CBBF" },
-        { name: "Pitch Noir", hex: "#171717" },
-        { name: "Raw Cream", hex: "#F3ECE1" },
-      ],
-      collectionHref: "/collections/the-signature-edit",
-      collectionName: "The Signature Edit",
+      image: "/images/hero/hero-slide-walking.jpg",
+      tag: "EDITORIAL CAMPAIGN · AUTUMN/WINTER",
+      headline: "A QUIETER\nKIND OF LUXURY.",
+      subtitle: "Considered silhouettes. Timeless pieces. For today and beyond.",
+      cta: "SHOP THE COLLECTION",
+      href: "/shop",
+      align: "object-top",
+      stylePosition: "62% 0%"
     },
     {
       id: 1,
-      modelImage: "/images/about/about-story-model.jpg",
-      modelPosition: "50% 10%",
-      modelAlt: "VELORA Men's Atelier Campaign — Cashmere Blouson Jacket",
-      seasonalLabel: "MEN'S ATELIER · THE ESSENTIALS",
-      editionLabel: "LOOK 02 · FOUNDATIONAL TAILORING",
-      productName: "Men's Minimal Cashmere Blouson Jacket",
-      productSlug: "mens-minimal-cashmere-blouson-jacket",
-      productImage: "/images/catalog/mens-cashmere-blouson.jpg",
-      price: 42000,
-      description:
-        "Cut from ultra-dense double-faced cashmere with a clean stand collar, concealed horn-button placket, and brushed satin cupro interior.",
-      colors: [
-        { name: "Charcoal Noir", hex: "#222222" },
-        { name: "Camel", hex: "#A88764" },
-        { name: "Espresso", hex: "#3D2E24" },
-      ],
-      collectionHref: "/collections/the-essentials",
-      collectionName: "The Essentials",
+      image: "/images/hero/hero-slide-standing.jpg",
+      tag: "THE SIGNATURE EDIT · MONOCHROME",
+      headline: "ARCHITECTURAL\nEASE & PURITY.",
+      subtitle: "Sculpted outerwear and relaxed tailoring cut from Italian virgin wool.",
+      cta: "EXPLORE SIGNATURE EDIT",
+      href: "/collections/the-signature-edit",
+      align: "object-top",
+      stylePosition: "52% 0%"
     },
     {
       id: 2,
-      modelImage: "/images/hero/hero-adv-15.jpg",
-      modelPosition: "50% 10%",
-      modelAlt: "VELORA Editorial Campaign — Architectural Trench Cape",
-      seasonalLabel: "NEW SEASON ARRIVALS · THE MONOCHROME EDIT",
-      editionLabel: "LOOK 03 · RUNWAY EDITION",
-      productName: "Architectural Trench Cape",
-      productSlug: "architectural-trench-cape",
-      productImage: "/images/catalog/architectural-trench-cape.jpg",
-      price: 46000,
-      description:
-        "A dramatic architectural silhouette cut from weatherproof Italian wool gabardine with structured raglan shoulders and belted waist drape.",
-      colors: [
-        { name: "Bone Ivory", hex: "#F5F2EB" },
-        { name: "Warm Sand", hex: "#D8C8B5" },
-        { name: "Pitch Noir", hex: "#171717" },
-      ],
-      collectionHref: "/collections/the-monochrome-edit",
-      collectionName: "The Monochrome Edit",
-    },
-    {
-      id: 3,
-      modelImage: "/images/hero/hero-campaign-portrait.jpg",
-      modelPosition: "center 20%",
-      modelAlt: "VELORA Fine Jewelry & Atelier Accessories — Sculpted Gold Hoop Earrings",
-      seasonalLabel: "FINE ATELIER ACCENTS · THE ACCESSORIES",
-      editionLabel: "LOOK 04 · JEWELRY ACCENTS",
-      productName: "Sculpted Gold Hoop Earrings",
-      productSlug: "sculpted-gold-hoop-earrings",
-      productImage: "/images/products/sculpted-gold-hoop-earrings.jpg",
-      price: 14500,
-      description:
-        "Handcrafted 18k gold vermeil earrings characterized by undulating molten curves and an architectural twist silhouette. Lightweight for all-day comfort.",
-      colors: [
-        { name: "18k Yellow Gold", hex: "#D4AF37" },
-        { name: "Rhodium Silver", hex: "#E5E4E2" },
-      ],
-      collectionHref: "/collections/the-accessories",
-      collectionName: "The Accessories",
-    },
+      image: "/images/hero/hero-slide-portrait.jpg",
+      tag: "FINE JEWELLERY & ATELIER DETAILS",
+      headline: "INTENTIONAL\nIN EVERY DETAIL.",
+      subtitle: "18k sculpted gold vermeil, tactile silks and hand-finished craft.",
+      cta: "EXPLORE ACCESSORIES",
+      href: "/shop?department=accessories",
+      align: "object-top",
+      stylePosition: "68% 0%"
+    }
   ];
 
-  const currentSlide = heroCampaignSlides[activeSlide] || heroCampaignSlides[0];
+  // Hero carousel slide indicator state & auto-scrolling
+  const [activeSlide, setActiveSlide] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+  const [scrollY, setScrollY] = useState(0);
 
-  const handleNextSlide = () => {
-    setActiveSlide((prev) => (prev + 1) % heroCampaignSlides.length);
-    setSelectedColorIdx(0);
-  };
-
-  const handlePrevSlide = () => {
-    setActiveSlide((prev) => (prev - 1 + heroCampaignSlides.length) % heroCampaignSlides.length);
-    setSelectedColorIdx(0);
-  };
-
-  // Auto-advance slides every 8 seconds when not hovered
-  React.useEffect(() => {
-    if (isHeroHovered) return;
+  // Auto-scrolling slides sideways slowly one after another (every 5.5s)
+  useEffect(() => {
+    if (isPaused) return;
     const interval = setInterval(() => {
-      handleNextSlide();
-    }, 8000);
+      setActiveSlide((prev) => (prev + 1) % heroSlides.length);
+    }, 5500);
     return () => clearInterval(interval);
-  }, [isHeroHovered]);
+  }, [isPaused, heroSlides.length]);
+
+  // Gentle subtle parallax along page scrolling
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrollY(window.scrollY);
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const currentHero = heroSlides[activeSlide] || heroSlides[0];
 
   return (
     <div className="w-full bg-[#FAF8F5] text-[#171717] min-h-screen">
       {/* ──────────────────────────────────────────────────────────── */}
-      {/* 1. EDITORIAL LUXURY FASHION ADVERTISING HERO SECTION         */}
+      {/* 1. CINEMATIC FULL-SIZE HERO SLIDER (AUTO SIDE-SCROLLING)     */}
       {/* ──────────────────────────────────────────────────────────── */}
       <section
-        onMouseEnter={() => setIsHeroHovered(true)}
-        onMouseLeave={() => setIsHeroHovered(false)}
-        className="relative w-full bg-[#FAF8F5] border-b border-[#E9E6E0] overflow-hidden"
+        onMouseEnter={() => setIsPaused(true)}
+        onMouseLeave={() => setIsPaused(false)}
+        className="relative w-full h-[88vh] sm:h-[94vh] lg:h-[98vh] min-h-[660px] sm:min-h-[740px] lg:min-h-[820px] max-h-[1100px] overflow-hidden bg-[#181411] border-b border-[#E9E6E0]"
       >
-        <div className="max-w-[1600px] mx-auto px-6 sm:px-10 lg:px-12 py-8 sm:py-12 lg:py-14">
-          {/* 2-Column Asymmetrical Editorial Grid */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 xl:gap-16 items-center min-h-[640px] sm:min-h-[700px] lg:min-h-[740px]">
-            {/* ───────────── LEFT COLUMN: LARGE FASHION MODEL ───────────── */}
-            <div className="lg:col-span-7 xl:col-span-7 relative w-full h-[500px] sm:h-[620px] lg:h-[720px] xl:h-[760px] overflow-hidden bg-[#ECE6DC] border border-[#E9E6E0] group">
-              {/* High-Resolution Fashion Model Image */}
+        {/* Horizontal side-scrolling track that glides slowly between the slides */}
+        <div
+          className="absolute -inset-2 sm:-inset-3 flex w-[300%] h-full transition-transform duration-1000 ease-[cubic-bezier(0.25,1,0.5,1)]"
+          style={{
+            transform: `translateX(-${(activeSlide * 100) / 3}%) translateY(${Math.min(scrollY * 0.12, 80)}px)`,
+          }}
+        >
+          {heroSlides.map((slide, idx) => (
+            <div key={slide.id} className="relative w-1/3 h-full overflow-hidden flex-shrink-0">
               <Image
-                key={currentSlide.modelImage}
-                src={currentSlide.modelImage}
-                alt={currentSlide.modelAlt}
+                src={slide.image}
+                alt={slide.tag}
                 fill
-                priority
-                quality={98}
-                className="object-cover transition-transform duration-1000 ease-out group-hover:scale-[1.02]"
-                style={{ objectPosition: currentSlide.modelPosition }}
-                sizes="(max-width: 1024px) 100vw, 60vw"
+                priority={idx === 0}
+                quality={96}
+                className={`object-cover ${slide.align} w-full h-full scale-[1.03] lg:scale-[1.04]`}
+                style={{ objectPosition: slide.stylePosition }}
+                sizes="100vw"
               />
-
-              {/* Editorial Look Pill in Bottom Left */}
-              <div className="absolute bottom-5 left-5 sm:bottom-6 sm:left-6 z-10 bg-[#FAF8F5]/92 backdrop-blur-md border border-[#E9E6E0] px-3.5 py-1.5 text-[9px] uppercase tracking-[0.25em] text-[#171717] font-medium hidden sm:flex items-center gap-2 shadow-xs">
-                <span className="w-2 h-2 rounded-full bg-[#A18A70]" />
-                <span>{currentSlide.editionLabel}</span>
-              </div>
-
-              {/* Watermark brand signature in top-right */}
-              <div className="absolute top-5 right-5 sm:top-6 sm:right-6 z-10 text-[9px] uppercase tracking-[0.3em] font-medium text-[#171717]/60 pointer-events-none">
-                CAMPAIGN ATELIER
-              </div>
+              {/* Luxury Editorial Soft Scrim Overlay on the left */}
+              <div className="absolute inset-0 bg-gradient-to-r from-[#FAF8F5]/92 via-[#FAF8F5]/50 to-transparent w-full sm:w-[65%] lg:w-[48%] pointer-events-none" />
             </div>
+          ))}
+        </div>
 
-            {/* ───────────── RIGHT COLUMN: PRODUCT SHOWCASE ───────────── */}
-            <div className="lg:col-span-5 xl:col-span-5 flex flex-col justify-between h-full space-y-6 sm:space-y-7 lg:space-y-8 py-2 lg:py-4">
-              {/* 4. Small Seasonal Collection Label & Counter */}
-              <div className="flex items-center justify-between pb-2 border-b border-[#E9E6E0]/80">
-                <div className="flex items-center gap-2.5">
-                  <span className="w-6 h-px bg-[#A18A70]" />
-                  <span className="text-[10px] sm:text-[11px] uppercase tracking-[0.35em] text-[#8C7A6B] font-semibold">
-                    {currentSlide.seasonalLabel}
-                  </span>
-                </div>
-                <span className="text-xs font-mono tracking-widest text-[#77736E]">
-                  {String(activeSlide + 1).padStart(2, "0")} / {String(heroCampaignSlides.length).padStart(2, "0")}
-                </span>
-              </div>
+        {/* Previous / Next Side-Scrolling Arrows */}
+        <button
+          onClick={() => setActiveSlide((prev) => (prev === 0 ? heroSlides.length - 1 : prev - 1))}
+          className="hidden sm:flex absolute left-4 lg:left-8 top-1/2 -translate-y-1/2 z-20 w-10 h-10 lg:w-11 lg:h-11 rounded-full bg-[#FAF8F5]/80 hover:bg-[#FAF8F5] border border-[#E9E6E0] backdrop-blur-xs text-[#171717] items-center justify-center transition-all hover:scale-105 shadow-xs"
+          aria-label="Previous slide"
+        >
+          <ChevronLeft className="w-4 h-4 stroke-[1.5]" />
+        </button>
 
-              {/* Product Headline, Price & Description */}
-              <div className="space-y-3">
-                <Link href={`/product/${currentSlide.productSlug}`} className="group/title block">
-                  <h1 className="font-editorial text-3xl sm:text-4xl lg:text-5xl font-normal text-[#171717] tracking-tight leading-[1.08] group-hover/title:text-[#A18A70] transition-colors">
-                    {currentSlide.productName}
-                  </h1>
-                </Link>
+        <button
+          onClick={() => setActiveSlide((prev) => (prev + 1) % heroSlides.length)}
+          className="hidden sm:flex absolute right-4 lg:right-8 top-1/2 -translate-y-1/2 z-20 w-10 h-10 lg:w-11 lg:h-11 rounded-full bg-[#FAF8F5]/80 hover:bg-[#FAF8F5] border border-[#E9E6E0] backdrop-blur-xs text-[#171717] items-center justify-center transition-all hover:scale-105 shadow-xs"
+          aria-label="Next slide"
+        >
+          <ChevronRight className="w-4 h-4 stroke-[1.5]" />
+        </button>
 
-                <div className="flex items-baseline gap-3 pt-1">
-                  <span className="text-xl sm:text-2xl font-normal text-[#171717] font-editorial tracking-wide">
-                    ₹{currentSlide.price.toLocaleString("en-IN")}
-                  </span>
-                  <span className="text-[9.5px] uppercase tracking-[0.2em] text-[#77736E] font-medium">
-                    TAX INCLUDED · WHITE GLOVE DELIVERY
-                  </span>
-                </div>
+        {/* Foreground Content: Clean Typography & CTAs directly in front of the image */}
+        <div className="relative z-10 h-full max-w-[1600px] mx-auto px-6 sm:px-12 lg:px-16 xl:px-20 flex flex-col justify-center space-y-6">
+          <div className="space-y-3 max-w-xl transition-all duration-700">
+            <span className="text-[10px] sm:text-[11px] tracking-[0.4em] uppercase text-[#77736E] font-medium block">
+              {currentHero.tag}
+            </span>
+            <h1 className="font-editorial text-4xl sm:text-6xl lg:text-7xl font-normal text-[#171717] leading-[1.05] tracking-tight whitespace-pre-line">
+              {currentHero.headline}
+            </h1>
+            <p className="text-xs sm:text-sm text-[#3E3A36] font-light leading-relaxed max-w-md pt-1">
+              {currentHero.subtitle}
+            </p>
+          </div>
 
-                <p className="text-xs sm:text-sm text-[#55504A] font-light leading-relaxed max-w-lg pt-1">
-                  {currentSlide.description}
-                </p>
-              </div>
+          {/* Action CTA Button */}
+          <div className="pt-2">
+            <Link
+              href={currentHero.href}
+              className="inline-flex items-center gap-2.5 bg-[#171717] text-white hover:bg-[#A18A70] text-[10px] sm:text-[11px] uppercase tracking-[0.25em] px-8 py-4 font-medium transition-colors duration-300 group shadow-xs"
+            >
+              <span>{currentHero.cta}</span>
+              <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+            </Link>
+          </div>
 
-              {/* 3. Product Studio Imagery Preview Card */}
-              <Link
-                href={`/product/${currentSlide.productSlug}`}
-                className="relative w-full aspect-[16/10] sm:aspect-[16/9] lg:aspect-[16/10] overflow-hidden bg-[#ECE6DC] border border-[#E9E6E0] block group/pimg shadow-xs"
-              >
-                <Image
-                  src={currentSlide.productImage}
-                  alt={currentSlide.productName}
-                  fill
-                  className="object-cover object-center transition-transform duration-700 ease-out group-hover/pimg:scale-105"
-                  sizes="(max-width: 1024px) 100vw, 40vw"
+          {/* Carousel Slide Indicator Dashes with Slide Numbers */}
+          <div className="flex items-center space-x-3 pt-4">
+            <div className="flex items-center space-x-2">
+              {heroSlides.map((slide, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => setActiveSlide(idx)}
+                  className={`h-[2.5px] transition-all duration-500 ${
+                    activeSlide === idx ? "w-12 bg-[#171717]" : "w-4 bg-[#171717]/35 hover:bg-[#171717]"
+                  }`}
+                  aria-label={`Advertisement Slide ${idx + 1}`}
                 />
-                <div className="absolute top-3 left-3 bg-[#FAF8F5]/92 backdrop-blur-xs px-2.5 py-1 text-[8.5px] uppercase tracking-[0.2em] text-[#171717] font-semibold border border-[#E9E6E0]">
-                  STUDIO ATELIER PIECE
-                </div>
-              </Link>
-
-              {/* Available Colors & Interactive Swatches */}
-              <div className="space-y-2 pt-1">
-                <div className="flex items-center justify-between text-xs">
-                  <span className="text-[10px] uppercase tracking-[0.25em] text-[#77736E] font-medium">
-                    AVAILABLE SHADES:
-                  </span>
-                  <span className="text-[11px] text-[#171717] font-medium">
-                    {currentSlide.colors[selectedColorIdx]?.name || currentSlide.colors[0]?.name}
-                  </span>
-                </div>
-                <div className="flex items-center gap-2">
-                  {currentSlide.colors.map((color, idx) => (
-                    <button
-                      key={color.name}
-                      onClick={() => setSelectedColorIdx(idx)}
-                      title={color.name}
-                      className={`w-5 h-5 rounded-full border border-black/20 transition-all ${
-                        selectedColorIdx === idx
-                          ? "ring-2 ring-[#171717] ring-offset-2 ring-offset-[#FAF8F5] scale-110"
-                          : "hover:scale-105 opacity-85 hover:opacity-100"
-                      }`}
-                      style={{ backgroundColor: color.hex }}
-                      aria-label={`Select ${color.name}`}
-                    />
-                  ))}
-                  <span className="text-[10px] text-[#77736E] font-light ml-2">
-                    ({currentSlide.colors.length} curated tones)
-                  </span>
-                </div>
-              </div>
-
-              {/* Action Buttons: Prominent Black EXPLORE PRODUCT & Secondary VIEW COLLECTION */}
-              <div className="pt-2 sm:pt-4 flex flex-col sm:flex-row items-stretch sm:items-center gap-4 sm:gap-6">
-                {/* 5. Prominent Black EXPLORE PRODUCT Button */}
-                <Link
-                  href={`/product/${currentSlide.productSlug}`}
-                  className="inline-flex items-center justify-center gap-3 bg-[#171717] text-white hover:bg-[#8C7A6B] text-[10.5px] uppercase tracking-[0.28em] px-8 py-4 font-medium transition-colors shadow-sm group/btn"
-                >
-                  <span>EXPLORE PRODUCT</span>
-                  <ArrowRight className="w-3.5 h-3.5 group-hover/btn:translate-x-1 transition-transform" />
-                </Link>
-
-                {/* 6. Secondary VIEW COLLECTION Text Link */}
-                <Link
-                  href={currentSlide.collectionHref}
-                  className="inline-flex items-center justify-center sm:justify-start gap-2 text-[10.5px] uppercase tracking-[0.25em] font-medium text-[#171717] hover:text-[#8C7A6B] underline underline-offset-8 transition-colors py-2"
-                >
-                  <span>VIEW COLLECTION</span>
-                  <ArrowRight className="w-3 h-3 text-[#8C7A6B]" />
-                </Link>
-              </div>
-
-              {/* Slide Navigation Dots and Arrows */}
-              <div className="pt-4 border-t border-[#E9E6E0] flex items-center justify-between">
-                {/* Carousel Indicators */}
-                <div className="flex items-center gap-2">
-                  {heroCampaignSlides.map((_, idx) => (
-                    <button
-                      key={idx}
-                      onClick={() => {
-                        setActiveSlide(idx);
-                        setSelectedColorIdx(0);
-                      }}
-                      className={`h-[2px] transition-all duration-500 ${
-                        activeSlide === idx
-                          ? "w-10 bg-[#171717]"
-                          : "w-4 bg-[#171717]/25 hover:bg-[#171717]"
-                      }`}
-                      aria-label={`Go to slide ${idx + 1}`}
-                    />
-                  ))}
-                </div>
-
-                {/* Arrows */}
-                <div className="flex items-center gap-2">
-                  <button
-                    onClick={handlePrevSlide}
-                    className="p-2 border border-[#E9E6E0] hover:border-[#171717] hover:bg-[#171717] hover:text-white transition-colors"
-                    aria-label="Previous Campaign"
-                  >
-                    <ChevronLeft className="w-4 h-4" />
-                  </button>
-                  <button
-                    onClick={handleNextSlide}
-                    className="p-2 border border-[#E9E6E0] hover:border-[#171717] hover:bg-[#171717] hover:text-white transition-colors"
-                    aria-label="Next Campaign"
-                  >
-                    <ChevronRight className="w-4 h-4" />
-                  </button>
-                </div>
-              </div>
+              ))}
             </div>
+            <span className="text-[10px] font-mono text-[#55504A] tracking-widest pl-2">
+              0{activeSlide + 1} / 0{heroSlides.length}
+            </span>
           </div>
         </div>
       </section>
