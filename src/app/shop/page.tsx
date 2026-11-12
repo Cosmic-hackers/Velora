@@ -206,32 +206,31 @@ function ShopContent() {
       {/* ──────────────────────────────────────────────────────────── */}
       {/* 1. CINEMATIC FULL-WIDTH CAMPAIGN BANNER                      */}
       {/* ──────────────────────────────────────────────────────────── */}
-      <section className="relative w-full h-[260px] sm:h-[300px] md:h-[340px] lg:h-[380px] xl:h-[400px] overflow-hidden bg-[#ECE6DC] border-b border-[#E9E6E0]">
-        {/* Architectural backdrop and Model image */}
+      <section className="relative w-full h-[200px] sm:h-[240px] md:h-[280px] lg:h-[320px] overflow-hidden bg-[#D8D0C5] border-b border-[#E9E6E0]">
+        {/* Architectural backdrop and Model image without any whiteness overlay */}
         <div className="absolute inset-0">
           <Image
             src="/images/catalog/shop-banner.jpg"
             alt="VELORA The Complete Portfolio"
             fill
             priority
+            quality={98}
             className="object-cover"
-            style={{ objectPosition: "74% 20%" }}
+            style={{ objectPosition: "70% 50%" }}
             sizes="100vw"
           />
-          {/* Subtle gradient overlay to enhance legibility on the left while revealing the model on the right */}
-          <div className="absolute inset-0 bg-gradient-to-r from-[#FAF8F5]/90 via-[#FAF8F5]/45 to-transparent sm:via-[#FAF8F5]/25" />
         </div>
 
         {/* Banner Content (Aligned to left margin) */}
         <div className="relative z-10 h-full max-w-[1600px] mx-auto px-6 sm:px-10 lg:px-12 flex flex-col justify-center">
           <div className="max-w-xl space-y-1.5 sm:space-y-2">
-            <span className="text-[10px] sm:text-[11px] tracking-[0.38em] uppercase text-[#77736E] font-medium block">
+            <span className="text-[10px] sm:text-[11px] tracking-[0.38em] uppercase text-[#5C554E] font-medium block">
               S H O P
             </span>
             <h1 className="font-editorial text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-[#171717] font-normal tracking-tight leading-[1.08]">
               The Complete Portfolio
             </h1>
-            <p className="text-xs sm:text-sm text-[#55504A] font-light leading-relaxed max-w-md pt-1">
+            <p className="text-xs sm:text-sm text-[#3E3832] font-light leading-relaxed max-w-md pt-1">
               Pure silhouettes, master tailoring, natural unadulterated wools and cashmere.
             </p>
           </div>
