@@ -201,15 +201,6 @@ function ShopContent() {
     price_desc: "PRICE: HIGH TO LOW",
   };
 
-  const isMen = selectedGender === "men";
-  const bannerImage = isMen ? "/images/catalog/shop-banner-men.jpg" : "/images/catalog/shop-banner.png";
-  const bannerAlt = isMen ? "VELORA Men's Atelier Portfolio" : "VELORA The Complete Portfolio";
-  const bannerTag = isMen ? "M E N ' S   A T E L I E R" : "S H O P";
-  const bannerHeading = isMen ? "The Men's Atelier" : "The Complete Portfolio";
-  const bannerSubheading = isMen
-    ? "Considered masculine silhouettes, unadulterated Italian wools, and master tailoring."
-    : "Pure silhouettes, master tailoring, natural unadulterated wools and cashmere.";
-
   return (
     <div className="w-full bg-[#FAF8F5] text-[#171717] min-h-screen">
       {/* ──────────────────────────────────────────────────────────── */}
@@ -219,13 +210,19 @@ function ShopContent() {
         {/* Architectural backdrop and Model image without any whiteness overlay */}
         <div className="absolute inset-0">
           <Image
-            src={bannerImage}
-            alt={bannerAlt}
+            src={
+              selectedGender === "men"
+                ? "/images/catalog/shop-banner-men.jpg"
+                : "/images/catalog/shop-banner.png"
+            }
+            alt="VELORA The Complete Portfolio"
             fill
             priority
             quality={98}
             className="object-cover"
-            style={{ objectPosition: isMen ? "80% 15%" : "70% 50%" }}
+            style={{
+              objectPosition: selectedGender === "men" ? "75% 20%" : "70% 50%",
+            }}
             sizes="100vw"
           />
         </div>
@@ -234,13 +231,13 @@ function ShopContent() {
         <div className="relative z-10 h-full max-w-[1600px] mx-auto px-6 sm:px-10 lg:px-12 flex flex-col justify-center">
           <div className="max-w-xl space-y-1.5 sm:space-y-2">
             <span className="text-[10px] sm:text-[11px] tracking-[0.38em] uppercase text-[#5C554E] font-medium block">
-              {bannerTag}
+              S H O P
             </span>
             <h1 className="font-editorial text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-[#171717] font-normal tracking-tight leading-[1.08]">
-              {bannerHeading}
+              The Complete Portfolio
             </h1>
             <p className="text-xs sm:text-sm text-[#3E3832] font-light leading-relaxed max-w-md pt-1">
-              {bannerSubheading}
+              Pure silhouettes, master tailoring, natural unadulterated wools and cashmere.
             </p>
           </div>
         </div>
