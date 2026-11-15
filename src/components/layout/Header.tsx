@@ -14,6 +14,7 @@ export function Header() {
   const { itemCount, openCart } = useCart();
   const { wishlistCount } = useWishlist();
   const { user } = useAuth();
+  const isHome = pathname === "/";
 
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -54,10 +55,12 @@ export function Header() {
   return (
     <>
       <header
-        className={`sticky top-0 z-40 w-full transition-all duration-500 ${
+        className={`${isHome ? "absolute top-0" : "sticky top-0"} z-40 w-full transition-all duration-500 ${
           isScrolled
             ? "bg-[#F8F7F4]/95 backdrop-blur-md border-b border-[#E9E6E0]"
-            : "bg-[#F8F7F4] border-b border-[#E9E6E0]/40"
+            : isHome
+              ? "bg-transparent border-b border-transparent"
+              : "bg-[#F8F7F4] border-b border-[#E9E6E0]/40"
         }`}
       >
         <div className="w-full relative px-6 sm:px-10 lg:px-12 h-20 flex items-center justify-between">

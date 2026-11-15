@@ -39,7 +39,7 @@ export default function HomePage() {
     }
   };
 
-  // Hero advertisement carousel slides (including walking model, standing model, and portrait detail)
+  // Hero advertisement carousel slides (walking model, standing model, and portrait detail)
   const heroSlides = [
     {
       id: 0,
@@ -50,7 +50,7 @@ export default function HomePage() {
       cta: "SHOP THE COLLECTION",
       href: "/shop",
       align: "object-top",
-      stylePosition: "62% 0%"
+      stylePosition: "62% 0%",
     },
     {
       id: 1,
@@ -61,7 +61,7 @@ export default function HomePage() {
       cta: "EXPLORE SIGNATURE EDIT",
       href: "/collections/the-signature-edit",
       align: "object-top",
-      stylePosition: "52% 12%"
+      stylePosition: "52% 12%",
     },
     {
       id: 2,
@@ -72,48 +72,32 @@ export default function HomePage() {
       cta: "EXPLORE ACCESSORIES",
       href: "/shop?department=accessories",
       align: "object-top",
-      stylePosition: "68% 0%"
+      stylePosition: "68% 0%",
     },
   ];
 
-  // Hero carousel slide indicator state & auto-scrolling
+  // Hero carousel active slide state - fixed without moving or shaking
   const [activeSlide, setActiveSlide] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
-
-  // Auto-scrolling slides sideways slowly one after another (every 5.5s)
-  useEffect(() => {
-    if (isPaused) return;
-    const interval = setInterval(() => {
-      setActiveSlide((prev) => (prev + 1) % heroSlides.length);
-    }, 5500);
-    return () => clearInterval(interval);
-  }, [isPaused, heroSlides.length]);
 
   const currentHero = heroSlides[activeSlide] || heroSlides[0];
 
   return (
     <div className="w-full bg-[#FAF8F5] text-[#171717] min-h-screen">
       {/* ──────────────────────────────────────────────────────────── */}
-      {/* 1. CINEMATIC FULL-SIZE HERO SLIDER (AUTO SIDE-SCROLLING)     */}
+      {/* 1. CINEMATIC FULL-SIZE HERO SECTION (FIXED & RESPONSIVE)     */}
       {/* ──────────────────────────────────────────────────────────── */}
       <section
-        onMouseEnter={() => setIsPaused(true)}
-        onMouseLeave={() => setIsPaused(false)}
-        className="relative w-full h-[78vh] sm:h-[86vh] lg:h-[92vh] min-h-[560px] sm:min-h-[650px] lg:min-h-[760px] max-h-[1000px] overflow-hidden bg-white border-b border-[#E9E6E0]"
+        data-motion-skip
+        className="relative w-full h-[100svh] min-h-[560px] sm:min-h-[650px] lg:min-h-[760px] overflow-hidden bg-[#FAF8F5] border-b border-[#E9E6E0]"
       >
-        {/* Horizontal side-scrolling track that glides slowly between the slides */}
-        <div
-          className="absolute inset-0 flex h-full bg-white transition-transform duration-1000 ease-[cubic-bezier(0.25,1,0.5,1)] will-change-transform"
-          style={{
-            width: `${heroSlides.length * 100}%`,
-            transform: `translate3d(-${(activeSlide * 100) / heroSlides.length}%, 0, 0)`,
-          }}
-        >
+        {/* Fixed background images - perfectly steady without moving or shaking */}
+        <div className="absolute inset-0 w-full h-full bg-[#FAF8F5]">
           {heroSlides.map((slide, idx) => (
             <div
               key={slide.id}
-              className="relative h-full min-w-0 overflow-hidden flex-shrink-0 bg-white"
-              style={{ width: `${100 / heroSlides.length}%` }}
+              className={`absolute inset-0 w-full h-full transition-opacity duration-700 ease-in-out ${
+                activeSlide === idx ? "opacity-100 z-10" : "opacity-0 z-0 pointer-events-none"
+              }`}
             >
               <Image
                 src={slide.image}
@@ -121,7 +105,7 @@ export default function HomePage() {
                 fill
                 priority={idx === 0}
                 quality={96}
-                className={`object-cover ${slide.align} w-full h-full`}
+                className="object-cover w-full h-full"
                 style={{ objectPosition: slide.stylePosition }}
                 sizes="100vw"
               />
@@ -166,6 +150,7 @@ export default function HomePage() {
           <div className="pt-2">
             <Link
               href={currentHero.href}
+              data-magnetic
               className="inline-flex items-center gap-2.5 bg-[#171717] text-white hover:bg-[#A18A70] text-[10px] sm:text-[11px] uppercase tracking-[0.25em] px-8 py-4 font-medium transition-colors duration-300 group shadow-xs"
             >
               <span>{currentHero.cta}</span>

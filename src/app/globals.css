@@ -43,6 +43,27 @@ html, body {
   font-family: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
 }
 
+/* Shared editorial transition and pointer language. */
+.velora-page-curtain {
+  position: fixed;
+  inset: 0;
+  z-index: 1100;
+  display: grid;
+  place-items: center;
+  background: #F5F1EB;
+  color: #38291F;
+  pointer-events: none;
+  transform: scaleY(0);
+  transform-origin: bottom center;
+}
+
+.velora-page-curtain__logo {
+  font-family: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  letter-spacing: 0.38em;
+  padding-left: 0.38em;
+}
+
 /* Lightweight first-load layer: motion stays on opacity and transforms for smooth compositing. */
 .velora-preloader {
   position: fixed;

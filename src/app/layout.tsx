@@ -1,6 +1,7 @@
 import { CartDrawer } from "@/components/cart/CartDrawer";
 import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
+import { MotionSystem } from "@/components/layout/MotionSystem";
 import { Preloader } from "@/components/layout/Preloader";
 import { AuthProvider } from "@/context/AuthContext";
 import { CartProvider } from "@/context/CartContext";
@@ -62,6 +63,7 @@ export default function RootLayout({
       </head>
       <body className="bg-[#F8F7F4] text-[#171717] min-h-screen flex flex-col font-sans selection:bg-[#A18A70] selection:text-white">
         <Preloader />
+        <MotionSystem />
         <AuthProvider>
           <CartProvider>
             <WishlistProvider>

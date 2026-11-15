@@ -1,13 +1,14 @@
 "use client";
 
-import React, { useState } from "react";
+import { MotionReveal } from "@/components/motion/MotionReveal";
+import { useCart } from "@/context/CartContext";
+import { useWishlist } from "@/context/WishlistContext";
+import { Product } from "@/data/seedData";
+import { formatPrice } from "@/lib/utils";
+import { Check, Heart } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { Heart, Check } from "lucide-react";
-import { Product } from "@/data/seedData";
-import { useWishlist } from "@/context/WishlistContext";
-import { useCart } from "@/context/CartContext";
-import { formatPrice } from "@/lib/utils";
+import React, { useState } from "react";
 
 interface ProductCardProps {
   product: Product;
@@ -28,6 +29,7 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
     product.images[selectedColorIdx] ||
     product.images[0] ||
     "";
+  const alternateImage = product.images[1] || activeImage;
 
   const handleQuickAddSize = (e: React.MouseEvent, size: string) => {
     e.preventDefault();
@@ -43,7 +45,7 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
   };
 
   return (
-    <div className="group relative flex flex-col bg-transparent">
+    <MotionReveal className="group relative flex flex-col bg-transparent">
       {/* ──────────────────────────────────────────────────────────── */}
       {/* 1. IMAGE CONTAINER (NO ZOOM, NO HOVER IMAGE SWAPPING)        */}
       {/* ──────────────────────────────────────────────────────────── */}
@@ -55,8 +57,17 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
             fill
             priority={priority}
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-            className="object-cover object-top"
+            className="object-cover object-top transition-transform duration-1000 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.03]"
           />
+          {alternateImage !== activeImage && (
+            <Image
+              src={alternateImage}
+              alt={`${product.name} alternate view`}
+              fill
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+              className="object-cover object-top opacity-0 transition-opacity duration-700 ease-out group-hover:opacity-100"
+            />
+          )}
         </Link>
 
         {/* Minimalist Outline Wishlist Heart Icon in Top Right */}
@@ -71,10 +82,10 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
           title="Save to wishlist"
         >
           <Heart
-            className={`w-4 h-4 stroke-[1.25] transition-all duration-300 ${
+            className={`w-4 h-4 stroke-[1.25] transition-all duration-500 ${
               isWishlisted
                 ? "fill-[#171717] text-[#171717] scale-110"
-                : "text-[#171717] hover:scale-110"
+                : "text-[#171717] group-hover:scale-110"
             }`}
           />
         </button>
@@ -107,7 +118,7 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
       {/* ──────────────────────────────────────────────────────────── */}
       {/* 2. PRODUCT INFO (EXACT LAYOUT TO REFERENCE IMAGE)            */}
       {/* ──────────────────────────────────────────────────────────── */}
-      <div className="pt-3 pb-1 flex flex-col space-y-0.5">
+      <div className="pt-3 pb-1 flex flex-col space-y-0.5 transition-transform duration-500 ease-out group-hover:-translate-y-0.5">
         {/* Row 1: Name on Left, Color Swatches on Right */}
         <div className="flex items-center justify-between gap-3">
           <Link
@@ -149,6 +160,6 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
           </p>
         </div>
       </div>
-    </div>
+    </MotionReveal>
   );
 }
