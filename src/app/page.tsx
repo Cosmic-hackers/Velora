@@ -39,7 +39,7 @@ export default function HomePage() {
     }
   };
 
-  // Hero advertisement carousel slides (walking model, standing model, and portrait detail)
+  // Hero advertisement carousel slides (walking model, menswear campaign, standing model, and portrait detail)
   const heroSlides = [
     {
       id: 0,
@@ -54,6 +54,17 @@ export default function HomePage() {
     },
     {
       id: 1,
+      image: "/images/hero/hero-slide-mens.jpg",
+      tag: "MEN'S ATELIER · AUTUMN/WINTER",
+      headline: "MODERN MASCULINITY.\nCONSIDERED FORM.",
+      subtitle: "Unstructured Italian wool overcoats, relaxed pleated trousers and refined essentials.",
+      cta: "EXPLORE MEN'S ATELIER",
+      href: "/shop?department=men",
+      align: "object-top",
+      stylePosition: "58% 18%",
+    },
+    {
+      id: 2,
       image: "/images/hero/hero-slide-standing.png",
       tag: "THE SIGNATURE EDIT · MONOCHROME",
       headline: "ARCHITECTURAL\nEASE & PURITY.",
@@ -64,7 +75,7 @@ export default function HomePage() {
       stylePosition: "52% 12%",
     },
     {
-      id: 2,
+      id: 3,
       image: "/images/hero/hero-slide-portrait.png",
       tag: "FINE JEWELLERY & ATELIER DETAILS",
       headline: "INTENTIONAL\nIN EVERY DETAIL.",
