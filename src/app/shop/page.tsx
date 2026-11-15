@@ -248,13 +248,13 @@ function ShopContent() {
             className="lg:hidden inline-flex items-center gap-2 text-xs uppercase tracking-widest text-[#171717] py-2 px-3 border border-[#E9E6E0] bg-white"
           >
             <SlidersHorizontal className="w-3.5 h-3.5" />
-            <span>Refine ({filteredProducts.length})</span>
+            <span suppressHydrationWarning>Refine ({filteredProducts.length})</span>
           </button>
 
           {/* Left Count Indicator (Aligned with grid on desktop) */}
           <div className="hidden lg:block lg:ml-[280px] xl:ml-[300px]">
             <span className="text-xs text-[#77736E] font-light">
-              Displaying <strong className="font-medium text-[#171717]">{filteredProducts.length}</strong> pieces
+              Displaying <strong suppressHydrationWarning className="font-medium text-[#171717]">{filteredProducts.length}</strong> pieces
             </span>
           </div>
 

@@ -15,7 +15,7 @@ import {
 } from "@/data/seedData";
 
 const STORAGE_KEYS = {
-  PRODUCTS: "velora_products_v9",
+  PRODUCTS: "velora_products_v12",
   ORDERS: "velora_orders_v1",
   COUPONS: "velora_coupons_v1",
   REVIEWS: "velora_reviews_v1",
@@ -62,9 +62,12 @@ export const StoreService = {
   // PRODUCTS
   getProducts(): Product[] {
     if (typeof window !== "undefined") {
-      return getStored<Product[]>(STORAGE_KEYS.PRODUCTS, INITIAL_PRODUCTS).filter(
-        (product) => product.department === "accessories"
-      );
+      const stored = getStored<Product[]>(STORAGE_KEYS.PRODUCTS, INITIAL_PRODUCTS);
+      if (!Array.isArray(stored) || stored.length < INITIAL_PRODUCTS.length) {
+        setStored(STORAGE_KEYS.PRODUCTS, INITIAL_PRODUCTS);
+        return INITIAL_PRODUCTS;
+      }
+      return stored;
     }
     return memoryProducts;
   },
