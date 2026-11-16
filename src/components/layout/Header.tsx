@@ -46,11 +46,10 @@ export function Header() {
   return (
     <>
       <header
-        className={`sticky top-0 z-40 w-full transition-all duration-500 ${
-          isScrolled
-            ? "bg-white/95 backdrop-blur-md border-b border-[#E9E6E0] shadow-sm"
-            : "bg-white border-b border-[#E9E6E0]/60"
-        }`}
+        className={`sticky top-0 z-40 w-full transition-all duration-500 ${isScrolled
+          ? "bg-white/95 backdrop-blur-md border-b border-[#E9E6E0] shadow-sm"
+          : "bg-white border-b border-[#E9E6E0]/60"
+          }`}
       >
         <div className="w-full relative px-6 sm:px-10 lg:px-12 h-20 flex items-center justify-between">
           {/* Mobile Menu Button */}
