@@ -4,7 +4,7 @@ import { SearchModal } from "@/components/search/SearchModal";
 import { useAuth } from "@/context/AuthContext";
 import { useCart } from "@/context/CartContext";
 import { useWishlist } from "@/context/WishlistContext";
-import { ChevronDown, Heart, Menu, Search, ShoppingBag, X } from "lucide-react";
+import { Heart, Menu, Search, ShoppingBag, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -20,8 +20,6 @@ export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchModalOpen, setSearchModalOpen] = useState(false);
   const [megaMenuOpen, setMegaMenuOpen] = useState(false);
-  const [currency, setCurrency] = useState("INR");
-  const [currencyOpen, setCurrencyOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -43,25 +41,17 @@ export function Header() {
     { name: "JOURNAL", href: "/journal" },
   ];
 
-  const shippingDestinations = [
-    { country: "India", code: "INR", label: "Ship to: India (INR)" },
-    { country: "United Kingdom", code: "GBP", label: "Ship to: United Kingdom (£)" },
-    { country: "United States", code: "USD", label: "Ship to: United States ($)" },
-    { country: "Europe", code: "EUR", label: "Ship to: Europe (€)" },
-  ];
 
-  const currencies = ["INR", "USD", "EUR", "GBP"];
 
   return (
     <>
       <header
-        className={`${isHome ? "absolute top-0" : "sticky top-0"} z-40 w-full transition-all duration-500 ${
-          isScrolled
+        className={`${isHome ? "absolute top-0" : "sticky top-0"} z-40 w-full transition-all duration-500 ${isScrolled
             ? "bg-[#F8F7F4]/95 backdrop-blur-md border-b border-[#E9E6E0]"
             : isHome
               ? "bg-transparent border-b border-transparent"
               : "bg-[#F8F7F4] border-b border-[#E9E6E0]/40"
-        }`}
+          }`}
       >
         <div className="w-full relative px-6 sm:px-10 lg:px-12 h-20 flex items-center justify-between">
           {/* Mobile Menu Button */}
@@ -90,15 +80,13 @@ export function Header() {
                 >
                   <Link
                     href={link.href}
-                    className={`text-[11px] uppercase tracking-[0.25em] font-medium transition-all duration-300 relative py-1 group ${
-                      isActive ? "text-[#171717]" : "text-[#171717]/85 hover:text-[#171717]"
-                    }`}
+                    className={`text-[11px] uppercase tracking-[0.25em] font-medium transition-all duration-300 relative py-1 group ${isActive ? "text-[#171717]" : "text-[#171717]/85 hover:text-[#171717]"
+                      }`}
                   >
                     {link.name}
                     <span
-                      className={`absolute bottom-0 left-0 h-[1px] bg-[#171717] transition-all duration-300 ${
-                        isActive ? "w-full" : "w-0 group-hover:w-full"
-                      }`}
+                      className={`absolute bottom-0 left-0 h-[1px] bg-[#171717] transition-all duration-300 ${isActive ? "w-full" : "w-0 group-hover:w-full"
+                        }`}
                     />
                   </Link>
                 </div>
@@ -117,74 +105,7 @@ export function Header() {
 
           {/* RIGHT ACTION ICONS & LINKS (Reference Layout) */}
           <div className="flex items-center space-x-4 sm:space-x-6 lg:space-x-7 ml-auto z-10">
-            {/* Shipping Destination & Currency Selector (KHAITE style) */}
-            <div className="relative hidden xl:block">
-              <button
-                onClick={() => setCurrencyOpen(!currencyOpen)}
-                className="text-[11px] font-medium tracking-[0.08em] text-[#171717]/85 hover:text-[#171717] flex items-center gap-1.5 transition-colors py-1"
-                aria-label="Select destination & currency"
-              >
-                <span>
-                  {shippingDestinations.find((d) => d.code === currency)?.label || `Ship to: India (${currency})`}
-                </span>
-                <ChevronDown className="w-3 h-3 stroke-[1.5]" />
-              </button>
 
-              {currencyOpen && (
-                <div
-                  onMouseLeave={() => setCurrencyOpen(false)}
-                  className="absolute right-0 top-full mt-2 w-56 bg-[#FFFFFF] border border-[#E9E6E0] shadow-sm py-2 z-50 text-[11px] tracking-wide animate-fadeIn"
-                >
-                  {shippingDestinations.map((dest) => (
-                    <button
-                      key={dest.code}
-                      onClick={() => {
-                        setCurrency(dest.code);
-                        setCurrencyOpen(false);
-                      }}
-                      className={`block w-full text-left px-4 py-2 hover:bg-[#F8F7F4] transition-colors ${
-                        currency === dest.code ? "font-semibold text-[#171717]" : "text-[#77736E]"
-                      }`}
-                    >
-                      {dest.label}
-                    </button>
-                  ))}
-                </div>
-              )}
-            </div>
-
-            {/* Mobile/Compact Currency Button */}
-            <div className="relative block xl:hidden">
-              <button
-                onClick={() => setCurrencyOpen(!currencyOpen)}
-                className="text-[10px] uppercase tracking-[0.2em] font-medium text-[#171717]/80 hover:text-[#171717] flex items-center gap-1 transition-colors py-1"
-                aria-label="Select currency"
-              >
-                <span>{currency}</span>
-                <ChevronDown className="w-3 h-3 stroke-[1.5]" />
-              </button>
-              {currencyOpen && (
-                <div
-                  onMouseLeave={() => setCurrencyOpen(false)}
-                  className="absolute right-0 top-full mt-2 w-28 bg-[#FFFFFF] border border-[#E9E6E0] shadow-sm py-1.5 z-50 text-[10px] tracking-widest uppercase animate-fadeIn"
-                >
-                  {shippingDestinations.map((dest) => (
-                    <button
-                      key={dest.code}
-                      onClick={() => {
-                        setCurrency(dest.code);
-                        setCurrencyOpen(false);
-                      }}
-                      className={`block w-full text-left px-3 py-1.5 hover:bg-[#F8F7F4] transition-colors ${
-                        currency === dest.code ? "font-semibold text-[#171717]" : "text-[#77736E]"
-                      }`}
-                    >
-                      {dest.code}
-                    </button>
-                  ))}
-                </div>
-              )}
-            </div>
 
             {/* About Link */}
             <Link
@@ -449,22 +370,7 @@ export function Header() {
               </Link>
             </nav>
 
-            <div className="pt-2 flex items-center justify-between text-xs tracking-wider uppercase text-[#77736E]">
-              <span>Currency: {currency}</span>
-              <div className="flex gap-2">
-                {currencies.map((c) => (
-                  <button
-                    key={c}
-                    onClick={() => setCurrency(c)}
-                    className={`px-2 py-1 text-[10px] border ${
-                      currency === c ? "border-[#171717] text-[#171717] font-semibold" : "border-[#E9E6E0]"
-                    }`}
-                  >
-                    {c}
-                  </button>
-                ))}
-              </div>
-            </div>
+
           </div>
         )}
       </header>

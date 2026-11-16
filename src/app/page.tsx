@@ -99,9 +99,9 @@ export default function HomePage() {
       {/* ──────────────────────────────────────────────────────────── */}
       <section
         data-motion-skip
-        className="relative w-full h-[100svh] min-h-[560px] sm:min-h-[650px] lg:min-h-[760px] overflow-hidden bg-[#FAF8F5] border-b border-[#E9E6E0]"
+        className="relative w-full aspect-[9/16] sm:aspect-auto sm:h-[100svh] sm:min-h-[650px] lg:min-h-[760px] overflow-hidden bg-[#FAF8F5] border-b border-[#E9E6E0]"
       >
-        {/* Fixed background images - perfectly steady without moving or shaking */}
+        {/* Background images - no scrim overlay, clean full-bleed */}
         <div className="absolute inset-0 w-full h-full bg-[#FAF8F5]">
           {heroSlides.map((slide, idx) => (
             <div
@@ -120,8 +120,6 @@ export default function HomePage() {
                 style={{ objectPosition: slide.stylePosition }}
                 sizes="100vw"
               />
-              {/* Luxury Editorial Soft Scrim Overlay on the left */}
-              <div className="absolute inset-0 bg-gradient-to-r from-[#FAF8F5]/92 via-[#FAF8F5]/50 to-transparent w-full sm:w-[65%] lg:w-[48%] pointer-events-none" />
             </div>
           ))}
         </div>
@@ -129,7 +127,7 @@ export default function HomePage() {
         {/* Previous / Next Side-Scrolling Arrows */}
         <button
           onClick={() => setActiveSlide((prev) => (prev === 0 ? heroSlides.length - 1 : prev - 1))}
-          className="hidden sm:flex absolute left-4 lg:left-8 top-1/2 -translate-y-1/2 z-20 w-10 h-10 lg:w-11 lg:h-11 rounded-full bg-[#FAF8F5]/80 hover:bg-[#FAF8F5] border border-[#E9E6E0] backdrop-blur-xs text-[#171717] items-center justify-center transition-all hover:scale-105 shadow-xs"
+          className="flex absolute left-4 lg:left-8 top-1/2 -translate-y-1/2 z-20 w-10 h-10 lg:w-11 lg:h-11 rounded-full bg-[#FAF8F5]/80 hover:bg-[#FAF8F5] border border-[#E9E6E0] backdrop-blur-xs text-[#171717] items-center justify-center transition-all hover:scale-105 shadow-xs"
           aria-label="Previous slide"
         >
           <ChevronLeft className="w-4 h-4 stroke-[1.5]" />
@@ -137,55 +135,36 @@ export default function HomePage() {
 
         <button
           onClick={() => setActiveSlide((prev) => (prev + 1) % heroSlides.length)}
-          className="hidden sm:flex absolute right-4 lg:right-8 top-1/2 -translate-y-1/2 z-20 w-10 h-10 lg:w-11 lg:h-11 rounded-full bg-[#FAF8F5]/80 hover:bg-[#FAF8F5] border border-[#E9E6E0] backdrop-blur-xs text-[#171717] items-center justify-center transition-all hover:scale-105 shadow-xs"
+          className="flex absolute right-4 lg:right-8 top-1/2 -translate-y-1/2 z-20 w-10 h-10 lg:w-11 lg:h-11 rounded-full bg-[#FAF8F5]/80 hover:bg-[#FAF8F5] border border-[#E9E6E0] backdrop-blur-xs text-[#171717] items-center justify-center transition-all hover:scale-105 shadow-xs"
           aria-label="Next slide"
         >
           <ChevronRight className="w-4 h-4 stroke-[1.5]" />
         </button>
 
-        {/* Foreground Content: Clean Typography & CTAs directly in front of the image */}
-        <div className="relative z-10 h-full max-w-[1600px] mx-auto px-6 sm:px-12 lg:px-16 xl:px-20 flex flex-col justify-center space-y-6">
-          <div className="space-y-3 max-w-xl transition-all duration-700">
-            <span className="text-[10px] sm:text-[11px] tracking-[0.4em] uppercase text-[#77736E] font-medium block">
-              {currentHero.tag}
-            </span>
-            <h1 className="font-editorial text-4xl sm:text-6xl lg:text-7xl font-normal text-[#171717] leading-[1.05] tracking-tight whitespace-pre-line">
-              {currentHero.headline}
-            </h1>
-            <p className="text-xs sm:text-sm text-[#3E3A36] font-light leading-relaxed max-w-md pt-1">
-              {currentHero.subtitle}
-            </p>
-          </div>
+        {/* Bottom overlay: CTA button + slide dots only — no text */}
+        <div className="absolute bottom-6 sm:bottom-8 left-0 right-0 z-20 flex flex-col items-center gap-4 px-6">
+          {/* CTA Button */}
+          <Link
+            href={currentHero.href}
+            data-magnetic
+            className="inline-flex items-center gap-2.5 bg-[#171717]/85 hover:bg-[#171717] text-white text-[10px] sm:text-[11px] uppercase tracking-[0.25em] px-8 py-3.5 font-medium transition-colors duration-300 group backdrop-blur-sm shadow-xs"
+          >
+            <span>{currentHero.cta}</span>
+            <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+          </Link>
 
-          {/* Action CTA Button */}
-          <div className="pt-2">
-            <Link
-              href={currentHero.href}
-              data-magnetic
-              className="inline-flex items-center gap-2.5 bg-[#171717] text-white hover:bg-[#A18A70] text-[10px] sm:text-[11px] uppercase tracking-[0.25em] px-8 py-4 font-medium transition-colors duration-300 group shadow-xs"
-            >
-              <span>{currentHero.cta}</span>
-              <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
-            </Link>
-          </div>
-
-          {/* Carousel Slide Indicator Dashes with Slide Numbers */}
-          <div className="flex items-center space-x-3 pt-4">
-            <div className="flex items-center space-x-2">
-              {heroSlides.map((slide, idx) => (
-                <button
-                  key={idx}
-                  onClick={() => setActiveSlide(idx)}
-                  className={`h-[2.5px] transition-all duration-500 ${
-                    activeSlide === idx ? "w-12 bg-[#171717]" : "w-4 bg-[#171717]/35 hover:bg-[#171717]"
-                  }`}
-                  aria-label={`Advertisement Slide ${idx + 1}`}
-                />
-              ))}
-            </div>
-            <span className="text-[10px] font-mono text-[#55504A] tracking-widest pl-2">
-              0{activeSlide + 1} / 0{heroSlides.length}
-            </span>
+          {/* Slide dot indicators */}
+          <div className="flex items-center space-x-2">
+            {heroSlides.map((_, idx) => (
+              <button
+                key={idx}
+                onClick={() => setActiveSlide(idx)}
+                className={`h-[2.5px] transition-all duration-500 ${
+                  activeSlide === idx ? "w-10 bg-white" : "w-4 bg-white/50 hover:bg-white/80"
+                }`}
+                aria-label={`Slide ${idx + 1}`}
+              />
+            ))}
           </div>
         </div>
       </section>

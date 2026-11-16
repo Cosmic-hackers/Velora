@@ -206,40 +206,38 @@ function ShopContent() {
       {/* ──────────────────────────────────────────────────────────── */}
       {/* 1. CINEMATIC FULL-WIDTH CAMPAIGN BANNER                      */}
       {/* ──────────────────────────────────────────────────────────── */}
-      <section className="relative w-full h-[200px] sm:h-[240px] md:h-[280px] lg:h-[320px] overflow-hidden bg-[#D8D0C5] border-b border-[#E9E6E0]">
-        {/* Architectural backdrop and Model image without any whiteness overlay */}
-        <div className="absolute inset-0">
+      <section className="relative w-full overflow-hidden bg-[#D8D0C5]">
+        {/* 9:16 portrait on mobile, wider on desktop */}
+        <div className="relative w-full aspect-[9/16] sm:aspect-[16/7] md:aspect-[16/6] lg:aspect-[16/5]">
           <Image
             src={
               selectedGender === "men"
                 ? "/images/catalog/shop-banner-men.jpg"
                 : "/images/catalog/shop-banner.png"
             }
-            alt="VELORA The Complete Portfolio"
+            alt="VELORA Shop"
             fill
             priority
             quality={98}
             className="object-cover"
             style={{
-              objectPosition: selectedGender === "men" ? "75% 20%" : "70% 50%",
+              objectPosition: selectedGender === "men" ? "75% 20%" : "70% 20%",
             }}
             sizes="100vw"
           />
         </div>
 
-        {/* Banner Content (Aligned to left margin) */}
-        <div className="relative z-10 h-full max-w-[1600px] mx-auto px-6 sm:px-10 lg:px-12 flex flex-col justify-center">
-          <div className="max-w-xl space-y-1.5 sm:space-y-2">
-            <span className="text-[10px] sm:text-[11px] tracking-[0.38em] uppercase text-[#5C554E] font-medium block">
-              S H O P
-            </span>
-            <h1 className="font-editorial text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-[#171717] font-normal tracking-tight leading-[1.08]">
-              The Complete Portfolio
-            </h1>
-            <p className="text-xs sm:text-sm text-[#3E3832] font-light leading-relaxed max-w-md pt-1">
-              Pure silhouettes, master tailoring, natural unadulterated wools and cashmere.
-            </p>
-          </div>
+        {/* Short tagline strip BELOW the image, outside the photo */}
+        <div className="bg-[#FAF8F5] border-b border-[#E9E6E0] px-6 sm:px-10 lg:px-12 py-4 flex items-center gap-4">
+          <span className="text-[10px] tracking-[0.38em] uppercase text-[#5C554E] font-medium hidden sm:block">
+            S H O P
+          </span>
+          <span className="text-[10px] text-[#77736E] hidden sm:block">—</span>
+          <p className="text-xs sm:text-sm text-[#3E3832] font-light tracking-wide">
+            {selectedGender === "men"
+              ? "Sharp tailoring. Quiet luxury."
+              : "Pure form. Natural fibres."}
+          </p>
         </div>
       </section>
 
@@ -457,9 +455,9 @@ function ShopContent() {
                     className="w-full h-1 bg-[#DED8CF] accent-[#8B5E3C] cursor-pointer"
                   />
                   <div className="flex items-center justify-between text-xs text-[#55504A] font-mono">
-                    <span>₹1,000</span>
+                    <span>1,000</span>
                     <span>-</span>
-                    <span>₹{priceRange.toLocaleString("en-IN")}</span>
+                    <span>{priceRange.toLocaleString("en-IN")}</span>
                   </div>
                 </div>
               )}
@@ -586,8 +584,8 @@ function ShopContent() {
                 </button>
               </div>
             ) : (
-              /* Exact 3-column editorial grid matching reference */
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 sm:gap-x-8 gap-y-12">
+              /* 2-column mobile grid, 3-column on desktop */
+              <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-x-3 sm:gap-x-6 md:gap-x-8 gap-y-8 sm:gap-y-12">
                 {filteredProducts.map((product, idx) => (
                   <ProductCard key={product.id} product={product} priority={idx < 3} />
                 ))}

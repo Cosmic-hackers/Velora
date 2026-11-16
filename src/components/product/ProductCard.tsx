@@ -4,7 +4,6 @@ import { MotionReveal } from "@/components/motion/MotionReveal";
 import { useCart } from "@/context/CartContext";
 import { useWishlist } from "@/context/WishlistContext";
 import { Product } from "@/data/seedData";
-import { formatPrice } from "@/lib/utils";
 import { Check, Heart } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -56,7 +55,7 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
             alt={product.name}
             fill
             priority={priority}
-            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+            sizes="(max-width: 640px) 50vw, (max-width: 1024px) 50vw, 33vw"
             className="object-cover object-top transition-transform duration-1000 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.03]"
           />
           {alternateImage !== activeImage && (
@@ -64,7 +63,7 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
               src={alternateImage}
               alt={`${product.name} alternate view`}
               fill
-              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+              sizes="(max-width: 640px) 50vw, (max-width: 1024px) 50vw, 33vw"
               className="object-cover object-top opacity-0 transition-opacity duration-700 ease-out group-hover:opacity-100"
             />
           )}
@@ -153,10 +152,10 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
           )}
         </div>
 
-        {/* Row 2: Price in INR formatted with Rupee Symbol */}
+        {/* Row 2: Price without currency symbol */}
         <div>
           <p className="font-light text-[12px] sm:text-[13px] text-[#171717] tracking-tight">
-            {formatPrice(product.price)}
+            {new Intl.NumberFormat("en-IN", { maximumFractionDigits: 0 }).format(product.price)}
           </p>
         </div>
       </div>
