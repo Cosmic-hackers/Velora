@@ -4,7 +4,7 @@ import { SearchModal } from "@/components/search/SearchModal";
 import { useAuth } from "@/context/AuthContext";
 import { useCart } from "@/context/CartContext";
 import { useWishlist } from "@/context/WishlistContext";
-import { Heart, Menu, Search, ShoppingBag, X } from "lucide-react";
+import { Heart, Menu, Search, ShoppingBag, User, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -46,12 +46,11 @@ export function Header() {
   return (
     <>
       <header
-        className={`${isHome ? "absolute top-0" : "sticky top-0"} z-40 w-full transition-all duration-500 ${isScrolled
-            ? "bg-[#F8F7F4]/95 backdrop-blur-md border-b border-[#E9E6E0]"
-            : isHome
-              ? "bg-transparent border-b border-transparent"
-              : "bg-[#F8F7F4] border-b border-[#E9E6E0]/40"
-          }`}
+        className={`sticky top-0 z-40 w-full transition-all duration-500 ${
+          isScrolled
+            ? "bg-white/95 backdrop-blur-md border-b border-[#E9E6E0] shadow-sm"
+            : "bg-white border-b border-[#E9E6E0]/60"
+        }`}
       >
         <div className="w-full relative px-6 sm:px-10 lg:px-12 h-20 flex items-center justify-between">
           {/* Mobile Menu Button */}
@@ -103,11 +102,10 @@ export function Header() {
             </Link>
           </div>
 
-          {/* RIGHT ACTION ICONS & LINKS (Reference Layout) */}
-          <div className="flex items-center space-x-2 sm:space-x-6 lg:space-x-7 ml-auto z-10">
+          {/* RIGHT ACTION ICONS & LINKS */}
+          <div className="flex items-center space-x-2 sm:space-x-5 lg:space-x-7 ml-auto z-10">
 
-
-            {/* About Link */}
+            {/* About Link — desktop only */}
             <Link
               href="/about"
               className="hidden lg:inline-block text-[11px] uppercase tracking-[0.2em] font-medium text-[#171717]/85 hover:text-[#171717] transition-colors"
@@ -115,7 +113,7 @@ export function Header() {
               ABOUT
             </Link>
 
-            {/* Stores Link */}
+            {/* Stores Link — desktop only */}
             <Link
               href="/contact"
               className="hidden lg:inline-block text-[11px] uppercase tracking-[0.2em] font-medium text-[#171717]/85 hover:text-[#171717] transition-colors"
@@ -123,7 +121,7 @@ export function Header() {
               STORES
             </Link>
 
-            {/* Account: Sign In / Account: Name */}
+            {/* Account text — desktop only */}
             <Link
               href={user?.role === "admin" || user?.role === "super_admin" ? "/admin" : user ? "/account" : "/login"}
               className="hidden sm:inline-block text-[11px] uppercase tracking-[0.18em] font-medium text-[#171717]/85 hover:text-[#171717] transition-colors"
@@ -131,18 +129,37 @@ export function Header() {
               {user ? `ACCOUNT: ${user.fullName?.split(" ")[0] || "CLIENT"}` : "ACCOUNT: SIGN IN"}
             </Link>
 
-            {/* Wishlist — hidden on smallest mobile to prevent crowding */}
+            {/* Wishlist heart — always visible on mobile when logged in, always on desktop */}
+            {user ? (
+              <Link
+                href="/wishlist"
+                className="inline-flex text-[#171717] hover:opacity-60 transition-opacity relative p-1"
+                aria-label="View wishlist"
+              >
+                <Heart className="w-[17px] h-[17px] stroke-[1.25]" />
+                {wishlistCount > 0 && (
+                  <span className="absolute -top-1 -right-1 text-[9px] font-medium text-[#171717] w-3.5 h-3.5 flex items-center justify-center">
+                    {wishlistCount}
+                  </span>
+                )}
+              </Link>
+            ) : (
+              <Link
+                href="/wishlist"
+                className="hidden sm:inline-flex text-[#171717] hover:opacity-60 transition-opacity relative p-1"
+                aria-label="View wishlist"
+              >
+                <Heart className="w-[17px] h-[17px] stroke-[1.25]" />
+              </Link>
+            )}
+
+            {/* Profile / Account icon — always visible on mobile */}
             <Link
-              href="/wishlist"
-              className="hidden sm:inline-flex text-[#171717] hover:opacity-60 transition-opacity relative p-1"
-              aria-label="View wishlist"
+              href={user?.role === "admin" || user?.role === "super_admin" ? "/admin" : user ? "/account" : "/login"}
+              className="sm:hidden text-[#171717] hover:opacity-60 transition-opacity p-1"
+              aria-label={user ? "My Account" : "Sign In"}
             >
-              <Heart className="w-[17px] h-[17px] stroke-[1.25]" />
-              {wishlistCount > 0 && (
-                <span className="absolute -top-1 -right-1 text-[9px] font-medium text-[#171717] w-3.5 h-3.5 flex items-center justify-center">
-                  {wishlistCount}
-                </span>
-              )}
+              <User className="w-[17px] h-[17px] stroke-[1.25]" />
             </Link>
 
             {/* Search */}

@@ -99,7 +99,7 @@ export default function HomePage() {
       {/* ──────────────────────────────────────────────────────────── */}
       <section
         data-motion-skip
-        className="relative w-full aspect-[9/16] sm:aspect-auto sm:h-[100svh] sm:min-h-[650px] lg:min-h-[760px] overflow-hidden bg-[#FAF8F5] border-b border-[#E9E6E0]"
+        className="relative w-full h-[calc(100svh-80px)] min-h-[500px] sm:min-h-[600px] lg:min-h-[700px] overflow-hidden bg-[#FAF8F5] border-b border-[#E9E6E0]"
       >
         {/* Background images - no scrim overlay, clean full-bleed */}
         <div className="absolute inset-0 w-full h-full bg-[#FAF8F5]">

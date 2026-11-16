@@ -207,8 +207,8 @@ function ShopContent() {
       {/* 1. CINEMATIC FULL-WIDTH CAMPAIGN BANNER                      */}
       {/* ──────────────────────────────────────────────────────────── */}
       <section className="relative w-full overflow-hidden bg-[#D8D0C5]">
-        {/* 9:16 portrait on mobile, wider on desktop */}
-        <div className="relative w-full aspect-[9/16] sm:aspect-[16/7] md:aspect-[16/6] lg:aspect-[16/5]">
+        {/* 16:9 landscape on mobile, progressively shorter on larger screens */}
+        <div className="relative w-full aspect-[16/9] sm:aspect-[16/7] md:aspect-[16/6] lg:aspect-[16/5]">
           <Image
             src={
               selectedGender === "men"
