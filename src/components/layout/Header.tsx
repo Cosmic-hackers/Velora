@@ -104,7 +104,7 @@ export function Header() {
           </div>
 
           {/* RIGHT ACTION ICONS & LINKS (Reference Layout) */}
-          <div className="flex items-center space-x-4 sm:space-x-6 lg:space-x-7 ml-auto z-10">
+          <div className="flex items-center space-x-2 sm:space-x-6 lg:space-x-7 ml-auto z-10">
 
 
             {/* About Link */}
@@ -131,10 +131,10 @@ export function Header() {
               {user ? `ACCOUNT: ${user.fullName?.split(" ")[0] || "CLIENT"}` : "ACCOUNT: SIGN IN"}
             </Link>
 
-            {/* Wishlist */}
+            {/* Wishlist — hidden on smallest mobile to prevent crowding */}
             <Link
               href="/wishlist"
-              className="text-[#171717] hover:opacity-60 transition-opacity relative p-1"
+              className="hidden sm:inline-flex text-[#171717] hover:opacity-60 transition-opacity relative p-1"
               aria-label="View wishlist"
             >
               <Heart className="w-[17px] h-[17px] stroke-[1.25]" />
@@ -154,14 +154,14 @@ export function Header() {
               <Search className="w-[17px] h-[17px] stroke-[1.25]" />
             </button>
 
-            {/* Shopping Bag with live count: e.g. (0) */}
+            {/* Shopping Bag — count text hidden on mobile */}
             <button
               onClick={openCart}
               className="text-[#171717] hover:opacity-60 transition-opacity p-1 flex items-center gap-1 group text-[11px] font-mono tracking-tight"
               aria-label="Open shopping bag"
             >
               <ShoppingBag className="w-[17px] h-[17px] stroke-[1.25]" />
-              <span className="font-sans text-[11px] tracking-normal">({itemCount})</span>
+              <span className="hidden sm:inline font-sans text-[11px] tracking-normal">({itemCount})</span>
             </button>
           </div>
         </div>
