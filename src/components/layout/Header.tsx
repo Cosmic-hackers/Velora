@@ -97,7 +97,7 @@ export function Header() {
           {/* CENTER: VELORA WORDMARK (Mathematically Centered in Viewport) */}
           <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-center pointer-events-auto z-10">
             <Link href="/" className="inline-block group">
-              <span className="font-editorial text-2xl sm:text-3xl tracking-[0.38em] text-[#171717] font-normal uppercase block transition-opacity group-hover:opacity-70">
+              <span className="font-editorial text-base sm:text-lg tracking-[0.38em] text-[#171717] font-normal uppercase block transition-opacity group-hover:opacity-70">
                 VELORA
               </span>
             </Link>
